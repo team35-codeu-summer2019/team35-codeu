@@ -30,6 +30,11 @@ nav li {
   display: inline-block;
   margin-right: 10px
 }
-
+img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 
 .top-buffer { margin-top:20px; }
