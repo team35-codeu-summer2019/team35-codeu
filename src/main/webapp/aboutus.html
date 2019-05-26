@@ -28,32 +28,25 @@ limitations under the License.
 
 <body>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Team 35</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a class="nav-link" href="./index.html">Home </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="./aboutus.html">Our Team<span class="sr-only">(current)</span></a>
+            </li>
+          
+          </ul>
+        </div>
+      </nav>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Team 35</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./aboutus.html">Our Team</a>
-          </li>
-      </div>
-    </nav>
+ 
 <div class="main-content">
   <div class="container text-center">
       <br/><br/>
@@ -61,8 +54,9 @@ limitations under the License.
 
     <div class="row mt-3">
       <div class="col-sm-6">
-        <div class="card">
-          <img src="./img/totoro.jpg" class="card-img-top" alt="..." style="width:20rem">
+        <div class="card customized-card">
+          <div class="image-container">
+          <img src="./img/totoro.jpg" style="width:10rem;" class="card-img-top img-customized" alt="Image Not Available"></div>
           <div class="card-body">
             <h5 class="card-title">Pang Hangzhi</h5>
             <div class="card-block text-left">
@@ -77,8 +71,8 @@ limitations under the License.
 
 
       <div class="col-sm-6">
-        <div class="card">
-          <img src="./img/placeholder.png" class="card-img-top" alt="..." style="width:20rem">
+        <div class="card customized-card">
+          <img src="./img/placeholder.png" class="card-img-top img-customized" alt="...">
           <div class="card-body">
             <h5 class="card-title">Teammate B Name</h5>
             <div class="card-block text-left">
@@ -95,8 +89,8 @@ limitations under the License.
 
     <div class="row mt-3">
       <div class="col-sm-6">
-        <div class="card">
-          <img src="https://i.pinimg.com/originals/8d/c4/23/8dc423d06649dac62bc74d7c47cd8acb.jpg" class="card-img-top"
+        <div class="card customized-card">
+          <img src="https://i.pinimg.com/originals/8d/c4/23/8dc423d06649dac62bc74d7c47cd8acb.jpg" class="img-customized card-img-top"
             alt="LiMengyang" style="height: 25rem; width:20rem">
           <div class="card-body">
             <h5 class="card-title">Li Mengyang</h5>
@@ -115,8 +109,8 @@ limitations under the License.
       </div>
 
       <div class="col-sm-6">
-        <div class="card">
-          <img src="./img/placeholder.png" class="card-img-top" alt="..." style="width:20rem">
+        <div class="card customized-card">
+          <img src="./img/placeholder.png" class="img-customized card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Nanda Thant Sin</h5>
             <div class="card-block text-left">
@@ -132,5 +126,15 @@ limitations under the License.
   </div>
 </div>
 </body>
-
+<footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</footer>
 </html>

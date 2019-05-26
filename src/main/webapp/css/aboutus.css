@@ -3,10 +3,18 @@
     padding-right:20px;
 }
 .col-sm{
-    margin-bottom: 50px;
+    margin-bottom: 70px;
     padding: 30px;
 }
+.card.customized-card{
+    padding: 20px;
+}
+
   
 .main-content{
-    background-color: antiquewhite;
+    background-color: aliceblue;
+}
+
+.img-customized.card-img-top{
+    width:20rem;
 }
