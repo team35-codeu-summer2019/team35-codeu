@@ -89,6 +89,9 @@ function createNavBar(){
       <li class="nav-item ">\
         <a class="nav-link" href="./feed.html">Public Feeds</a>\
       </li>\
+      <li class="nav-item ">\
+        <a class="nav-link" href="./stats.html">Statistics</a>\
+      </li>\
     </ul>\
   </div>\
 </nav>';

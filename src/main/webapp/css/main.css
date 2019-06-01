@@ -28,7 +28,8 @@ nav ul {
 /* Keep navigation menu on one line. */
 nav li {
   display: inline-block;
-  margin-right: 10px
+  margin-right: 10px;
+  height:56px;
 }
 img{
   display: block;
@@ -42,4 +43,8 @@ img{
 .btn-primary { margin-top: 10px; }
 .container{
   padding-top:26px;
+}
+.main-content{
+  background-color:rgb(248, 249, 250);
+  height :calc(100vh - 56px);
 }
