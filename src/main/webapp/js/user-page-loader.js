@@ -41,6 +41,7 @@ function showMessageFormIfViewingSelf() {
         if (loginStatus.isLoggedIn &&
             loginStatus.username == parameterUsername) {
           const messageForm = document.getElementById('message-form');
+          document.getElementById('about-me-form').classList.remove('hidden');
           messageForm.classList.remove('hidden');
         }
       });
@@ -65,6 +66,21 @@ function fetchMessages() {
           messagesContainer.appendChild(messageDiv);
         });
       });
+}
+/** Fetches the user's about data, and then adds it to the page. */
+function fetchAboutMe(){
+  const url = '/about?user=' + parameterUsername;
+  fetch(url).then((response) => {
+    return response.text();
+  }).then((aboutMe) => {
+    const aboutMeContainer = document.getElementById('about-me-container');
+    if(aboutMe == ''){
+      aboutMe = 'This user has not entered any information yet.';
+    }
+
+    aboutMeContainer.innerHTML = aboutMe;
+
+  });
 }
 
 /**
@@ -94,5 +110,6 @@ function buildMessageDiv(message) {
 function buildUI() {
   setPageTitle();
   showMessageFormIfViewingSelf();
+  fetchAboutMe();
   fetchMessages();
 }
