@@ -18,35 +18,27 @@
  * Adds a login or logout link to the page, depending on whether the user is
  * already logged in.
  */
-function addLoginOrLogoutLinkToNavigation() {
-  createNavBar();
-  const navigationElement = document.getElementById('navigation');
-  if (!navigationElement) {
-    console.warn('Navigation element not found!');
-    return;
-  }
 
-  fetch('/login-status')
-    .then((response) => {
-      return response.json();
-    })
-    .then((loginStatus) => {
-      if (loginStatus.isLoggedIn) {
-        navigationElement.appendChild(createListItem(createLink('/user-page.html?user=' + loginStatus.username, 'Your Page')));
-
-        navigationElement.appendChild(createListItem(createLink('/feed.html','Public Feeds')));
-
-        navigationElement.appendChild(createListItem(createLink('/stats.html','Statistics')));
-
-        navigationElement.appendChild(createListItem(createLink('/community.html','Community')));
-        
-        navigationElement.appendChild(
-          createListItem(createLink('/logout', 'Logout')));
-      } else {
-        navigationElement.appendChild(
-          createListItem(createLink('/login', 'Login')));
-      }
-    });
+function createNavBar() {
+  document.getElementById('nav-bar').innerHTML =
+    // eslint-disable-next-line no-multi-str
+    '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">\
+    <a class="navbar-brand" href="">Team 35</a>\
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"\
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">\
+      <span class="navbar-toggler-icon"></span>\
+    </button>\
+    <div class="collapse navbar-collapse" id="navbarNav">\
+      <ul class="navbar-nav" id="navigation">\
+        <li class="nav-item">\
+          <a class="nav-link" href="./index.html">Home</a>\
+        </li>\
+        <li class="nav-item ">\
+          <a class="nav-link" href="./aboutus.html">Our Team </a>\
+        </li>\
+      </ul>\
+    </div>\
+  </nav>';
 }
 
 /**
@@ -75,23 +67,33 @@ function createLink(url, text) {
   return linkElement;
 }
 
-function createNavBar(){
-  document.getElementById('nav-bar').innerHTML = 
-  '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">\
-  <a class="navbar-brand" href="">Team 35</a>\
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"\
-    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">\
-    <span class="navbar-toggler-icon"></span>\
-  </button>\
-  <div class="collapse navbar-collapse" id="navbarNav">\
-    <ul class="navbar-nav" id="navigation">\
-      <li class="nav-item">\
-        <a class="nav-link" href="./index.html">Home</a>\
-      </li>\
-      <li class="nav-item ">\
-        <a class="nav-link" href="./aboutus.html">Our Team </a>\
-      </li>\
-    </ul>\
-  </div>\
-</nav>';
+function addLoginOrLogoutLinkToNavigation() {
+  createNavBar();
+  const navigationElement = document.getElementById('navigation');
+  if (!navigationElement) {
+    console.warn('Navigation element not found!');
+    return;
+  }
+
+  fetch('/login-status')
+    .then(response => response.json())
+    .then((loginStatus) => {
+      if (loginStatus.isLoggedIn) {
+        navigationElement.appendChild(createListItem(createLink(`/user-page.html?user=${loginStatus.username}`, 'Your Page')));
+
+        navigationElement.appendChild(createListItem(createLink('/feed.html', 'Public Feeds')));
+
+        navigationElement.appendChild(createListItem(createLink('/stats.html', 'Statistics')));
+
+        navigationElement.appendChild(createListItem(createLink('/community.html', 'Community')));
+
+        navigationElement.appendChild(
+          createListItem(createLink('/logout', 'Logout'))
+        );
+      } else {
+        navigationElement.appendChild(
+          createListItem(createLink('/login', 'Login'))
+        );
+      }
+    });
 }

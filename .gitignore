@@ -7,3 +7,5 @@ target
 .DS_Store
 
 .factorypath
+node_modules
+.team35-codeu.code-workspace
