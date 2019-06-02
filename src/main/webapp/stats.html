@@ -4,10 +4,10 @@
 <head>
     <title>Stats</title>
     <link rel="stylesheet" href="/css/main.css">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="/css/stats.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script>
         // Fetch stats and display them in the page.
         function fetchStats() {
@@ -39,13 +39,16 @@
 
 <body onload="buildUI()">
     <div id="nav-bar"></div>
-    <div class="main-content">
-        <div id="content" class="container">
-            <h1>Site Statistics</h1>
-            <hr />
-            <div id="stats-container">Loading...</div>
+  
+    <div class="background">
+            <div class="transbox">
+                <h1 class="title">Site Statistics</h1>
+                <hr />
+                <div id="stats-container">Loading...</div>
+                <hr />
+                <div id="stats-container-map">Loading...</div>
+            </div>
         </div>
-    </div>
 </body>
 <footer>
     <script src="./js/navigation-loader.js"></script>
