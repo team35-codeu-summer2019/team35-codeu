@@ -26,7 +26,7 @@ if (!parameterUsername) {
 /** Sets the page title based on the URL parameter username. */
 function setPageTitle() {
   document.getElementById('page-title').innerText = parameterUsername;
-  document.title = parameterUsername + ' - User Page';
+  document.title = `${parameterUsername} - User Page`;
 }
 
 /**
@@ -34,52 +34,45 @@ function setPageTitle() {
  */
 function showMessageFormIfViewingSelf() {
   fetch('/login-status')
-      .then((response) => {
-        return response.json();
-      })
-      .then((loginStatus) => {
-        if (loginStatus.isLoggedIn &&
-            loginStatus.username == parameterUsername) {
-          const messageForm = document.getElementById('message-form');
-          document.getElementById('about-me-form').classList.remove('hidden');
-          messageForm.classList.remove('hidden');
-        }
-      });
+    .then(response => response.json())
+    .then((loginStatus) => {
+      if (loginStatus.isLoggedIn
+            && loginStatus.username === parameterUsername) {
+        const messageForm = document.getElementById('message-form');
+        document.getElementById('about-me-form').classList.remove('hidden');
+        messageForm.classList.remove('hidden');
+      }
+    });
 }
 
 /** Fetches messages and add them to the page. */
 function fetchMessages() {
-  const url = '/messages?user=' + parameterUsername;
+  const url = `/messages?user=${parameterUsername}`;
   fetch(url)
-      .then((response) => {
-        return response.json();
-      })
-      .then((messages) => {
-        const messagesContainer = document.getElementById('message-container');
-        if (messages.length == 0) {
-          messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
-        } else {
-          messagesContainer.innerHTML = '';
-        }
-        messages.forEach((message) => {
-          const messageDiv = buildMessageDiv(message);
-          messagesContainer.appendChild(messageDiv);
-        });
+    .then(response => response.json())
+    .then((messages) => {
+      const messagesContainer = document.getElementById('message-container');
+      if (messages.length === 0) {
+        messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
+      } else {
+        messagesContainer.innerHTML = '';
+      }
+      messages.forEach((message) => {
+        const messageDiv = buildMessageDiv(message);
+        messagesContainer.appendChild(messageDiv);
       });
+    });
 }
 /** Fetches the user's about data, and then adds it to the page. */
-function fetchAboutMe(){
-  const url = '/about?user=' + parameterUsername;
-  fetch(url).then((response) => {
-    return response.text();
-  }).then((aboutMe) => {
+function fetchAboutMe() {
+  const url = `/about?user=${parameterUsername}`;
+  fetch(url).then(response => response.text()).then((aboutMe) => {
     const aboutMeContainer = document.getElementById('about-me-container');
-    if(aboutMe == ''){
+    if (aboutMe === '') {
       aboutMe = 'This user has not entered any information yet.';
     }
 
     aboutMeContainer.innerHTML = aboutMe;
-
   });
 }
 
@@ -92,7 +85,8 @@ function buildMessageDiv(message) {
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(document.createTextNode(
-      message.user + ' - ' + new Date(message.timestamp)));
+    `${message.user} - ${new Date(message.timestamp)}`
+  ));
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
@@ -109,9 +103,8 @@ function buildMessageDiv(message) {
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
-  createNavBar();
+  addLoginOrLogoutLinkToNavigation();
   showMessageFormIfViewingSelf();
   fetchAboutMe();
   fetchMessages();
- 
 }
