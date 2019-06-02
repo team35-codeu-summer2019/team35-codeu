@@ -8,33 +8,7 @@
     <link rel="stylesheet" href="/css/stats.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script>
-        // Fetch stats and display them in the page.
-        function fetchStats() {
-            const url = '/stats';
-            fetch(url).then((response) => {
-                return response.json();
-            }).then((stats) => {
-                const statsContainer = document.getElementById('stats-container');
-                statsContainer.innerHTML = '';
-
-                const messageCountElement = buildStatElement('Message count: ' + stats.messageCount);
-                statsContainer.appendChild(messageCountElement);
-            });
-        }
-
-        function buildStatElement(statString) {
-            const statElement = document.createElement('p');
-            statElement.appendChild(document.createTextNode(statString));
-            return statElement;
-        }
-
-        // Fetch data and populate the UI of the page.
-        function buildUI() {
-            fetchStats();
-            addLoginOrLogoutLinkToNavigation();
-        }
-    </script>
+    <script src="./js/stats.js"></script>
 </head>
 
 <body onload="buildUI()">
@@ -46,7 +20,7 @@
                 <hr />
                 <div id="stats-container">Loading...</div>
                 <hr />
-                <div id="stats-container-map">Loading...</div>
+                <div id="user-stats-container">Loading...</div>
             </div>
 
     </div>
