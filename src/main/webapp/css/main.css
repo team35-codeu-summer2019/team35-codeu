@@ -28,7 +28,7 @@ nav ul {
 /* Keep navigation menu on one line. */
 nav li {
   display: inline-block;
-  margin-right: 10px
+  margin-right: 10px;
 }
 img{
   display: block;
@@ -37,11 +37,13 @@ img{
   width: 50%;
 }
 
-<<<<<<< HEAD
-.top-buffer { margin-top:20px; }
-=======
-
 .top-buffer { margin-top:20px; }
 
 .btn-primary { margin-top: 10px; }
->>>>>>> b02c8ff9c40549b2be78f7ac382223bb6b6d577c
+.container{
+  padding-top:26px;
+}
+.main-content{
+  background-color:rgb(248, 249, 250);
+  height :calc(100vh - 56px);
+}

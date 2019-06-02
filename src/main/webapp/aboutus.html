@@ -21,7 +21,7 @@ limitations under the License.
   <meta charset="UTF-8">
   <title>About Us</title>
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/aboutus.css">
+  <link rel="stylesheet" href="./css/aboutus.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
@@ -30,28 +30,11 @@ limitations under the License.
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="">Team 35</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav" id="navigation">
-        <li class="nav-item ">
-          <a class="nav-link" href="./index.html">Home </a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="./aboutus.html">Our Team<span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
-
+  <div id="nav-bar"></div>
   <div class="main-content">
     <div class="container text-center">
-      <br /><br />
+
+
       <h1>About Our Team</h1><br /><br />
 
       <div class="row mt-3">
@@ -75,8 +58,7 @@ limitations under the License.
           </div>
         </div>
 
-
-
+        
         <div class="col-sm-6">
           <div class="card customized-card">
             <img src="./img/placeholder.png" class="card-img-top img-customized" alt="...">
@@ -263,6 +245,9 @@ limitations under the License.
   </div>
 </body>
 <footer>
+
+
+  <script src="./js/navigation-loader.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
@@ -272,6 +257,8 @@ limitations under the License.
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+    <script>
+        addLoginOrLogoutLinkToNavigation();</script>
 </footer>
 
 </html>
