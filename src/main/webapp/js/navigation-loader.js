@@ -38,7 +38,7 @@ function addLoginOrLogoutLinkToNavigation() {
 
         navigationElement.appendChild(createListItem(createLink('/stats.html','Statistics')));
 
-        // more links for public feed etc. can be added here
+        navigationElement.appendChild(createListItem(createLink('/community.html','Community')));
         
         navigationElement.appendChild(
           createListItem(createLink('/logout', 'Logout')));
