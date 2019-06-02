@@ -17,15 +17,28 @@ function fetchStats() {
 }
 
 function fetchUserStats(){
-    const url = '/stats?user=' + parameterUsername;
+    const url = '/stats/user?user=' + parameterUsername;
     fetch(url).then((response) => {
         return response.json();
     }).then((userStats) => {
         const userStatsContainer = document.getElementById('user-stats-container');
         userStatsContainer.innerHTML = '';
 
-        const userMessageCountElement = buildStatElement('You have sent: ' + userStats.messageCount);
+        const userMessageCountElement = buildStatElement('You have sent: ' + userStats.userMessageCount);
         userStatsContainer.appendChild(userMessageCountElement);
+    })
+}
+
+function fetchAvgStats(){
+    const url = '/stats/avg';
+    fetch(url).then((response) => {
+        return response.json();
+    }).then((avgStats) => {
+        const avgStatsContainer = document.getElementById('avg-stats-container');
+        avgStatsContainer.innerHTML = '';
+
+        const avgMessageCountElement = buildStatElement('The average length of message is: ' + avgStats.avgMessageLength);
+        avgStatsContainer.appendChild(avgMessageCountElement);
     })
 }
 
@@ -38,5 +51,7 @@ function buildStatElement(statString) {
 // Fetch data and populate the UI of the page.
 function buildUI() {
     fetchStats();
+    fetchUserStats();
+    fetchAvgStats();
     addLoginOrLogoutLinkToNavigation();
 }

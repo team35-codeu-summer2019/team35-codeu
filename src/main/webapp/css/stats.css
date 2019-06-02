@@ -1,23 +1,23 @@
-div.background {
+.background {
     background: url("https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/2b3f6ff00db7a1efae21d85cfb8995eaff2da8d8.png") repeat;
     height:100%;
 }
   
-div.transbox {
-    margin: 30px;
+.transbox {
     background-color: #ffffff;
     border: 1px solid black;
     border-radius: 25px;
-    opacity: 0.6;
     filter: alpha(opacity=60); /* For IE8 and earlier */
+    margin: 30px;
+    opacity: 0.6;
 }
   
-div.transbox p {
-    margin: 5%;
-    font-weight: bold;
+.transbox p {
     color: #000000;
+    font-weight: bold;
+    margin: 5%;
 }
 
-div.title{
+.title{
     padding-left: 50px;
 }
