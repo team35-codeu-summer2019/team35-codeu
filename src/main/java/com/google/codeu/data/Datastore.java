@@ -28,9 +28,7 @@ public class Datastore {
 
   private DatastoreService datastore;
 
-  public Datastore() {
-    datastore = DatastoreServiceFactory.getDatastoreService();
-  }
+  public Datastore() { datastore = DatastoreServiceFactory.getDatastoreService(); }
 
   /** Stores the Message in Datastore. */
   public void storeMessage(Message message) {

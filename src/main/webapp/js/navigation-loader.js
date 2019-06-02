@@ -20,7 +20,7 @@
  */
 function addLoginOrLogoutLinkToNavigation() {
   const navigationElement = document.getElementById('navigation');
-  if (!navigationElement) {
+  if (!navigationElement){
     console.warn('Navigation element not found!');
     return;
   }
