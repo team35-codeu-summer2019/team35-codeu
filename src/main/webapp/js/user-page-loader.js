@@ -109,7 +109,7 @@ function buildMessageDiv(message) {
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
-  createNavBar();
+  addLoginOrLogoutLinkToNavigation()
   showMessageFormIfViewingSelf();
   fetchAboutMe();
   fetchMessages();

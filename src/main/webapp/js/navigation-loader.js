@@ -34,9 +34,11 @@ function addLoginOrLogoutLinkToNavigation() {
       if (loginStatus.isLoggedIn) {
         navigationElement.appendChild(createListItem(createLink('/user-page.html?user=' + loginStatus.username, 'Your Page')));
 
+        navigationElement.appendChild(createListItem(createLink('/feed.html','Public Feeds')));
+
         navigationElement.appendChild(createListItem(createLink('/stats.html','Statistics')));
 
-        // more links for public feed etc. can be added here
+        navigationElement.appendChild(createListItem(createLink('/community.html','Community')));
         
         navigationElement.appendChild(
           createListItem(createLink('/logout', 'Logout')));
@@ -76,7 +78,7 @@ function createLink(url, text) {
 function createNavBar(){
   document.getElementById('nav-bar').innerHTML = 
   '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">\
-  <a class="navbar-brand" href="#">Team 35</a>\
+  <a class="navbar-brand" href="">Team 35</a>\
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"\
     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">\
     <span class="navbar-toggler-icon"></span>\
@@ -88,12 +90,6 @@ function createNavBar(){
       </li>\
       <li class="nav-item ">\
         <a class="nav-link" href="./aboutus.html">Our Team </a>\
-      </li>\
-      <li class="nav-item ">\
-        <a class="nav-link" href="./feed.html">Public Feeds</a>\
-      </li>\
-      <li class="nav-item ">\
-        <a class="nav-link" href="./stats.html">Statistics</a>\
       </li>\
     </ul>\
   </div>\
