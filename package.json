@@ -1,0 +1,29 @@
+{
+  "name": "checkstyle",
+  "version": "1.0.0",
+  "description": "This is for checking style locally",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^4.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0"
+  },
+  "scripts": {
+    "test": "stylecheck"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team35-codeu-summer2019/team35-codeu.git"
+  },
+  "author": "Li Mengyang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/team35-codeu-summer2019/team35-codeu/issues"
+  },
+  "homepage": "https://github.com/team35-codeu-summer2019/team35-codeu#readme"
+}
