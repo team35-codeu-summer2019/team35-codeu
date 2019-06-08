@@ -64,6 +64,12 @@
   max-width: 75%;
 }
 
+.message-body figure {
+  display: table; 
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Use this to hide certain elements like forms if the
    user is not logged in or viewing their own page. */
 .hidden {
