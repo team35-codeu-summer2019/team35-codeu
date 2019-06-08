@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmsBaZDSm50H1fqB3PVmAr-BIwopAdsOg&callback=initMap"
+        type="text/javascript"></script>
     <script type="text/javascript" src="./js/chart.js"></script>
     <script src="./js/stats.js"></script>
 </head>
@@ -15,20 +18,38 @@
 <body onload="buildUI()">
     <div id="nav-bar"></div>
 
-    <div class="background">
+    <div class="main-content">
         <div class="transbox">
             <h1 class="title">Site Statistics</h1>
             <hr />
-            <div id="stats-container">Loading...</div>
+            <table class="table table-sm table-hover">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div id="stats-container">Loading...</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="user-stats-container">Loading...</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="avg-stats-container">Loading...</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <hr />
-            <div id="user-stats-container">Loading...</div>
+            <div id="top10-most-active-users">Loading...</div>
             <hr />
-            <div id="avg-stats-container">Loading...</div>
+            <div id="geochart-of-places">Loading...</div>
             <hr />
-            <div id="top-10-most-popular-places">Loading...</div>
+            <div id="book_chart">Loading...</div>
         </div>
-
     </div>
+
 </body>
 <footer>
     <script src="./js/navigation-loader.js"></script>

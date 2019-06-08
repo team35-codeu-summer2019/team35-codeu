@@ -1,8 +1,6 @@
 // Get ?user=XYZ parameter value
 const urlParams = new URLSearchParams(window.location.search);
 const parameterUsername = urlParams.get('user');
-google.charts.load('current', { packages: ['corechart'] });
-google.charts.setOnLoadCallback(drawChart);
 
 function buildStatElement(statString) {
   const statElement = document.createElement('p');

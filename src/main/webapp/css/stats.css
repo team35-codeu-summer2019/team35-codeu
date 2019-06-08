@@ -1,23 +1,25 @@
-.background {
-    background: url("https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/2b3f6ff00db7a1efae21d85cfb8995eaff2da8d8.png") repeat;
+.main-content{
+    background-image: url("https://www.peaksandpints.com/wp-content/uploads/2016/03/peaks-and-pints-tumblr-mountain-top-hiking.jpg");
     height:100%;
+    width:100%;
 }
-  
+
 .transbox {
     background-color: #ffffff;
     border: 1px solid black;
     border-radius: 25px;
-    filter: alpha(opacity=60); /* For IE8 and earlier */
+    filter: alpha(opacity=80); /* For IE8 and earlier */
     margin: 30px;
-    opacity: 0.6;
+    opacity: 0.95;
 }
   
 .transbox p {
     color: #000000;
     font-weight: bold;
-    margin: 5%;
+    margin: 1%;
 }
 
 .title{
-    padding-left: 50px;
+    padding-left: 35px;
+    padding-top: 10px;
 }
