@@ -4,20 +4,45 @@ function createMap() {
         center: { lat: 37.422, lng: -122.084 },
         zoom: 16
     });
-    const trexMarker = new google.maps.Marker({
-        position: { lat: 37.421903, lng: -122.084674 },
-        map: map,
-        title: 'Stan the T-Rex'
-    });
-    var trexInfoWindow = new google.maps.InfoWindow({
-        content: 'This is Stan, the T-Rex statue.'
-    });
-    trexInfoWindow.open(map, trexMarker);
-    marker.addListener('click', function() {
-        map.setZoom(8);
-        map.setCenter(marker.getPosition());
-    });
-    trexMarker.addListener('click', function() {
-        trexInfoWindow.open(map, trexMarker);
-    });
+    recenterToCurrentLocation(map);
+}
+
+function recenterToCurrentLocation(map) {
+    infoWindow = new google.maps.InfoWindow;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found!');
+            infoWindow.open(map);
+            map.setCenter(pos);
+            const trexMarker = new google.maps.Marker({
+                position: { lat: pos.lat, lng: pos.lng },
+                map: map,
+                title: 'Current Location'
+            });
+            var trexInfoWindow = new google.maps.InfoWindow({
+                content: 'Your current location.'
+            });
+            trexMarker.addListener('click', function() {
+                trexInfoWindow.open(map, trexMarker);
+            });
+        }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
 }
