@@ -86,10 +86,10 @@ public class MessageServlet extends HttpServlet {
     String userEnteredContent = request.getParameter("text");
 
     TextProcessor processor = BBProcessorFactory.getInstance().create();
-    String HtmlConvertedContent = processor.process(userEnteredContent);
+    String htmlConvertedContent = processor.process(userEnteredContent);
 
     Whitelist whitelist = Whitelist.basicWithImages();
-    String sanitizedContent = Jsoup.clean(HtmlConvertedContent, whitelist);
+    String sanitizedContent = Jsoup.clean(htmlConvertedContent, whitelist);
 
     Message message = new Message(user, sanitizedContent);
     datastore.storeMessage(message);

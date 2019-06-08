@@ -68,10 +68,10 @@ public class AboutMeServlet extends HttpServlet {
     String userEnteredContent = request.getParameter("about-me");
 
     TextProcessor processor = BBProcessorFactory.getInstance().create();
-    String HtmlConvertedContent = processor.process(userEnteredContent);
+    String htmlConvertedContent = processor.process(userEnteredContent);
 
     Whitelist whitelist = Whitelist.basicWithImages();
-    String sanitizedContent = Jsoup.clean(HtmlConvertedContent, whitelist);
+    String sanitizedContent = Jsoup.clean(htmlConvertedContent, whitelist);
 
     User user = new User(userEmail, sanitizedContent);
     datastore.storeUser(user);
