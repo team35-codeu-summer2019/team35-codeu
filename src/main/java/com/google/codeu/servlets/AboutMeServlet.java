@@ -15,6 +15,9 @@ import com.google.codeu.data.User;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessor;
+
 /**
  * Handles fetching and saving user data.
  */
@@ -62,9 +65,15 @@ public class AboutMeServlet extends HttpServlet {
     }
 
     String userEmail = userService.getCurrentUser().getEmail();
-    String aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
+    String userEnteredContent = request.getParameter("about-me");
 
-    User user = new User(userEmail, aboutMe);
+    TextProcessor processor = BBProcessorFactory.getInstance().create();
+    String HtmlConvertedContent = processor.process(userEnteredContent);
+
+    Whitelist whitelist = Whitelist.basicWithImages();
+    String sanitizedContent = Jsoup.clean(HtmlConvertedContent, whitelist);
+
+    User user = new User(userEmail, sanitizedContent);
     datastore.storeUser(user);
 
     response.sendRedirect("/user-page.html?user=" + userEmail);
