@@ -20,9 +20,9 @@
  */
 
 function createNavBar() {
-  document.getElementById('nav-bar').innerHTML =
-    // eslint-disable-next-line no-multi-str
-    '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">\
+    document.getElementById('nav-bar').innerHTML =
+        // eslint-disable-next-line no-multi-str
+        '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">\
     <a class="navbar-brand" href="">Team 35</a>\
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"\
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">\
@@ -36,6 +36,9 @@ function createNavBar() {
         <li class="nav-item ">\
           <a class="nav-link" href="./aboutus.html">Our Team </a>\
         </li>\
+        <li class="nav-item ">\
+          <a class="nav-link" href="./map.html">Map </a>\
+        </li>\
       </ul>\
     </div>\
   </nav>';
@@ -47,10 +50,10 @@ function createNavBar() {
  * @return {Element} li element
  */
 function createListItem(childElement) {
-  const listItemElement = document.createElement('li');
-  listItemElement.appendChild(childElement);
-  listItemElement.className = 'nav-item';
-  return listItemElement;
+    const listItemElement = document.createElement('li');
+    listItemElement.appendChild(childElement);
+    listItemElement.className = 'nav-item';
+    return listItemElement;
 }
 
 /**
@@ -60,40 +63,40 @@ function createListItem(childElement) {
  * @return {Element} Anchor element
  */
 function createLink(url, text) {
-  const linkElement = document.createElement('a');
-  linkElement.appendChild(document.createTextNode(text));
-  linkElement.href = url;
-  linkElement.className = 'nav-link';
-  return linkElement;
+    const linkElement = document.createElement('a');
+    linkElement.appendChild(document.createTextNode(text));
+    linkElement.href = url;
+    linkElement.className = 'nav-link';
+    return linkElement;
 }
 
 function addLoginOrLogoutLinkToNavigation() {
-  createNavBar();
-  const navigationElement = document.getElementById('navigation');
-  if (!navigationElement) {
-    console.warn('Navigation element not found!');
-    return;
-  }
+    createNavBar();
+    const navigationElement = document.getElementById('navigation');
+    if (!navigationElement) {
+        console.warn('Navigation element not found!');
+        return;
+    }
 
-  fetch('/login-status')
-    .then(response => response.json())
-    .then((loginStatus) => {
-      if (loginStatus.isLoggedIn) {
-        navigationElement.appendChild(createListItem(createLink(`/user-page.html?user=${loginStatus.username}`, 'Your Page')));
+    fetch('/login-status')
+        .then(response => response.json())
+        .then((loginStatus) => {
+            if (loginStatus.isLoggedIn) {
+                navigationElement.appendChild(createListItem(createLink(`/user-page.html?user=${loginStatus.username}`, 'Your Page')));
 
-        navigationElement.appendChild(createListItem(createLink('/feed.html', 'Public Feeds')));
+                navigationElement.appendChild(createListItem(createLink('/feed.html', 'Public Feeds')));
 
-        navigationElement.appendChild(createListItem(createLink('/stats.html', 'Statistics')));
+                navigationElement.appendChild(createListItem(createLink('/stats.html', 'Statistics')));
 
-        navigationElement.appendChild(createListItem(createLink('/community.html', 'Community')));
+                navigationElement.appendChild(createListItem(createLink('/community.html', 'Community')));
 
-        navigationElement.appendChild(
-          createListItem(createLink('/logout', 'Logout'))
-        );
-      }else {
-        navigationElement.appendChild(
-          createListItem(createLink('/login', 'Login'))
-        );
-      }
-    });
+                navigationElement.appendChild(
+                    createListItem(createLink('/logout', 'Logout'))
+                );
+            } else {
+                navigationElement.appendChild(
+                    createListItem(createLink('/login', 'Login'))
+                );
+            }
+        });
 }
