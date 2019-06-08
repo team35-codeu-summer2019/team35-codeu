@@ -76,6 +76,10 @@ function addLoginOrLogoutLinkToNavigation() {
     .then(response => response.json())
     .then((loginStatus) => {
       if (loginStatus.isLoggedIn) {
+        navigationElement.appendChild(createListItem(createLink('/index.html', 'Home')));
+
+        navigationElement.appendChild(createListItem(createLink('/aboutus.html', 'Our Team')));
+
         navigationElement.appendChild(createListItem(createLink(`/user-page.html?user=${loginStatus.username}`, 'Your Page')));
 
         navigationElement.appendChild(createListItem(createLink('/feed.html', 'Public Feeds')));
@@ -88,9 +92,11 @@ function addLoginOrLogoutLinkToNavigation() {
           createListItem(createLink('/logout', 'Logout'))
         );
       }else {
-        navigationElement.appendChild(
-          createListItem(createLink('/login', 'Login'))
-        );
+        navigationElement.appendChild(createListItem(createLink('/index.html', 'Home')));
+
+        navigationElement.appendChild(createListItem(createLink('/aboutus.html', 'Our Team')));
+
+        navigationElement.appendChild(createListItem(createLink('/login', 'Login')));
       }
     });
 }
