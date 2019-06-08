@@ -19,25 +19,6 @@
  * already logged in.
  */
 
-// function createNavBar() {
-//   document.getElementById('nav-bar').innerHTML =
-//     // eslint-disable-next-line no-multi-str
-//     '<nav>\
-//         <div class="brand">\
-//             <h2> Play Even Harder </h2>\
-//         </div>\
-//         <ul>\
-//             <li><a href="./index.html">Home</a></li>\
-//             <li><a href="./aboutus.html">Our Team</a></li>\
-//         </ul>\
-//     </nav>\
-//     <section class="sec1"></section>\
-//     <section class="sec2"></section>';
-//     var styleE1 = document.createElement('style');
-//     document.appendChild(styleE1);
-//   ;
-// }
-
 /**
  * Creates an li element.
  * @param {Element} childElement
@@ -65,7 +46,6 @@ function createLink(url, text) {
 }
 
 function addLoginOrLogoutLinkToNavigation() {
-//   createNavBar();
   const navigationElement = document.getElementById('navigation');
   if (!navigationElement) {
     console.warn('Navigation element not found!');
@@ -91,7 +71,7 @@ function addLoginOrLogoutLinkToNavigation() {
         navigationElement.appendChild(
           createListItem(createLink('/logout', 'Logout'))
         );
-      }else {
+      } else {
         navigationElement.appendChild(createListItem(createLink('/index.html', 'Home')));
 
         navigationElement.appendChild(createListItem(createLink('/aboutus.html', 'Our Team')));
@@ -100,23 +80,3 @@ function addLoginOrLogoutLinkToNavigation() {
       }
     });
 }
-
-
-// initial nav bar
-// '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">\
-//     <a class="navbar-brand" href="">Team 35</a>\
-//     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"\
-//       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">\
-//       <span class="navbar-toggler-icon"></span>\
-//     </button>\
-//     <div class="collapse navbar-collapse" id="navbarNav">\
-//       <ul class="navbar-nav" id="navigation">\
-//         <li class="nav-item">\
-//           <a class="nav-link" href="./index.html">Home</a>\
-//         </li>\
-//         <li class="nav-item ">\
-//           <a class="nav-link" href="./aboutus.html">Our Team </a>\
-//         </li>\
-//       </ul>\
-//     </div>\
-//   </nav>'
