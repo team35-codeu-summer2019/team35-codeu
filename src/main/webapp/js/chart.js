@@ -3,19 +3,19 @@ google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
     var book_data = new google.visualization.DataTable();
-    book_data.addColumn('string', 'Book Title');
-    book_data.addColumn('number', 'Votes');
+    book_data.addColumn('string', 'Destination');
+    book_data.addColumn('number', 'Number of Times');
 
     //add data to book_data
     book_data.addRows([
-        ["The Best We Could Do", 6],
-        ["Sing, Unburied, Sing", 10],
-        ["The Book of Unknown Americans", 7],
+        ["Azerbaijan", 6],
+        ["Bahamas", 10],
+        ["China", 7],
         ["The 57 Bus", 4],
-        ["The Handmaid's Tale", 8]
+        ["Dominica", 8]
     ]);
 
-    var chart = new google.visualization.BarChart(document.getElementById('top-10-places-users-been-to'));
+    var chart = new google.visualization.BarChart(document.getElementById('top-10-most-popular-places'));
 
     var chart_options = {
         width: 800,
