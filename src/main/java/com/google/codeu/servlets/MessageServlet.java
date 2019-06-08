@@ -91,7 +91,13 @@ public class MessageServlet extends HttpServlet {
     Whitelist whitelist = Whitelist.basicWithImages();
     String sanitizedContent = Jsoup.clean(htmlConvertedContent, whitelist);
 
-    Message message = new Message(user, sanitizedContent);
+
+
+    String regex = "(https:?://\\S+\\.(png|jpg))";
+    String replacement =  "<img src=\"$1\" />";
+    String textWithImageContent = sanitizedContent.replaceAll(regex, replacement);
+
+    Message message = new Message(user, textWithImageContent);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + user);
