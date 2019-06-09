@@ -6,7 +6,7 @@
 
 .transbox {
     background-color: #ffffff;
-    border: 1px solid black;
+    border: 1px black;
     border-radius: 25px;
     filter: alpha(opacity=80); /* For IE8 and earlier */
     margin: 30px;
@@ -22,4 +22,19 @@
 .title{
     padding-left: 35px;
     padding-top: 10px;
+}
+
+#top10-most-active-users{
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+#geochart-of-places{
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+#book_chart{
+  padding-left: 5%;
+  padding-right: 5%;
 }
