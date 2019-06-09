@@ -37,7 +37,7 @@ function showMessageFormIfViewingSelf() {
     .then(response => response.json())
     .then((loginStatus) => {
       if (loginStatus.isLoggedIn
-            && loginStatus.username === parameterUsername) {
+        && loginStatus.username === parameterUsername) {
         const messageForm = document.getElementById('message-form');
         document.getElementById('about-me-form').classList.remove('hidden');
         messageForm.classList.remove('hidden');

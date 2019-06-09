@@ -1,64 +1,75 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Community Page</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="/js/navigation-loader.js"></script>
-    <script>
 
-      /** Fetches users and adds them to the page. */
-      function fetchUserList(){
-        const url = '/user-list';
-        fetch(url).then((response) => {
-          return response.json();
-        }).then((users) => {
-          const list = document.getElementById('list');
-          list.innerHTML = '';
+<head>
+  <title>Community Page</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/nav-bar.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="/js/navigation-loader.js"></script>
+  <script>
 
-          users.forEach((user) => {
-           const userListItem = buildUserListItem(user);
-           list.appendChild(userListItem);
-          });
+    /** Fetches users and adds them to the page. */
+    function fetchUserList() {
+      const url = '/user-list';
+      fetch(url).then((response) => {
+        return response.json();
+      }).then((users) => {
+        const list = document.getElementById('list');
+        list.innerHTML = '';
+
+        users.forEach((user) => {
+          const userListItem = buildUserListItem(user);
+          list.appendChild(userListItem);
         });
-      }
+      });
+    }
 
-      /**
-       * Builds a list element that contains a link to a user page, e.g.
-       * <li><a href="/user-page.html?user=test@example.com">test@example.com</a></li>
-       */
-      function buildUserListItem(user){
-        const userLink = document.createElement('a');
-        userLink.setAttribute('href', '/user-page.html?user=' + user);
-        userLink.appendChild(document.createTextNode(user));
-        const userListItem = document.createElement('li');
-        userListItem.appendChild(userLink);
-        return userListItem;
-      }
+    /**
+     * Builds a list element that contains a link to a user page, e.g.
+     * <li><a href="/user-page.html?user=test@example.com">test@example.com</a></li>
+     */
+    function buildUserListItem(user) {
+      const userLink = document.createElement('a');
+      userLink.setAttribute('href', '/user-page.html?user=' + user);
+      userLink.appendChild(document.createTextNode(user));
+      const userListItem = document.createElement('li');
+      userListItem.appendChild(userLink);
+      return userListItem;
+    }
 
-      /** Fetches data and populates the UI of the page. */
-      function buildUI(){
-       fetchUserList();
-       addLoginOrLogoutLinkToNavigation();
-      }
-    </script>
-  </head>
-  <body onload="buildUI()">
+    /** Fetches data and populates the UI of the page. */
+    function buildUI() {
+      fetchUserList();
+      addLoginOrLogoutLinkToNavigation();
+    }
+  </script>
+</head>
 
-    <div id="nav-bar"></div>
+<body onload="buildUI()">
+  <nav>
+    <div class="brand">
+      <h2> Play Even Harder </h2>
+    </div>
+    <ul id="navigation">
+      <li><a href="#"></a></li>
+    </ul>
+  </nav>
+  <section class="sec1"></section>
+  <section class="sec2"></section>
 
-    <div id="content">
+  <div id="content">
     <div class="text-center">
       <h1>Community Page</h1>
       <p>Here is a list of every user who has posted a message:</p>
     </div>
-      <hr/>
-      <ul id="list">Loading...</ul>
-    </div>
-  </body>
-  <footer>
-    <script src="./js/navigation-loader.js"></script>
+    <hr />
+    <ul id="list">Loading...</ul>
+  </div>
+</body>
+<footer>
+  <script src="./js/navigation-loader.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
@@ -69,4 +80,5 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
 </footer>
+
 </html>

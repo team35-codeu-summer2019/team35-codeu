@@ -2,33 +2,67 @@
 <html>
 
 <head>
-    <title>Stats</title>
-    <link rel="stylesheet" href="/css/main.css">
-
-    <link rel="stylesheet" href="/css/stats.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="./js/stats.js"></script>
+  <title>Stats</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/nav-bar.css">
+  <link rel="stylesheet" href="/css/stats.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmsBaZDSm50H1fqB3PVmAr-BIwopAdsOg&callback=initMap"
+    type="text/javascript"></script>
+  <script type="text/javascript" src="./js/chart.js"></script>
+  <script src="./js/stats.js"></script>
 </head>
 
 <body onload="buildUI()">
-    <div id="nav-bar"></div>
-  
-    <div class="background">
-            <div class="transbox">
-                <h1 class="title">Site Statistics</h1>
-                <hr />
-                <div id="stats-container">Loading...</div>
-                <hr />
-                <div id="user-stats-container">Loading...</div>
-                <hr />
-                <div id="avg-stats-container">Loading...</div>
-            </div>
-
+  <nav>
+    <div class="brand">
+      <h2> Play Even Harder </h2>
     </div>
+    <ul id="navigation">
+      <li><a href="#"></a></li>
+    </ul>
+  </nav>
+  <section class="sec1"></section>
+  <section class="sec2"></section>
+
+  <div class="main-content">
+    <div class="transbox">
+      <h1 class="title">Site Statistics</h1>
+      <hr />
+      <table class="table table-sm table-hover">
+        <tbody>
+          <tr>
+            <td>
+              <div id="stats-container">Loading...</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="user-stats-container">Loading...</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="avg-stats-container">Loading...</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <div id="top10-most-active-users">Loading...</div>
+      <hr />
+      <div id="geochart-of-places">Loading...</div>
+      <hr />
+      <div id="book_chart">Loading...</div>
+    </div>
+  </div>
+
 </body>
 <footer>
-    <script src="./js/navigation-loader.js"></script>
+  <script src="./js/navigation-loader.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
