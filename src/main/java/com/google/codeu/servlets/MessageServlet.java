@@ -48,6 +48,28 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
+  private String insertMediaTag(String content) {
+
+    String regex = "((?:!\\[.*])https?://\\S+\\.(png|jpg|gif))";
+    String replacement =  "<img src=\"$1\" alt=\"$1\" >";
+    String newContent = content.replaceAll(regex, replacement);
+
+    regex = "!\\[(.*)]\\((https?://\\S+\\.(png|jpg|gif))\\)";
+    replacement = "<figure> <img src=\"$2\" alt=\"$2\">"
+            + "<figcaption> $1 </figcatption>" + "<figure>";
+    newContent = newContent.replaceAll(regex, replacement);
+
+    regex = "(https?://\\S+\\.(mp4|webm|ogg))";
+    replacement = "<video controls> <source src=\"$1\"> </video>";
+    newContent = newContent.replaceAll(regex, replacement);
+
+    regex = "(https?://\\S+\\.(mp3|wav|ogg))";
+    replacement = "<audio controls> <source src=\"$1\"> </audio>";
+    newContent = newContent.replaceAll(regex, replacement);
+
+    return newContent;
+  }
+
   /**
    * Responds with a JSON representation of {@link Message} data for a specific
    * user. Responds with an empty array if the user is not provided.
@@ -91,7 +113,9 @@ public class MessageServlet extends HttpServlet {
     Whitelist whitelist = Whitelist.basicWithImages();
     String sanitizedContent = Jsoup.clean(htmlConvertedContent, whitelist);
 
-    Message message = new Message(user, sanitizedContent);
+    String textWithMedia = insertMediaTag(sanitizedContent);
+
+    Message message = new Message(user, textWithMedia);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + user);
