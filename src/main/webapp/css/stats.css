@@ -1,40 +1,40 @@
-.main-content{
-    background-image: url("https://www.peaksandpints.com/wp-content/uploads/2016/03/peaks-and-pints-tumblr-mountain-top-hiking.jpg");
-    height:100%;
-    width:100%;
+.main-content {
+  background-image: url("https://www.peaksandpints.com/wp-content/uploads/2016/03/peaks-and-pints-tumblr-mountain-top-hiking.jpg");
+  height: 100%;
+  width: 100%;
 }
 
 .transbox {
-    background-color: #ffffff;
-    border: 1px black;
-    border-radius: 25px;
-    filter: alpha(opacity=80); /* For IE8 and earlier */
-    margin: 30px;
-    opacity: 0.95;
+  background-color: #ffffff;
+  border: 1px black;
+  border-radius: 25px;
+  filter: alpha(opacity=80); /* For IE8 and earlier */
+  margin: 30px;
+  opacity: 0.95;
 }
-  
+
 .transbox p {
-    color: #000000;
-    font-weight: bold;
-    margin: 1%;
+  color: #000000;
+  font-weight: bold;
+  margin: 1%;
 }
 
-.title{
-    padding-left: 35px;
-    padding-top: 10px;
+.title {
+  padding-left: 35px;
+  padding-top: 10px;
 }
 
-#top10-most-active-users{
+#top10-most-active-users {
   padding-left: 5%;
   padding-right: 5%;
 }
 
-#geochart-of-places{
+#geochart-of-places {
   padding-left: 5%;
   padding-right: 5%;
 }
 
-#book_chart{
+#book_chart {
   padding-left: 5%;
   padding-right: 5%;
 }

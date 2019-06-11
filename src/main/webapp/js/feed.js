@@ -27,22 +27,26 @@ function buildMessageDiv(message) {
 // Fetch messages and add them to the page.
 function fetchMessages() {
   const url = '/feed';
-  fetch(url).then(response => response.json()).then((messages) => {
-    const messageContainer = document.getElementById('message-container');
-    if (messages.length === 0) {
-      messageContainer.innerHTML = '<p>There are no posts yet.</p>';
-    } else {
-      messageContainer.innerHTML = '';
-    }
-    messages.forEach((message) => {
-      const messageDiv = buildMessageDiv(message);
-      messageContainer.appendChild(messageDiv);
+  fetch(url)
+    .then(response => response.json())
+    .then((messages) => {
+      const messageContainer = document.getElementById('message-container');
+      if (messages.length === 0) {
+        messageContainer.innerHTML = '<p>There are no posts yet.</p>';
+      } else {
+        messageContainer.innerHTML = '';
+      }
+      messages.forEach((message) => {
+        const messageDiv = buildMessageDiv(message);
+        messageContainer.appendChild(messageDiv);
+      });
     });
-  });
 }
 
 // Fetch data and populate the UI of the page.
+// eslint-disable-next-line no-unused-vars
 function buildUI() {
   fetchMessages();
+  // eslint-disable-next-line no-undef
   addLoginOrLogoutLinkToNavigation();
 }

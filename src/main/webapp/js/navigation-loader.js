@@ -45,6 +45,7 @@ function createLink(url, text) {
   return linkElement;
 }
 
+// eslint-disable-next-line no-unused-vars
 function addLoginOrLogoutLinkToNavigation() {
   const navigationElement = document.getElementById('navigation');
   if (!navigationElement) {
@@ -56,27 +57,50 @@ function addLoginOrLogoutLinkToNavigation() {
     .then(response => response.json())
     .then((loginStatus) => {
       if (loginStatus.isLoggedIn) {
-        navigationElement.appendChild(createListItem(createLink('/index.html', 'Home')));
+        navigationElement.appendChild(
+          createListItem(createLink('/index.html', 'Home'))
+        );
 
-        navigationElement.appendChild(createListItem(createLink('/aboutus.html', 'Our Team')));
+        navigationElement.appendChild(
+          createListItem(createLink('/aboutus.html', 'Our Team'))
+        );
 
-        navigationElement.appendChild(createListItem(createLink(`/user-page.html?user=${loginStatus.username}`, 'Your Page')));
+        navigationElement.appendChild(
+          createListItem(
+            createLink(
+              `/user-page.html?user=${loginStatus.username}`,
+              'Your Page'
+            )
+          )
+        );
 
-        navigationElement.appendChild(createListItem(createLink('/feed.html', 'Public Feeds')));
+        navigationElement.appendChild(
+          createListItem(createLink('/feed.html', 'Public Feeds'))
+        );
 
-        navigationElement.appendChild(createListItem(createLink('/stats.html', 'Statistics')));
+        navigationElement.appendChild(
+          createListItem(createLink('/stats.html', 'Statistics'))
+        );
 
-        navigationElement.appendChild(createListItem(createLink('/community.html', 'Community')));
+        navigationElement.appendChild(
+          createListItem(createLink('/community.html', 'Community'))
+        );
 
         navigationElement.appendChild(
           createListItem(createLink('/logout', 'Logout'))
         );
       } else {
-        navigationElement.appendChild(createListItem(createLink('/index.html', 'Home')));
+        navigationElement.appendChild(
+          createListItem(createLink('/index.html', 'Home'))
+        );
 
-        navigationElement.appendChild(createListItem(createLink('/aboutus.html', 'Our Team')));
+        navigationElement.appendChild(
+          createListItem(createLink('/aboutus.html', 'Our Team'))
+        );
 
-        navigationElement.appendChild(createListItem(createLink('/login', 'Login')));
+        navigationElement.appendChild(
+          createListItem(createLink('/login', 'Login'))
+        );
       }
     });
 }
