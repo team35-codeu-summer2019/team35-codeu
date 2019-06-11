@@ -1,15 +1,15 @@
-.btn.know-more{
-    float: right;
-    padding-right:20px;
-    text-align: center
+.btn.know-more {
+  float: right;
+  padding-right: 20px;
+  text-align: center;
 }
-.col-sm{
-    margin-bottom: 70px;
-    padding: 30px;
+.col-sm {
+  margin-bottom: 70px;
+  padding: 30px;
 }
-.card.customized-card{
-    padding: 20px;
+.card.customized-card {
+  padding: 20px;
 }
-.img-customized.card-img-top{
-    width:20rem;
+.img-customized.card-img-top {
+  width: 20rem;
 }
