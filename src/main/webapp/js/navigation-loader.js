@@ -24,7 +24,7 @@
  * @param {Element} childElement
  * @return {Element} li element
  */
-function createListItem(childElement) {
+function createListItem(childElement){
   const listItemElement = document.createElement('li');
   listItemElement.appendChild(childElement);
   listItemElement.className = 'nav-item';
