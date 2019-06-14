@@ -41,11 +41,23 @@ function recenterToCurrentLocation(map) {
   }
 }
 
+
 function createMap() {
   addLoginOrLogoutLinkToNavigation();
-  const map = new google.maps.Map(document.getElementById("customized-map"), {
-    center: { lat: 37.422, lng: -122.084 },
-    zoom: 16
+  fetch('/map-data').then(response => response.json()).then((country) => {
+    const map = new google.maps.Map(document.getElementById('customized-map'), {
+      center: { lat: 37.422, lng: -122.084  },
+      zoom: 5
+    });
+
+    country.forEach((c) => {
+      // eslint-disable-next-line no-new
+      new google.maps.Marker({
+        position: { lat: c.lat, lng: c.lng },
+        map
+      });
+    });
+     recenterToCurrentLocation(map);
   });
-  recenterToCurrentLocation(map);
+
 }
