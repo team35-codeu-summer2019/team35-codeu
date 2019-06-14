@@ -6,6 +6,7 @@ var quill = new Quill('#editor-container', {
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
     ]
   },
+  bounds: document.querySelector('#editor-container'),
   placeholder: 'Compose a message...',
   theme: 'snow'
 });
