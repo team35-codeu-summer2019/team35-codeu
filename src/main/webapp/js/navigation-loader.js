@@ -79,8 +79,8 @@ function addLoginOrLogoutLinkToNavigation() {
         );
 
         navigationElement.appendChild(
-                  createListItem(createLink('/map.html', 'Map'))
-                );
+          createListItem(createLink('/map.html', 'Map'))
+        );
 
         navigationElement.appendChild(
           createListItem(createLink('/stats.html', 'Statistics'))
