@@ -34,8 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
-import org.kefirsf.bb.BBProcessorFactory;
-import org.kefirsf.bb.TextProcessor;
+
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -107,11 +106,8 @@ public class MessageServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String userEnteredContent = request.getParameter("text");
 
-    TextProcessor processor = BBProcessorFactory.getInstance().create();
-    String htmlConvertedContent = processor.process(userEnteredContent);
-
-    Whitelist whitelist = Whitelist.basicWithImages();
-    String sanitizedContent = Jsoup.clean(htmlConvertedContent, whitelist);
+    Whitelist whitelist = Whitelist.relaxed();
+    String sanitizedContent = Jsoup.clean(userEnteredContent, whitelist);
 
     String textWithMedia = insertMediaTag(sanitizedContent);
 
