@@ -15,15 +15,10 @@
  */
 
 #editor-container {
-  -moz-appearance: textfield-multiline;
-  -webkit-appearance: textarea;
   background-color: white;
-  background-color: -moz-field;
-  border: 1px solid gray;
-  overflow: auto;
-  padding: 2px;
-  resize: both;
   height: 100px;
+  overflow: auto;
+  resize: both;
 }
 
 /* Give each message a rounded border. */
