@@ -100,6 +100,19 @@ function buildMessageDiv(message) {
   return messageDiv;
 }
 
+/** fetch blobstore upload url */
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+    .then((response) => {
+      return response.text();
+    })
+    .then((imageUploadUrl) => {
+      const imageForm = document.getElementById('image-form');
+      imageForm.classList.remove('hidden');
+      imageForm.action = imageUploadUrl;
+    })
+}
+
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
@@ -107,4 +120,5 @@ function buildUI() {
   showMessageFormIfViewingSelf();
   fetchAboutMe();
   fetchMessages();
+  fetchBlobstoreUrlAndShowForm();
 }
