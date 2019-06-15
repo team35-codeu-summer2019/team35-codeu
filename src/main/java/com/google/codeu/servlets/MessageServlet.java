@@ -19,12 +19,14 @@ package com.google.codeu.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
+import com.google.codeu.data.Location;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -113,6 +115,11 @@ public class MessageServlet extends HttpServlet {
 
     Message message = new Message(user, textWithMedia);
     datastore.storeMessage(message);
+
+    // store a location here
+    Locale userlocale = request.getLocale();
+    Location location = new Location(user, userlocale.getCountry()) ;
+    datastore.storeLocation(location);
 
     response.sendRedirect("/user-page.html?user=" + user);
   }

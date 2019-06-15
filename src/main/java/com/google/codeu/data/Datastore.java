@@ -37,8 +37,21 @@ public class Datastore {
     messageEntity.setProperty("user", message.getUser());
     messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("timestamp", message.getTimestamp());
-
     datastore.put(messageEntity);
+  }
+
+  /** Stores the User in Datastore. */
+  public void storeUser(User user) {
+    Entity userEntity = new Entity("User", user.getEmail());
+    userEntity.setProperty("email", user.getEmail());
+    userEntity.setProperty("aboutMe", user.getAboutMe());
+    datastore.put(userEntity);
+  }
+
+  /** Store the geolocation in Datastore.*/
+  public void storeLocation(Location location){
+    Entity locationEntity = new Entity(location.getUser(), location.getCountry());
+    datastore.put(locationEntity);
   }
 
   /**
@@ -97,14 +110,6 @@ public class Datastore {
     Query query = new Query("Message")
             .addSort("timestamp", SortDirection.DESCENDING);
     return this.getMessagesHelper(query);
-  }
-
-  /** Stores the User in Datastore. */
-  public void storeUser(User user) {
-    Entity userEntity = new Entity("User", user.getEmail());
-    userEntity.setProperty("email", user.getEmail());
-    userEntity.setProperty("aboutMe", user.getAboutMe());
-    datastore.put(userEntity);
   }
 
   /**
@@ -166,6 +171,16 @@ public class Datastore {
       users.add((String) entity.getProperty("user"));
     }
     return users;
+  }
+
+  public Set<String> getCountries(){
+    Set<String> countries = new HashSet<>();
+    Query query = new Query("Location");
+    PreparedQuery queryResults = datastore.prepare(query);
+    for(Entity entity : queryResults.asIterable()){
+      countries.add((String) entity.getProperty("country"));
+    }
+    return countries;
   }
 }
 
