@@ -54,6 +54,13 @@ limitations under the License.
         </form>
       </div>
 
+      <form id="image-form" class="hidden" method="POST" enctype="multipart/form-data">
+        <br/>
+        <p>Upload an image:</p>
+        <input type="file" name="image">
+        <button>Submit</button>
+      </form>
+      
       <form id="message-form" action="/messages" onsubmit="return copyInput();" method="POST" class="hidden">
         <textarea name="text" id="message-input" class="hidden"></textarea>
         <br />

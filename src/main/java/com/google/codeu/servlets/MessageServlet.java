@@ -49,21 +49,21 @@ public class MessageServlet extends HttpServlet {
 
   private String insertMediaTag(String content) {
 
-    String regex = "((?:!\\[.*])https?://\\S+\\.(png|jpg|gif))";
-    String replacement =  "<img src=\"$1\" alt=\"$1\" >";
+    String regex = "(^|\\s|<br>)(https?://\\S+\\.(png|jpg|gif))(\\s|<br>|$)";
+    String replacement =  "<img src=\"$2\" alt=\"$2\" >";
     String newContent = content.replaceAll(regex, replacement);
 
-    regex = "!\\[(.*)]\\((https?://\\S+\\.(png|jpg|gif))\\)";
-    replacement = "<figure> <img src=\"$2\" alt=\"$2\">"
-            + "<figcaption> $1 </figcatption>" + "<figure>";
+    regex = "(^|\\s|<br>)!\\[(.*)]\\((https?://\\S+\\.(png|jpg|gif))\\)(\\s|<br>|$)";
+    replacement = "<figure> <img src=\"$3\" alt=\"$3\">"
+            + "<figcaption> $2 </figcatption>" + "<figure>";
     newContent = newContent.replaceAll(regex, replacement);
 
-    regex = "(https?://\\S+\\.(mp4|webm|ogg))";
-    replacement = "<video controls> <source src=\"$1\"> </video>";
+    regex = "(^|\\s|<br>)(https?://\\S+\\.(mp4|webm|ogg))(\\s|<br>|$)";
+    replacement = "<video controls> <source src=\"$2\"> </video>";
     newContent = newContent.replaceAll(regex, replacement);
 
-    regex = "(https?://\\S+\\.(mp3|wav|ogg))";
-    replacement = "<audio controls> <source src=\"$1\"> </audio>";
+    regex = "(^|\\s|<br>)(https?://\\S+\\.(mp3|wav|ogg))(\\s|<br>|$)";
+    replacement = "<audio controls> <source src=\"$2\"> </audio>";
     newContent = newContent.replaceAll(regex, replacement);
 
     return newContent;
