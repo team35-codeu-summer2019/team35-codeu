@@ -159,12 +159,6 @@ public class Datastore {
     return result;
   }
 
-  /** Returns the total number of users. */
-  public int getTotalUser(){
-    Query query = new Query("Message");
-    PreparedQuery results = datastore.prepare(query);
-    return results.countEntities(FetchOptions.Builder.withLimit(1000));
-  }
 
   public Set<String> getUsers(){
     Set<String> users = new HashSet<>();

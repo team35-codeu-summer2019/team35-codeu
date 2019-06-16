@@ -83,15 +83,20 @@ function drawGeoChart() {
       return response.json();
     })
     .then((locationJson) => {
+      var test = locationJson.length;
+      console.log(test);
       var locationData = new google.visualization.DataTable();
       //define columns for the DataTable instance
       locationData.addColumn('string', 'Country');
       locationData.addColumn('number', 'Occurence');
 
       for (i = 0; i < locationJson.length; i++) {
+        console.log("test is this loop is executed");
         locationRow = [];
         var country = locationJson[i][0];
+        console.log("country " + country);
         var occurence = locationJson[i][1];
+        console.log("occurence " + occurence);
         locationRow.push(country, occurence);
 
         locationData.addRow(locationRow);
