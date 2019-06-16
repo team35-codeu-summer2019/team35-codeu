@@ -83,6 +83,7 @@ function drawGeoChart() {
       return response.json();
     })
     .then((locationJson) => {
+      console.log(locationJson);
       var test = locationJson.length;
       console.log(test);
       var locationData = new google.visualization.DataTable();
@@ -114,3 +115,8 @@ function drawGeoChart() {
       chart.draw(locationData, options);
     });
 }
+
+
+// $.get("https://api.ipdata.co?api-key=test", function (response) {
+//     $("#response").html(JSON.stringify(response, null, 4));
+// }, "jsonp");

@@ -49,12 +49,12 @@ public class Datastore {
   }
 
   /** Store the geolocation in Datastore.*/
-  public void storeLocation(Location location){
-    Entity locationEntity = new Entity("Location", location.getId().toString());
-    locationEntity.setProperty("user", location.getUser());
-    locationEntity.setProperty("country",location.getCountry());
+  public void storeLocation(UserLocation userLocation){
+    Entity locationEntity = new Entity("UserLocation", userLocation.getId().toString());
+    locationEntity.setProperty("user", userLocation.getUser());
+    locationEntity.setProperty("country", userLocation.getCountry());
     datastore.put(locationEntity);
-    System.out.println("location stored");
+    System.out.println("userLocation stored");
   }
 
   /**
@@ -173,7 +173,7 @@ public class Datastore {
 
   public ArrayList<String> getCountries(){
     ArrayList<String> countries = new ArrayList<String>();
-    Query query = new Query("Location");
+    Query query = new Query("UserLocation");
     PreparedQuery queryResults = datastore.prepare(query);
     for(Entity entity : queryResults.asIterable()){
       countries.add((String) entity.getProperty("country"));
