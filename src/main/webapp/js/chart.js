@@ -65,7 +65,7 @@ function drawGeoChart() {
       for (i = 0; i < locationJson.length; i++) {
         console.log("test is this loop is executed");
         locationRow = [];
-        var country = locationJson[i].country;
+        var country = locationJson[i].location;
         console.log("country " + country);
         var occurence = locationJson[i].frequency;
         console.log("occurence " + occurence);
