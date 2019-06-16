@@ -120,8 +120,7 @@ public class MessageServlet extends HttpServlet {
     datastore.storeMessage(message);
 
     // store a userLocation here
-//    IPInfo ipInfo = IPInfo.builder().setToken("5099035df7d924").build();
-    IPInfo ipInfo = IPInfo.builder().setToken("5099035df7d924").setCountryFile(new File("path/to/file.json")).build();
+    IPInfo ipInfo = IPInfo.builder().setToken("5099035df7d924").setCountryFile(new File("iptoaddress.json")).build();
     String ipAddress = request.getRemoteAddr();
     try {
       IPResponse ipResponse = ipInfo.lookupIP(ipAddress);
@@ -130,23 +129,16 @@ public class MessageServlet extends HttpServlet {
       System.out.println(ipAddress);
       System.out.println(ipResponse);
       System.out.println(ipResponse.getCountryName());
+      System.out.println(ipResponse.getCountryCode());
       System.out.println(ipResponse.getHostname());
 
-      UserLocation userLocation = new UserLocation(user, ipResponse.getCountryName());
+      // TODO: Get the country corresponding to the country code in the json file -> OPTIONAL BUT WOULD BE BETTER
+      UserLocation userLocation = new UserLocation(user, ipResponse.getCountryCode());
       datastore.storeLocation(userLocation);
 
     } catch (RateLimitedException ex) {
       System.out.println("Exceed rate limit");
     }
-
-//    File file = new File(
-//            "/Users/limengyang/Workspaces/team35-codeu/target/GeoLite2-Country_20190611.tar.gz");
-//    String ipAddress = request.getRemoteAddr();
-//    System.out.println(ipAddress);
-//    LookupService lookup = new LookupService(file,LookupService.GEOIP_MEMORY_CACHE);
-//    Location userLocationServices = lookup.getLocation(ipAddress);
-//    UserLocation userLocation = new UserLocation(user, userLocationServices.countryName) ;
-//    datastore.storeLocation(userLocation);
 
     response.sendRedirect("/user-page.html?user=" + user);
   }
