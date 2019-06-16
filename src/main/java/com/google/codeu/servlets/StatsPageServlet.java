@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 /**
  * Handles fetching site statistics.
  */
-@WebServlet("/stats")
+@WebServlet("/message-count")
 public class StatsPageServlet extends HttpServlet{
 
     private Datastore datastore;

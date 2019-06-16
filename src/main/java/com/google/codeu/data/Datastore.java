@@ -37,8 +37,24 @@ public class Datastore {
     messageEntity.setProperty("user", message.getUser());
     messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("timestamp", message.getTimestamp());
-
     datastore.put(messageEntity);
+  }
+
+  /** Stores the User in Datastore. */
+  public void storeUser(User user) {
+    Entity userEntity = new Entity("User", user.getEmail());
+    userEntity.setProperty("email", user.getEmail());
+    userEntity.setProperty("aboutMe", user.getAboutMe());
+    datastore.put(userEntity);
+  }
+
+  /** Store the geolocation in Datastore.*/
+  public void storeLocation(Location location){
+    Entity locationEntity = new Entity("Location", location.getId().toString());
+    locationEntity.setProperty("user", location.getUser());
+    locationEntity.setProperty("country",location.getCountry());
+    datastore.put(locationEntity);
+    System.out.println("location stored");
   }
 
   /**
@@ -99,14 +115,6 @@ public class Datastore {
     return this.getMessagesHelper(query);
   }
 
-  /** Stores the User in Datastore. */
-  public void storeUser(User user) {
-    Entity userEntity = new Entity("User", user.getEmail());
-    userEntity.setProperty("email", user.getEmail());
-    userEntity.setProperty("aboutMe", user.getAboutMe());
-    datastore.put(userEntity);
-  }
-
   /**
    * Returns the User owned by the email address, or null if no matching User was
    * found.
@@ -151,12 +159,6 @@ public class Datastore {
     return result;
   }
 
-  /** Returns the total number of users. */
-  public int getTotalUser(){
-    Query query = new Query("Message");
-    PreparedQuery results = datastore.prepare(query);
-    return results.countEntities(FetchOptions.Builder.withLimit(1000));
-  }
 
   public Set<String> getUsers(){
     Set<String> users = new HashSet<>();
@@ -166,6 +168,19 @@ public class Datastore {
       users.add((String) entity.getProperty("user"));
     }
     return users;
+  }
+
+
+  public ArrayList<String> getCountries(){
+    ArrayList<String> countries = new ArrayList<String>();
+    Query query = new Query("Location");
+    PreparedQuery queryResults = datastore.prepare(query);
+    for(Entity entity : queryResults.asIterable()){
+      countries.add((String) entity.getProperty("country"));
+    }
+    System.out.println("countries");
+    System.out.println(countries);
+    return countries;
   }
 }
 

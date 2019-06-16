@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 /**
  * Handles fetching site statistics.
  */
-@WebServlet("/stats/avg")
+@WebServlet("/avg-msg-length")
 public class StatsAvgMsgLengthServlet extends HttpServlet{
 
     private Datastore datastore;

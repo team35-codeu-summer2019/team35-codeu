@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Handles fetching site statistics.
  */
-@WebServlet("/stats/user")
+@WebServlet("/user-message-count")
 public class StatsUserServlet extends HttpServlet {
 
     private Datastore datastore;

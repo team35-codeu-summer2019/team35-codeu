@@ -10,7 +10,7 @@ function buildStatElement(statString) {
 
 // Fetch stats and display them in the page.
 function fetchStats() {
-  const url = '/stats';
+  const url = '/message-count';
   fetch(url).then(response => response.json()).then((stats) => {
     const statsContainer = document.getElementById('stats-container');
     statsContainer.innerHTML = '';
@@ -21,7 +21,7 @@ function fetchStats() {
 }
 
 function fetchUserStats() {
-  const url = `/stats/user?user=${parameterUsername}`;
+  const url = `/user-message-count?user=${parameterUsername}`;
   fetch(url).then(response => response.json()).then((userStats) => {
     const userStatsContainer = document.getElementById('user-stats-container');
     userStatsContainer.innerHTML = '';
@@ -32,7 +32,7 @@ function fetchUserStats() {
 }
 
 function fetchAvgStats() {
-  const url = '/stats/avg';
+  const url = '/avg-msg-length';
   fetch(url).then(response => response.json()).then((avgStats) => {
     const avgStatsContainer = document.getElementById('avg-stats-container');
     avgStatsContainer.innerHTML = '';
