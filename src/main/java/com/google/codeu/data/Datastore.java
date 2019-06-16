@@ -176,8 +176,9 @@ public class Datastore {
     return users;
   }
 
-  public Set<String> getCountries(){
-    Set<String> countries = new HashSet<>();
+
+  public ArrayList<String> getCountries(){
+    ArrayList<String> countries = new ArrayList<String>();
     Query query = new Query("Location");
     PreparedQuery queryResults = datastore.prepare(query);
     for(Entity entity : queryResults.asIterable()){

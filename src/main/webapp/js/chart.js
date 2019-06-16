@@ -2,6 +2,9 @@ google.charts.load('current', { packages: ['corechart'] });
 google.charts.setOnLoadCallback(drawBarChart);
 google.charts.setOnLoadCallback(drawChartCSV);
 
+// var myMapsApiKey = 'SomeMagicToSetThis';
+// google.charts.load('45', { packages: [ 'geochart'], mapsApiKey: myMapsApiKey  });
+
 google.charts.load('current', {
   'packages': ['geochart'],
   'mapsApiKey': 'AIzaSyDmsBaZDSm50H1fqB3PVmAr-BIwopAdsOg'
@@ -75,25 +78,34 @@ function drawChartCSV() {
 }
 
 function drawGeoChart() {
-  var data = google.visualization.arrayToDataTable([
-    ['Country', 'Popularity'],
-    ['Germany', 200],
-    ['United States', 300],
-    ['Brazil', 400],
-    ['Canada', 500],
-    ['France', 600],
-    ['RU', 700]
-  ]);
+  fetch("/locations")
+    .then((response) => {
+      return response.json();
+    })
+    .then((locationJson) => {
+      var locationData = new google.visualization.DataTable();
+      //define columns for the DataTable instance
+      locationData.addColumn('string', 'Country');
+      locationData.addColumn('number', 'Occurence');
 
-  var options = {
-    width: 900,
-    height: 500,
+      for (i = 0; i < locationJson.length; i++) {
+        locationRow = [];
+        var country = locationJson[i][0];
+        var occurence = locationJson[i][1];
+        locationRow.push(country, occurence);
 
-    displayMode: 'text'
-  };
+        locationData.addRow(locationRow);
+      }
 
-  var chart = new google.visualization.GeoChart(document.getElementById('geochart-of-places'));
-
-  chart.draw(data, options);
+      var options = {
+        width: 900,
+        height: 500,
+        chart: {
+          title: 'Where are our users from?'
+        },
+      };
+      
+      var chart = new google.visualization.GeoChart(document.getElementById('geochart-of-places'));
+      chart.draw(locationData, options);
+    });
 }
-

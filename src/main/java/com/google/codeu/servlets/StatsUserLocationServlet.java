@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Set;
+import java.util.*;
+
 
 @WebServlet("/locations")
 public class StatsUserLocationServlet extends HttpServlet {
@@ -24,11 +25,23 @@ public class StatsUserLocationServlet extends HttpServlet {
 					throws IOException{
 		response.setContentType("application/json");
 
+		//Get all countries
+		ArrayList<String> countries = datastore.getCountries();
 
-		Set<String> countries = datastore.getCountries();
+		// Get all unique countries
+		Set<String> uniqueCountries = new HashSet<>(countries);
+
+		// Into a map
+		Map<String, Integer> countryFreq = new HashMap<>();
+		for(String item:uniqueCountries){
+			int freq = Collections.frequency(countries, item);
+			countryFreq.put(item,freq);
+		}
+
+		System.out.println(countryFreq);
 
 		Gson gson = new Gson();
-		String json = gson.toJson(countries);
+		String json = gson.toJson(countryFreq);
 		response.getWriter().println(json);
 	}
 }
