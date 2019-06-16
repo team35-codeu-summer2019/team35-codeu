@@ -33,8 +33,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.maxmind.geoip.Location;
-import com.maxmind.geoip.LookupService;
 import io.ipinfo.api.IPInfo;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
@@ -122,7 +120,8 @@ public class MessageServlet extends HttpServlet {
     datastore.storeMessage(message);
 
     // store a userLocation here
-    IPInfo ipInfo = IPInfo.builder().setToken("5099035df7d924").build();
+//    IPInfo ipInfo = IPInfo.builder().setToken("5099035df7d924").build();
+    IPInfo ipInfo = IPInfo.builder().setToken("5099035df7d924").setCountryFile(new File("path/to/file.json")).build();
     String ipAddress = request.getRemoteAddr();
     try {
       IPResponse ipResponse = ipInfo.lookupIP(ipAddress);

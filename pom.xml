@@ -73,6 +73,12 @@ limitations under the License.
       <version>1.0</version>
       <scope>compile</scope>
     </dependency>
+
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.2</version>
+    </dependency>
   </dependencies>
 
   <build>

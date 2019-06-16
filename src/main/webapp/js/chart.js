@@ -1,10 +1,6 @@
 google.charts.load('current', { packages: ['corechart'] });
 google.charts.setOnLoadCallback(drawBarChart);
 google.charts.setOnLoadCallback(drawChartCSV);
-
-// var myMapsApiKey = 'SomeMagicToSetThis';
-// google.charts.load('45', { packages: [ 'geochart'], mapsApiKey: myMapsApiKey  });
-
 google.charts.load('current', {
   'packages': ['geochart'],
   'mapsApiKey': 'AIzaSyDmsBaZDSm50H1fqB3PVmAr-BIwopAdsOg'
@@ -12,70 +8,45 @@ google.charts.load('current', {
 google.charts.setOnLoadCallback(drawGeoChart);
 
 function drawBarChart() {
-  var book_data = new google.visualization.DataTable();
-  book_data.addColumn('string', 'User Name');
-  book_data.addColumn('number', 'Number of Messages sent per month');
-
-  //add data to book_data
-  book_data.addRows([
-    ["Lily", 6],
-    ["William", 10],
-    ["George", 7],
-    ["Peggy", 4],
-    ["Danny", 8],
-    ["Lizzy", 5],
-    ["Naomi", 7],
-    ["Amy", 3],
-    ["Vivian", 5],
-    ["Shirley", 3]
-  ]);
-
-  var chart = new google.visualization.BarChart(document.getElementById('top10-most-active-users'));
-
-  var chart_options = {
-    width: 800,
-    height: 400,
-
-    chart: {
-      title: 'Top 10 Most Active Users'
-    },
-    axes: {
-      x: {
-        brightness: { side: 'bottom', label: 'Number of Messages Sent by user per month' } // Top x-axis.
-      }
-    }
-  };
-
-  chart.draw(book_data, chart_options);
-}
-
-function drawChartCSV() {
-  fetch("/bookchart")
+  fetch("/top-10-active-users")
     .then((response) => {
       return response.json();
     })
-    .then((bookJson) => {
-      var bookData = new google.visualization.DataTable();
+    .then((activeUserJson) => {
+      var activeUserData = new google.visualization.DataTable();
       //define columns for the DataTable instance
-      bookData.addColumn('string', 'Book Title');
-      bookData.addColumn('number', 'Rating');
+      activeUserData.addColumn('string', 'User');
+      activeUserData.addColumn('number', 'Number of messages sent');
 
-      for (i = 0; i < bookJson.length; i++) {
-        bookRow = [];
-        var title = bookJson[i].title;
-        var ratings = bookJson[i].rating;
-        bookRow.push(title, ratings);
+      for (i = 0; i < activeUserJson.length; i++) {
+        activeUserRow = [];
+        var user = activeUserJson[i].user;
+        var number = activeUserJson[i].numberMsg;
+        activeUserRow.push(user, number);
 
-        bookData.addRow(bookRow);
+        activeUserData.addRow(activeUserRow);
       }
-      var chartOptions = {
+
+      var chart_options = {
         width: 800,
-        height: 400
+        height: 400,
+
+        chart: {
+          title: 'Top 10 Most Active Users'
+        },
+        axes: {
+          x: {
+            brightness: { side: 'bottom', label: 'Number of Messages Sent by user per month' } // Top x-axis.
+          }
+        }
       };
-      var bookChart = new google.visualization.BarChart(document.getElementById('book_chart'));
-      bookChart.draw(bookData, chartOptions);
+
+      var chart = new google.visualization.BarChart(document.getElementById('top10-most-active-users'));
+      chart.draw(activeUserData, chart_options);
     });
 }
+
+
 
 function drawGeoChart() {
   fetch("/locations")
@@ -110,13 +81,38 @@ function drawGeoChart() {
           title: 'Where are our users from?'
         },
       };
-      
+
       var chart = new google.visualization.GeoChart(document.getElementById('geochart-of-places'));
       chart.draw(locationData, options);
     });
 }
 
 
-// $.get("https://api.ipdata.co?api-key=test", function (response) {
-//     $("#response").html(JSON.stringify(response, null, 4));
-// }, "jsonp");
+
+function drawChartCSV() {
+  fetch("/bookchart")
+    .then((response) => {
+      return response.json();
+    })
+    .then((bookJson) => {
+      var bookData = new google.visualization.DataTable();
+      //define columns for the DataTable instance
+      bookData.addColumn('string', 'Book Title');
+      bookData.addColumn('number', 'Rating');
+
+      for (i = 0; i < bookJson.length; i++) {
+        bookRow = [];
+        var title = bookJson[i].title;
+        var ratings = bookJson[i].rating;
+        bookRow.push(title, ratings);
+
+        bookData.addRow(bookRow);
+      }
+      var chartOptions = {
+        width: 800,
+        height: 400
+      };
+      var bookChart = new google.visualization.BarChart(document.getElementById('book_chart'));
+      bookChart.draw(bookData, chartOptions);
+    });
+}
