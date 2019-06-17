@@ -37,11 +37,11 @@ public class StatsActiveUserServlet extends HttpServlet {
 
   public static Map<String, Integer> sortByValue(Map<String, Integer> hm)
   {
-		// Create a list from elements of HashMap
+    // Create a list from elements of HashMap
     List<Map.Entry<String, Integer> > list =
 						new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
 
-		// Sort the list
+    // Sort the list
     Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() {
       public int compare(Map.Entry<String, Integer> o1,
 			                   Map.Entry<String, Integer> o2)
@@ -50,7 +50,7 @@ public class StatsActiveUserServlet extends HttpServlet {
       }
     });
 
-		// put data from sorted list to hashmap
+    // put data from sorted list to hashmap
     HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
     for (Map.Entry<String, Integer> aa : list) {
       temp.put(aa.getKey(), aa.getValue());
@@ -68,7 +68,7 @@ public class StatsActiveUserServlet extends HttpServlet {
 
     List<Message> messages = datastore.getAllMessages();
 
-		// Get all users
+    // Get all users
     ArrayList<String> users = new ArrayList<>();
     for (int i = 0; i < messages.size(); i++) {
       users.add(messages.get(i).getUser());
@@ -76,12 +76,12 @@ public class StatsActiveUserServlet extends HttpServlet {
     System.out.println("ArrayList users");
     System.out.println(users);
 
-		// Get all unique countries
+    // Get all unique countries
     Set<String> uniqueUsers = new HashSet<>(users);
     System.out.println("Set uniqueUsers");
     System.out.println(uniqueUsers);
 
-		// Then input to a map
+    // Then input to a map
     Map<String, Integer> userFreq = new HashMap<>();
     for(String item:uniqueUsers){
       int freq = Collections.frequency(users, item);
@@ -90,7 +90,7 @@ public class StatsActiveUserServlet extends HttpServlet {
     System.out.println("Map userFreq");
     System.out.println(userFreq);
 
-		// Get the top 10
+    // Get the top 10
     Map<String, Integer> sortedUserFreq = sortByValue(userFreq);
     Map<String, Integer> result = new HashMap<>();
     System.out.println("Map sortedUserFreq");
@@ -117,7 +117,7 @@ public class StatsActiveUserServlet extends HttpServlet {
     System.out.println("Map result");
     System.out.println(result);
 
-		// Convert the result to json array
+    // Convert the result to json array
     userMsgArray = new JsonArray();
     Gson gson = new Gson();
 

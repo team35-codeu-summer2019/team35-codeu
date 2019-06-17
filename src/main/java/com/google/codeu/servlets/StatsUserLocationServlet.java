@@ -38,20 +38,20 @@ public class StatsUserLocationServlet extends HttpServlet {
 					throws IOException{
     response.setContentType("application/json");
 
-		//Get all countries
+    //Get all countries
     ArrayList<String> countries = datastore.getCountries();
 
-		// Get all unique countries
+    // Get all unique countries
     Set<String> uniqueCountries = new HashSet<>(countries);
 
-		// Into a map
+    // Into a map
     Map<String, Integer> countryFreq = new HashMap<>();
     for(String item:uniqueCountries){
       int freq = Collections.frequency(countries, item);
       countryFreq.put(item,freq);
     }
 
-		// Map to the json array
+    // Map to the json array
     locationFreqArray = new JsonArray();
     Gson gson = new Gson();
 

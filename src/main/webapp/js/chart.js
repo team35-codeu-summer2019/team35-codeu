@@ -30,15 +30,13 @@ function drawBarChart() {
       var chart_options = {
         width: 800,
         height: 400,
-
         chart: {
-          title: 'Top 10 Most Active Users'
+          title: 'Top Ten Active Users'
         },
-        axes: {
-          x: {
-            brightness: { side: 'bottom', label: 'Number of Messages Sent by user per month' } // Top x-axis.
-          }
-        }
+        hAxis: {
+          title: 'Number of messages sent',
+          minValue: 0,
+        },
       };
 
       var chart = new google.visualization.BarChart(document.getElementById('top10-most-active-users'));
