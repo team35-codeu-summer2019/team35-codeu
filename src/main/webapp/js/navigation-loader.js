@@ -24,6 +24,17 @@
  * @param {Element} childElement
  * @return {Element} li element
  */
+const navSlide = () =>{
+  
+  const burger = document.querySelector('.burger');
+  const nav = document.querySelector('nav ul');
+
+  burger.addEventListener('click', ()=>{
+    console.log("If this is invoked.");
+    nav.classList.toggle('.nav-active');
+  });
+}
+
 function createListItem(childElement) {
   const listItemElement = document.createElement('li');
   listItemElement.appendChild(childElement);
@@ -107,4 +118,11 @@ function addLoginOrLogoutLinkToNavigation() {
         );
       }
     });
+}
+
+
+// Fetch data and populate the UI of the page.
+function buildUI() {
+  navSlide(); 
+  addLoginOrLogoutLinkToNavigation();
 }

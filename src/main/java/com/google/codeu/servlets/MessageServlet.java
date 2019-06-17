@@ -19,20 +19,23 @@ package com.google.codeu.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
-import com.google.codeu.data.Location;
+import com.google.codeu.data.UserLocation;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
@@ -116,10 +119,26 @@ public class MessageServlet extends HttpServlet {
     Message message = new Message(user, textWithMedia);
     datastore.storeMessage(message);
 
-    // store a location here
-    Locale userlocale = request.getLocale();
-    Location location = new Location(user, userlocale.getCountry()) ;
-    datastore.storeLocation(location);
+    // store a userLocation here
+    IPInfo ipInfo = IPInfo.builder().setToken("5099035df7d924").setCountryFile(new File("iptoaddress.json")).build();
+    String ipAddress = request.getRemoteAddr();
+    try {
+      IPResponse ipResponse = ipInfo.lookupIP(ipAddress);
+      // Print out the hostname
+      System.out.println("Testing starts here");
+      System.out.println(ipAddress);
+      System.out.println(ipResponse);
+      System.out.println(ipResponse.getCountryName());
+      System.out.println(ipResponse.getCountryCode());
+      System.out.println(ipResponse.getHostname());
+
+      // TODO: Get the country corresponding to the country code in the json file -> OPTIONAL BUT WOULD BE BETTER
+      UserLocation userLocation = new UserLocation(user, ipResponse.getCountryCode());
+      datastore.storeLocation(userLocation);
+
+    } catch (RateLimitedException ex) {
+      System.out.println("Exceed rate limit");
+    }
 
     response.sendRedirect("/user-page.html?user=" + user);
   }
