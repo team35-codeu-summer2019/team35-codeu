@@ -15,56 +15,56 @@ import java.util.*;
 @WebServlet("/locations")
 public class StatsUserLocationServlet extends HttpServlet {
 
-	private Datastore datastore;
-	private JsonArray locationFreqArray;
+  private Datastore datastore;
+  private JsonArray locationFreqArray;
 
-	@Override
-	public void init() {
-		datastore = new Datastore();
-	}
+  @Override
+  public void init() {
+    datastore = new Datastore();
+  }
 
-	private static class locationFrequency {
-		String location;
-		int frequency;
+  private static class locationFrequency {
+    String location;
+    int frequency;
 
-		private locationFrequency (String location, int frequency) {
-			this.location = location;
-			this.frequency = frequency;
-		}
-	}
+    private locationFrequency (String location, int frequency) {
+      this.location = location;
+      this.frequency = frequency;
+    }
+  }
 
-	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
 					throws IOException{
-		response.setContentType("application/json");
+    response.setContentType("application/json");
 
 		//Get all countries
-		ArrayList<String> countries = datastore.getCountries();
+    ArrayList<String> countries = datastore.getCountries();
 
 		// Get all unique countries
-		Set<String> uniqueCountries = new HashSet<>(countries);
+    Set<String> uniqueCountries = new HashSet<>(countries);
 
 		// Into a map
-		Map<String, Integer> countryFreq = new HashMap<>();
-		for(String item:uniqueCountries){
-			int freq = Collections.frequency(countries, item);
-			countryFreq.put(item,freq);
-		}
+    Map<String, Integer> countryFreq = new HashMap<>();
+    for(String item:uniqueCountries){
+      int freq = Collections.frequency(countries, item);
+      countryFreq.put(item,freq);
+    }
 
 		// Map to the json array
-		locationFreqArray = new JsonArray();
-		Gson gson = new Gson();
+    locationFreqArray = new JsonArray();
+    Gson gson = new Gson();
 
-		Iterator it = countryFreq.entrySet().iterator();
-		while(it.hasNext()){
-			Map.Entry pair = (Map.Entry)it.next();
-			String country = pair.getKey().toString();
-			int frequency = Integer.parseInt(pair.getValue().toString());
-			locationFreqArray.add(gson.toJsonTree(new locationFrequency(country, frequency)));
-		}
-		System.out.println("locationFreqArray");
-		System.out.println(locationFreqArray);
+    Iterator it = countryFreq.entrySet().iterator();
+    while(it.hasNext()){
+      Map.Entry pair = (Map.Entry)it.next();
+      String country = pair.getKey().toString();
+      int frequency = Integer.parseInt(pair.getValue().toString());
+      locationFreqArray.add(gson.toJsonTree(new locationFrequency(country, frequency)));
+    }
+    System.out.println("locationFreqArray");
+    System.out.println(locationFreqArray);
 
-		response.getOutputStream().println(locationFreqArray.toString());
-	}
+    response.getOutputStream().println(locationFreqArray.toString());
+  }
 }
