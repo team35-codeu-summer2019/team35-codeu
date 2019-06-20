@@ -23,6 +23,26 @@ function buildLanguageSelectList() {
   return langSelect;
 }
 
+function requestTranslator(langId, bodyMessageId) {
+  const messageBody = document.getElementById(bodyMessageId);
+  const content = messageBody.innerHTML;
+  const languageCode = document.getElementById(langId).value;
+
+  messageBody.innerHTML = 'Loading...';
+
+  const params = new URLSearchParams();
+  params.append('text', content);
+  params.append('languageCode', languageCode);
+
+  fetch('/translate', {
+    method: 'POST',
+    body: params
+  }).then(response => response.text())
+  .then((translatedMessage) => {
+    messageBody.innerHTML = translatedMessage;
+  });
+}
+
 function buildMessageDiv(message, messageIndex) {
   const usernameDiv = document.createElement('div');
   usernameDiv.classList.add('left-align');
@@ -33,10 +53,17 @@ function buildMessageDiv(message, messageIndex) {
   timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
 
   const langList = buildLanguageSelectList();
-  langListId = 'lang-list-' + messageIndex.toString();
-  langList.setAttribute('id', langListId);
+  langId = 'lang-' + messageIndex.toString();
+  langList.setAttribute('id', langId);
+
+  const bodyDiv = document.createElement('div');
+  bodyMessageId = 'message-body-' + messageIndex.toString()
+  bodyDiv.setAttribute("id", bodyMessageId)
+  bodyDiv.classList.add('message-body');
+  bodyDiv.innerHTML = message.text;
 
   const translateButton = document.createElement('button');
+  translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\''+ bodyMessageId + '\');');
   translateButton.innerText = 'Translate';
 
   const headerDiv = document.createElement('div');
@@ -45,12 +72,6 @@ function buildMessageDiv(message, messageIndex) {
   headerDiv.appendChild(timeDiv);
   headerDiv.appendChild(langList);
   headerDiv.appendChild(translateButton);
-
-  const bodyDiv = document.createElement('div');
-  bodyID = "message-body-" + messageIndex.toString()
-  bodyDiv.setAttribute("id", bodyID)
-  bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text;
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
