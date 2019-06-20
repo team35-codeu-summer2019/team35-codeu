@@ -1,4 +1,29 @@
-function buildMessageDiv(message) {
+function buildLanguageOption(value, name) {
+  const langOption = document.createElement('option');
+  langOption.setAttribute('value', value);
+  langOption.innerHTML = name;
+
+  return langOption;
+}
+
+function buildLanguageSelectList() {
+  const englishOption = buildLanguageOption('en', 'English');
+  const chineseOption = buildLanguageOption('zh', 'Chinese');
+  const spanishOption = buildLanguageOption('es', 'Spanish');
+  const hindiOption = buildLanguageOption('hi', 'Hindi');
+  const arabicOption = buildLanguageOption('ar', 'Arabic');
+
+  const langSelect = document.createElement('select');
+  langSelect.appendChild(englishOption);
+  langSelect.appendChild(chineseOption);
+  langSelect.appendChild(spanishOption);
+  langSelect.appendChild(hindiOption);
+  langSelect.appendChild(arabicOption);
+
+  return langSelect;
+}
+
+function buildMessageDiv(message, messageIndex) {
   const usernameDiv = document.createElement('div');
   usernameDiv.classList.add('left-align');
   usernameDiv.appendChild(document.createTextNode(message.user));
@@ -7,12 +32,23 @@ function buildMessageDiv(message) {
   timeDiv.classList.add('right-align');
   timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
 
+  const langList = buildLanguageSelectList();
+  langListId = 'lang-list-' + messageIndex.toString();
+  langList.setAttribute('id', langListId);
+
+  const translateButton = document.createElement('button');
+  translateButton.innerText = 'Translate';
+
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(usernameDiv);
   headerDiv.appendChild(timeDiv);
+  headerDiv.appendChild(langList);
+  headerDiv.appendChild(translateButton);
 
   const bodyDiv = document.createElement('div');
+  bodyID = "message-body-" + messageIndex.toString()
+  bodyDiv.setAttribute("id", bodyID)
   bodyDiv.classList.add('message-body');
   bodyDiv.innerHTML = message.text;
 
@@ -36,9 +72,11 @@ function fetchMessages() {
       } else {
         messageContainer.innerHTML = '';
       }
+      messageIndex = 0;
       messages.forEach((message) => {
-        const messageDiv = buildMessageDiv(message);
+        const messageDiv = buildMessageDiv(message, messageIndex);
         messageContainer.appendChild(messageDiv);
+        messageIndex += 1;
       });
     });
 }
