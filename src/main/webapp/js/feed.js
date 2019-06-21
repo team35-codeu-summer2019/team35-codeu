@@ -58,8 +58,8 @@ function buildMessageDiv(message, messageIndex) {
   langList.setAttribute('id', langId);
 
   const bodyDiv = document.createElement('div');
-  const bodyMessageId = 'message-body-' + messageIndex.toString()
-  bodyDiv.setAttribute("id", bodyMessageId)
+  const bodyMessageId = 'message-body-' + messageIndex.toString();
+  bodyDiv.setAttribute("id", bodyMessageId);
   bodyDiv.classList.add('message-body');
   bodyDiv.innerHTML = message.text;
 
