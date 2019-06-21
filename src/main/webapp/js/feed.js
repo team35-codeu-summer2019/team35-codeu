@@ -37,10 +37,11 @@ function requestTranslator(langId, bodyMessageId) {
   fetch('/translate', {
     method: 'POST',
     body: params
-  }).then(response => response.text())
-  .then((translatedMessage) => {
-    messageBody.innerHTML = translatedMessage;
-  });
+  })
+    .then(response => response.text())
+    .then((translatedMessage) => {
+      messageBody.innerHTML = translatedMessage;
+    });
 }
 
 function buildMessageDiv(message, messageIndex) {
@@ -53,11 +54,11 @@ function buildMessageDiv(message, messageIndex) {
   timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
 
   const langList = buildLanguageSelectList();
-  langId = 'lang-' + messageIndex.toString();
+  const langId = 'lang-' + messageIndex.toString();
   langList.setAttribute('id', langId);
 
   const bodyDiv = document.createElement('div');
-  bodyMessageId = 'message-body-' + messageIndex.toString()
+  const bodyMessageId = 'message-body-' + messageIndex.toString()
   bodyDiv.setAttribute("id", bodyMessageId)
   bodyDiv.classList.add('message-body');
   bodyDiv.innerHTML = message.text;
@@ -93,7 +94,7 @@ function fetchMessages() {
       } else {
         messageContainer.innerHTML = '';
       }
-      messageIndex = 0;
+      var messageIndex = 0;
       messages.forEach((message) => {
         const messageDiv = buildMessageDiv(message, messageIndex);
         messageContainer.appendChild(messageDiv);
