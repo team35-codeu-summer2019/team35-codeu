@@ -1,26 +1,28 @@
 package com.google.codeu.servlets;
 
-import com.google.protobuf.ByteString;
-import javax.servlet.http.HttpServlet;
 import com.google.cloud.texttospeech.v1.AudioConfig;
 import com.google.cloud.texttospeech.v1.AudioEncoding;
 import com.google.cloud.texttospeech.v1.SsmlVoiceGender;
 import com.google.cloud.texttospeech.v1.SynthesisInput;
 import com.google.cloud.texttospeech.v1.SynthesizeSpeechResponse;
+import com.google.cloud.texttospeech.v1.SynthesizeSpeechResponse;
+import com.google.cloud.texttospeech.v1.TextToSpeechClient;
 import com.google.cloud.texttospeech.v1.TextToSpeechClient;
 import com.google.cloud.texttospeech.v1.VoiceSelectionParams;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.jsoup.Jsoup;
 
-import org.jsoup.safety.Whitelist;
-import com.google.cloud.texttospeech.v1.TextToSpeechClient;
-import com.google.cloud.texttospeech.v1.SynthesizeSpeechResponse;
-import javax.servlet.ServletOutputStream;
-import java.io.InputStream;
+import com.google.protobuf.ByteString;
 
 import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 
 /**
  * Takes requests that contain text and responds with an MP3 file speaking that
@@ -40,7 +42,7 @@ public class TextToSpeech extends HttpServlet {
     }
   }
 
-  /** Responds with an MP3 bytestream from the Google Cloud Text-to-Speech API */
+  /** Responds with an MP3 bytestream from the Google Cloud Text-to-Speech API. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
@@ -52,9 +54,9 @@ public class TextToSpeech extends HttpServlet {
 
     AudioConfig audioConfig = AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.MP3).build();
 
-    SynthesizeSpeechResponse responseFromAPI = ttsClient.synthesizeSpeech(input, voice, audioConfig);
+    SynthesizeSpeechResponse responseFromApi = ttsClient.synthesizeSpeech(input, voice, audioConfig);
 
-    ByteString audioContents = responseFromAPI.getAudioContent();
+    ByteString audioContents = responseFromApi.getAudioContent();
 
     response.setContentType("audio/mpeg");
     try (ServletOutputStream out = response.getOutputStream()) {

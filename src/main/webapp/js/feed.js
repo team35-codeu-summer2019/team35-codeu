@@ -66,15 +66,15 @@ function buildMessageDiv(message, messageIndex) {
   const translateButton = document.createElement('button');
   translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\''+ bodyMessageId + '\');');
   translateButton.innerText = 'Translate';
-  
+
   const audio = document.createElement('audio');
   const audioId = 'audio-' + messageIndex.toString();
   audio.setAttribute('id', audioId);
-  
+
   const audioButton = document.createElement('button');
-  audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\''+ bodyMessageId + '\');');
+  audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
   audioButton.innerText = 'Play';
-  
+
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(usernameDiv);
