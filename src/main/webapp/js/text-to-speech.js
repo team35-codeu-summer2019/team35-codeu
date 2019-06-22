@@ -10,12 +10,12 @@ async function play(audioId, bodyMessageId) {
     const resp = await fetch('/a11y/tts', {
       method: 'POST',
       body: params,
-   });
-   const audio = await resp.blob();
-   const audioURL = URL.createObjectURL(audio);
-   const elem = document.getElementById(audioId);
-   elem.src = audioURL;
-   elem.play();
+    });
+    const audio = await resp.blob();
+    const audioURL = URL.createObjectURL(audio);
+    const elem = document.getElementById(audioId);
+    elem.src = audioURL;
+    elem.play();
   } catch (err) {
     throw new Error('Unable to call the Text to Speech API: {e}');
   }
