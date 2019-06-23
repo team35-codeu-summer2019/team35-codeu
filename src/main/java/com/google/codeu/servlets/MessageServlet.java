@@ -180,22 +180,23 @@ public class MessageServlet extends HttpServlet {
       // Print the response
       float maximum = 0;
       String maximumEntity = "";
-      List<String> allCities = getWorldCities();
+      // List<String> allCities = getWorldCities();
       for (Entity entity : nerResponse.getEntitiesList()) {
         String entityName = entity.getName();
         String entityType = entity.getType().toString();
         if (entityType == "LOCATION") {
-          for(String str: allCities) {
-            if(str.trim().contains(entityName)){
-              System.out.printf("Entity: %s", entityName);
-              System.out.printf("Type is: %s", entityType);
-              System.out.printf("Salience: %.3f\n", entity.getSalience());
-              if (entity.getSalience() > maximum) {
-                maximum = entity.getSalience();
-                maximumEntity = entityName;
-              }
+          System.out.printf("Entity: %s", entityName);
+          System.out.printf("Type is: %s", entityType);
+          System.out.printf("Salience: %.3f\n", entity.getSalience());
+          if (entity.getSalience() > maximum) {
+            maximum = entity.getSalience();
+              maximumEntity = entityName;
             }
-          }
+//          for(String str: allCities) {
+//            if(str.trim().contains(entityName)){
+//
+//            }
+//          }
         }
       }
       System.out.printf("Maximum Entity: %s, Salience: %.3f\n", maximumEntity, maximum);
