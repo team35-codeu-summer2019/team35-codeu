@@ -65,11 +65,9 @@ public class MessageServlet extends HttpServlet {
     String line = null;
     List<String> result = new ArrayList<>();
 
-    FileReader fileReader =
-      new FileReader(fileName);
+    FileReader fileReader = new FileReader(fileName);
 
-    BufferedReader bufferedReader =
-      new BufferedReader(fileReader);
+    BufferedReader bufferedReader = new BufferedReader(fileReader);
 
     while((line = bufferedReader.readLine()) != null) {
       System.out.println(line.substring(6));
@@ -169,7 +167,7 @@ public class MessageServlet extends HttpServlet {
 
     // store a place rating
     Document doc = Document.newBuilder()
-      .setContent(userEnteredContent).setType(Document.Type.PLAIN_TEXT).build();
+        .setContent(userEnteredContent).setType(Document.Type.PLAIN_TEXT).build();
     try (LanguageServiceClient language = LanguageServiceClient.create()) {
 
       // Get the rating from the sentiment analysis
@@ -179,9 +177,9 @@ public class MessageServlet extends HttpServlet {
 
       // Get the place from NER
       AnalyzeEntitiesRequest nerRequest = AnalyzeEntitiesRequest.newBuilder()
-        .setDocument(doc)
-        .setEncodingType(EncodingType.UTF16)
-        .build();
+          .setDocument(doc)
+          .setEncodingType(EncodingType.UTF16)
+          .build();
       AnalyzeEntitiesResponse nerResponse = language.analyzeEntities(nerRequest);
 
       // Print the response
