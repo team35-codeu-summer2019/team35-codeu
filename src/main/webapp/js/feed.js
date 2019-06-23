@@ -67,12 +67,22 @@ function buildMessageDiv(message, messageIndex) {
   translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\''+ bodyMessageId + '\');');
   translateButton.innerText = 'Translate';
 
+  const audio = document.createElement('audio');
+  const audioId = 'audio-' + messageIndex.toString();
+  audio.setAttribute('id', audioId);
+
+  const audioButton = document.createElement('button');
+  audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
+  audioButton.innerText = 'Play';
+
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(usernameDiv);
   headerDiv.appendChild(timeDiv);
   headerDiv.appendChild(langList);
   headerDiv.appendChild(translateButton);
+  headerDiv.appendChild(audio);
+  headerDiv.appendChild(audioButton);
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
