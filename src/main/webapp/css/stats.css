@@ -34,7 +34,7 @@
   padding-right: 5%;
 }
 
-#book_chart {
+#top10-places {
   padding-left: 5%;
   padding-right: 5%;
 }
@@ -44,5 +44,9 @@
 }
 
 .geochart-of-places{
+  padding-left: 4%;
+}
+
+.top10-places{
   padding-left: 4%;
 }

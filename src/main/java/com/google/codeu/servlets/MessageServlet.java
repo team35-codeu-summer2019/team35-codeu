@@ -18,14 +18,16 @@ package com.google.codeu.servlets;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.cloud.language.v1.*;
 import com.google.codeu.data.Datastore;
+import com.google.codeu.data.PlaceRating;
 import com.google.codeu.data.UserLocation;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -50,6 +52,30 @@ public class MessageServlet extends HttpServlet {
   @Override
   public void init() {
     datastore = new Datastore();
+  }
+
+  public List<String> getWorldCities() throws FileNotFoundException, IOException{
+
+    // The name of the file to open.
+    String filePath = new File("").getAbsolutePath();
+    System.out.println(filePath);
+    String fileName = filePath.concat("/src/main/java/com/google/codeu/servlets/WORLD-CITIES.txt");
+    System.out.println(filePath);
+
+    String line = null;
+    List<String> result = new ArrayList<>();
+
+    FileReader fileReader = new FileReader(fileName);
+
+    BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+    while((line = bufferedReader.readLine()) != null) {
+      System.out.println(line.substring(6));
+      result.add(line.substring(6));
+    }
+
+    bufferedReader.close();
+    return result;
   }
 
   private String insertMediaTag(String content) {
@@ -132,13 +158,58 @@ public class MessageServlet extends HttpServlet {
       System.out.println(ipResponse.getCountryCode());
       System.out.println(ipResponse.getHostname());
 
-      // TODO: Get the country corresponding to the country code in the json file -> OPTIONAL BUT WOULD BE BETTER
       UserLocation userLocation = new UserLocation(user, ipResponse.getCountryCode());
       datastore.storeLocation(userLocation);
 
     } catch (RateLimitedException ex) {
       System.out.println("Exceed rate limit");
     }
+
+    // store a place rating
+    Document doc = Document.newBuilder()
+        .setContent(userEnteredContent).setType(Document.Type.PLAIN_TEXT).build();
+    try (LanguageServiceClient language = LanguageServiceClient.create()) {
+
+      // Get the rating from the sentiment analysis
+      Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
+      float score = sentiment.getScore();
+      System.out.printf("Sentiment Analysis Score is %.2f", score);
+
+      // Get the place from NER
+      AnalyzeEntitiesRequest nerRequest = AnalyzeEntitiesRequest.newBuilder()
+          .setDocument(doc)
+          .setEncodingType(EncodingType.UTF16)
+          .build();
+      AnalyzeEntitiesResponse nerResponse = language.analyzeEntities(nerRequest);
+
+      // Print the response
+      float maximum = 0;
+      String maximumEntity = "";
+      List<String> allCities = getWorldCities();
+      for (Entity entity : nerResponse.getEntitiesList()) {
+        String entityName = entity.getName();
+        String entityType = entity.getType().toString();
+        if (entityType == "LOCATION") {
+          for(String str: allCities) {
+            if(str.trim().contains(entityName)){
+              System.out.printf("Entity: %s", entityName);
+              System.out.printf("Type is: %s", entityType);
+              System.out.printf("Salience: %.3f\n", entity.getSalience());
+              if (entity.getSalience() > maximum) {
+                maximum = entity.getSalience();
+                maximumEntity = entityName;
+              }
+            }
+          }
+        }
+      }
+      System.out.printf("Maximum Entity: %s, Salience: %.3f\n", maximumEntity, maximum);
+
+      // Store into the database
+      PlaceRating placeRating = new PlaceRating(maximumEntity, score);
+      datastore.storePlaceRating(placeRating);
+    }  
+
 
     response.sendRedirect("/user-page.html?user=" + user);
   }

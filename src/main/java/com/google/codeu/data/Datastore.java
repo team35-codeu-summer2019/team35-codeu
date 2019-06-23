@@ -57,6 +57,15 @@ public class Datastore {
     System.out.println("userLocation stored");
   }
 
+  /** Store the rating for a place in Datastore.*/
+  public void storePlaceRating(PlaceRating placeRating){
+    Entity placeRatingEntity = new Entity("PlaceRating", placeRating.getId().toString());
+    placeRatingEntity.setProperty("place", placeRating.getPlace());
+    placeRatingEntity.setProperty("rating", placeRating.getRating());
+    datastore.put(placeRatingEntity);
+    System.out.println("placeRating stored");
+  }
+
   /**
    * Gets messages posted by a specific user.
    *
@@ -181,6 +190,38 @@ public class Datastore {
     System.out.println("countries");
     System.out.println(countries);
     return countries;
+  }
+
+  public Set<String> getUniqueCities(){
+    ArrayList<String> cities = new ArrayList<>();
+    Query query = new Query("PlaceRating");
+    PreparedQuery queryResults = datastore.prepare(query);
+    for(Entity entity : queryResults.asIterable()){
+      cities.add((String) entity.getProperty("place"));
+    }
+    Set<String> uniqueCities = new HashSet<>(cities);
+    System.out.println("unique cities in place rating ");
+    System.out.println(uniqueCities);
+    return uniqueCities;
+  }
+
+  public float getAverageRating(String place){
+    Query query = new Query("PlaceRating");
+    PreparedQuery queryResults = datastore.prepare(query);
+
+    float summedResult = 0;
+    int count = 0;
+    for(Entity entity : queryResults.asIterable()){
+      if(entity.getProperty("place") == place){
+        count ++;
+        summedResult += Float.parseFloat(entity.getProperty("rating").toString());
+        System.out.printf("This entity is %s, now count is %d, now summedResult is %.3f",entity.getProperty("place"), count, summedResult);
+      }
+    }
+
+    float averageResult = (float)(summedResult/count);
+    System.out.printf("The average result is %.3f",averageResult);
+    return averageResult;
   }
 }
 
