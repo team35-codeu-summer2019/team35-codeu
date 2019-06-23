@@ -1,13 +1,13 @@
 google.charts.load('current', { packages: ['corechart'] });
-google.charts.setOnLoadCallback(drawBarChart);
-google.charts.setOnLoadCallback(drawChartCSV);
+google.charts.setOnLoadCallback(drawBarChartTopTenUsers);
+google.charts.setOnLoadCallback(drawBarChartTopTenPlaces);
 google.charts.load('current', {
   'packages': ['geochart'],
   'mapsApiKey': 'AIzaSyDmsBaZDSm50H1fqB3PVmAr-BIwopAdsOg'
 });
 google.charts.setOnLoadCallback(drawGeoChart);
 
-function drawBarChart() {
+function drawBarChartTopTenUsers() {
   fetch("/top-10-active-users")
     .then((response) => {
       return response.json();
@@ -87,30 +87,30 @@ function drawGeoChart() {
 
 
 
-function drawChartCSV() {
-  fetch("/bookchart")
+function drawBarChartTopTenPlaces() {
+  fetch("/top-10-places")
     .then((response) => {
       return response.json();
     })
-    .then((bookJson) => {
-      var bookData = new google.visualization.DataTable();
+    .then((placeJson) => {
+      var placeData = new google.visualization.DataTable();
       //define columns for the DataTable instance
-      bookData.addColumn('string', 'Book Title');
-      bookData.addColumn('number', 'Rating');
+      placeData.addColumn('string', 'Places');
+      placeData.addColumn('number', 'Rating');
 
-      for (i = 0; i < bookJson.length; i++) {
-        bookRow = [];
-        var title = bookJson[i].title;
-        var ratings = bookJson[i].rating;
-        bookRow.push(title, ratings);
+      for (i = 0; i < placeJson.length; i++) {
+        placeRow = [];
+        var place = placeJson[i].place;
+        var rating = placeJson[i].rating;
+        placeRow.push(place, rating);
 
-        bookData.addRow(bookRow);
+        placeData.addRow(placeRow);
       }
       var chartOptions = {
         width: 800,
         height: 400
       };
-      var bookChart = new google.visualization.BarChart(document.getElementById('book_chart'));
-      bookChart.draw(bookData, chartOptions);
+      var placeChart = new google.visualization.BarChart(document.getElementById('top10-places'));
+      placeChart.draw(placeData, chartOptions);
     });
 }
