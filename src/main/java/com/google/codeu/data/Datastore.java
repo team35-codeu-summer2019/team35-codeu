@@ -212,7 +212,7 @@ public class Datastore {
     float summedResult = 0;
     int count = 0;
     for(Entity entity : queryResults.asIterable()){
-      if(entity.getProperty("place") == place){
+      if(entity.getProperty("place").equals(place)){
         count ++;
         summedResult += Float.parseFloat(entity.getProperty("rating").toString());
         System.out.printf("This entity is %s, now count is %d, now summedResult is %.3f",entity.getProperty("place"), count, summedResult);
@@ -224,5 +224,3 @@ public class Datastore {
     return averageResult;
   }
 }
-
-

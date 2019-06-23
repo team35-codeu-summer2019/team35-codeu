@@ -184,7 +184,7 @@ public class MessageServlet extends HttpServlet {
       for (Entity entity : nerResponse.getEntitiesList()) {
         String entityName = entity.getName();
         String entityType = entity.getType().toString();
-        if (entityType == "LOCATION") {
+        if (entityType.equals("LOCATION")) {
           System.out.printf("Entity: %s", entityName);
           System.out.printf("Type is: %s", entityType);
           System.out.printf("Salience: %.3f\n", entity.getSalience());
@@ -204,7 +204,7 @@ public class MessageServlet extends HttpServlet {
       // Store into the database
       PlaceRating placeRating = new PlaceRating(maximumEntity, score);
       datastore.storePlaceRating(placeRating);
-    }  
+    }
 
 
     response.sendRedirect("/user-page.html?user=" + user);
