@@ -25,9 +25,9 @@ import com.google.codeu.data.UserLocation;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -52,6 +52,32 @@ public class MessageServlet extends HttpServlet {
   @Override
   public void init() {
     datastore = new Datastore();
+  }
+
+  public List<String> getWorldCities() throws FileNotFoundException, IOException{
+
+    // The name of the file to open.
+    String filePath = new File("").getAbsolutePath();
+    System.out.println(filePath);
+    String fileName = filePath.concat("/src/main/java/com/google/codeu/servlets/WORLD-CITIES.txt");
+    System.out.println(filePath);
+
+    String line = null;
+    List<String> result = new ArrayList<>();
+
+    FileReader fileReader =
+      new FileReader(fileName);
+
+    BufferedReader bufferedReader =
+      new BufferedReader(fileReader);
+
+    while((line = bufferedReader.readLine()) != null) {
+      System.out.println(line.substring(6));
+      result.add(line.substring(6));
+    }
+
+    bufferedReader.close();
+    return result;
   }
 
   private String insertMediaTag(String content) {
@@ -161,14 +187,21 @@ public class MessageServlet extends HttpServlet {
       // Print the response
       float maximum = 0;
       String maximumEntity = "";
+      List<String> allCities = getWorldCities();
       for (Entity entity : nerResponse.getEntitiesList()) {
-        if (entity.getType().toString() == "LOCATION") {
-          System.out.printf("Entity: %s", entity.getName());
-          System.out.printf("Type is: %s", entity.getType());
-          System.out.printf("Salience: %.3f\n", entity.getSalience());
-          if (entity.getSalience() > maximum) {
-            maximum = entity.getSalience();
-            maximumEntity = entity.getName();
+        String entityName = entity.getName();
+        String entityType = entity.getType().toString();
+        if (entityType == "LOCATION") {
+          for(String str: allCities) {
+            if(str.trim().contains(entityName)){
+              System.out.printf("Entity: %s", entityName);
+              System.out.printf("Type is: %s", entityType);
+              System.out.printf("Salience: %.3f\n", entity.getSalience());
+              if (entity.getSalience() > maximum) {
+                maximum = entity.getSalience();
+                maximumEntity = entityName;
+              }
+            }
           }
         }
       }
