@@ -3,6 +3,7 @@ package com.google.codeu.servlets;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,20 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/sentiment")
 public class SentimentAnalysisServlet extends HttpServlet {
 
-//	static void authImplicit() {
-//		// If you don't specify credentials when constructing the client, the client library will
-//		// look for credentials via the environment variable GOOGLE_APPLICATION_CREDENTIALS.
-//		SearchServicePb.IndexMetadata.Storage storage = StorageOptions.getDefaultInstance().getService();
-//
-//		System.out.println("Buckets:");
-//		Page<Bucket> buckets = storage.list();
-//		for (Bucket bucket : buckets.iterateAll()) {
-//			System.out.println(bucket.toString());
-//		}
-//	}
-
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
 		String message = request.getParameter("message");
 
 		Document doc = Document.newBuilder()
