@@ -57,6 +57,15 @@ public class Datastore {
     System.out.println("userLocation stored");
   }
 
+  /** Store the rating for a place in Datastore.*/
+  public void storePlaceRating(PlaceRating placeRating){
+    Entity placeRatingEntity = new Entity("PlaceRating", placeRating.getId().toString());
+    placeRatingEntity.setProperty("place", placeRating.getPlace());
+    placeRatingEntity.setProperty("rating", placeRating.getRating());
+    datastore.put(placeRatingEntity);
+    System.out.println("placeRating stored");
+  }
+
   /**
    * Gets messages posted by a specific user.
    *
