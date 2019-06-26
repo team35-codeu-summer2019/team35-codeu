@@ -115,8 +115,6 @@ function fetchMessages() {
 
 // Fetch data and populate the UI of the page.
 // eslint-disable-next-line no-unused-vars
-function buildUI() {
+function buildFeedUI() {
   fetchMessages();
-  // eslint-disable-next-line no-undef
-  addLoginOrLogoutLinkToNavigation();
 }

@@ -114,9 +114,8 @@ function fetchBlobstoreUrlAndShowForm() {
 }
 
 /** Fetches data and populates the UI of the page. */
-function buildUI() {
+function buildUserPageUI() {
   setPageTitle();
-  addLoginOrLogoutLinkToNavigation();
   showMessageFormIfViewingSelf();
   fetchAboutMe();
   fetchMessages();
