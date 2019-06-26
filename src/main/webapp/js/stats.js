@@ -52,8 +52,9 @@ function fetchAvgStats() {
 }
 
 // Fetch data and populate the UI of the page.
-function buildStatus() {
+function buildUI() {
   fetchStats();
   fetchUserStats();
   fetchAvgStats();
 }
+window.onload=buildUI();

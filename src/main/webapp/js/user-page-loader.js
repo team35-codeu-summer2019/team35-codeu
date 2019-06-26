@@ -114,10 +114,11 @@ function fetchBlobstoreUrlAndShowForm() {
 }
 
 /** Fetches data and populates the UI of the page. */
-function buildUserPageUI() {
+function buildUI() {
   setPageTitle();
   showMessageFormIfViewingSelf();
   fetchAboutMe();
   fetchMessages();
   fetchBlobstoreUrlAndShowForm();
 }
+window.onload=buildUI();
