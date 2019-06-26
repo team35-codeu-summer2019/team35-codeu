@@ -126,4 +126,4 @@ function buildUI() {
   navSlide();
   addLoginOrLogoutLinkToNavigation();
 }
-window.onload=buildUI();
+window.onload = buildUI();

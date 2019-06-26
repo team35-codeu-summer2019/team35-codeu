@@ -114,4 +114,4 @@ function fetchMessages() {
 }
 
 // Fetch data and populate the UI of the page.
-window.onload=fetchMessages();
+window.onload = fetchMessages();

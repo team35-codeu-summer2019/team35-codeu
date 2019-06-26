@@ -121,4 +121,4 @@ function buildUI() {
   fetchMessages();
   fetchBlobstoreUrlAndShowForm();
 }
-window.onload=buildUI();
+window.onload = buildUI();

@@ -57,4 +57,4 @@ function buildUI() {
   fetchUserStats();
   fetchAvgStats();
 }
-window.onload=buildUI();
+window.onload = buildUI();

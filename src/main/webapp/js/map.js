@@ -188,4 +188,4 @@ function buildInfoWindowInput(lat, lng) {
   containerDiv.appendChild(button);
   return containerDiv;
 }
-window.onload=createMap();
+window.onload = createMap();
