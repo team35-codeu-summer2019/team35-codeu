@@ -21,14 +21,23 @@ function fetchStats() {
 }
 
 function fetchUserStats() {
-  const url = `/user-message-count?user=${parameterUsername}`;
-  fetch(url).then(response => response.json()).then((userStats) => {
-    const userStatsContainer = document.getElementById('user-stats-container');
-    userStatsContainer.innerHTML = '';
+  const userStatsContainer = document.getElementById('user-stats-container');
+  userStatsContainer.innerHTML = '';
+  fetch('/login-status')
+    .then(response => response.json())
+    .then((loginStatus) => {
+      if (loginStatus.isLoggedIn) {
+        const url = `/user-message-count?user=${loginStatus.username}`;
+        fetch(url).then(response => response.json()).then((userStats) => {
+          const userMessageCountElement = buildStatElement(`You have sent: ${userStats.userMessageCount}`);
+          userStatsContainer.appendChild(userMessageCountElement);
+        });
+      } else {
+        const userMessageCountElement = buildStatElement('You have sent: Log in first to see the result');
+        userStatsContainer.appendChild(userMessageCountElement);
+      }
+    });
 
-    const userMessageCountElement = buildStatElement(`You have sent: ${userStats.userMessageCount}`);
-    userStatsContainer.appendChild(userMessageCountElement);
-  });
 }
 
 function fetchAvgStats() {
@@ -43,9 +52,8 @@ function fetchAvgStats() {
 }
 
 // Fetch data and populate the UI of the page.
-function buildUI() {
+function buildStatus() {
   fetchStats();
   fetchUserStats();
   fetchAvgStats();
-  addLoginOrLogoutLinkToNavigation();
 }
