@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Mali&display=swap" rel="stylesheet">
-  <script src="/js/navigation-loader.js"></script>
   <script>
 
     /** Fetches users and adds them to the page. */
@@ -39,16 +38,10 @@
       userListItem.appendChild(userLink);
       return userListItem;
     }
-
-    /** Fetches data and populates the UI of the page. */
-    function buildUI() {
-      fetchUserList();
-      addLoginOrLogoutLinkToNavigation();
-    }
   </script>
 </head>
 
-<body onload="buildUI()">
+<body>
   <nav>
     <div class="brand">
       <h2> Play Even Harder </h2>
@@ -73,6 +66,9 @@
     <hr />
     <ul id="list">Loading...</ul>
   </div>
+  <script>
+    fetchUserList();
+  </script>
 </body>
 <footer>
   <script src="./js/navigation-loader.js"></script>

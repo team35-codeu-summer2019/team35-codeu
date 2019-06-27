@@ -25,7 +25,7 @@
  * @return {Element} li element
  */
 const navSlide = () =>{
-  
+
   const burger = document.querySelector('.burger');
   const nav = document.querySelector('nav ul');
 
@@ -123,6 +123,7 @@ function addLoginOrLogoutLinkToNavigation() {
 
 // Fetch data and populate the UI of the page.
 function buildUI() {
-  navSlide(); 
+  navSlide();
   addLoginOrLogoutLinkToNavigation();
 }
+window.onload = buildUI();

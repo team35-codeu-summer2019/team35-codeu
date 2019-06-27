@@ -61,7 +61,6 @@ function recenterToCurrentLocation() {
   }
 }
 function createMap() {
-  addLoginOrLogoutLinkToNavigation();
   map = new google.maps.Map(document.getElementById('customized-map'), {
     center: { lat: 38.5949, lng: -94.8923 },
     zoom: 4
@@ -189,3 +188,4 @@ function buildInfoWindowInput(lat, lng) {
   containerDiv.appendChild(button);
   return containerDiv;
 }
+window.onload = createMap();
