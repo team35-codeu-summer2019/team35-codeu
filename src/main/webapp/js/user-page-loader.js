@@ -39,7 +39,6 @@ function showMessageFormIfViewingSelf() {
       if (loginStatus.isLoggedIn
         && loginStatus.username === parameterUsername) {
         const messageForm = document.getElementById('message-form');
-        document.getElementById('about-me-form').classList.remove('hidden');
         messageForm.classList.remove('hidden');
       }
     });
@@ -63,18 +62,7 @@ function fetchMessages() {
       });
     });
 }
-/** Fetches the user's about data, and then adds it to the page. */
-function fetchAboutMe() {
-  const url = `/about?user=${parameterUsername}`;
-  fetch(url).then(response => response.text()).then((aboutMe) => {
-    const aboutMeContainer = document.getElementById('about-me-container');
-    if (aboutMe === '') {
-      aboutMe = 'This user has not entered any information yet.';
-    }
 
-    aboutMeContainer.innerHTML = aboutMe;
-  });
-}
 
 /**
  * Builds an element that displays the message.
@@ -102,7 +90,7 @@ function buildMessageDiv(message) {
 
 /** fetch blobstore upload url */
 function fetchBlobstoreUrlAndShowForm() {
-  fetch('/blobstore-upload-url')
+  fetch('/blobstore-upload-url?requester=user-page')
     .then((response) => {
       return response.text();
     })
@@ -117,7 +105,6 @@ function fetchBlobstoreUrlAndShowForm() {
 function buildUI() {
   setPageTitle();
   showMessageFormIfViewingSelf();
-  fetchAboutMe();
   fetchMessages();
   fetchBlobstoreUrlAndShowForm();
 }

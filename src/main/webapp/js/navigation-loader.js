@@ -84,7 +84,9 @@ function addLoginOrLogoutLinkToNavigation() {
             )
           )
         );
-
+        navigationElement.appendChild(
+          createListItem(createLink('/user-info.html', 'Your profile'))
+        );
         navigationElement.appendChild(
           createListItem(createLink('/feed.html', 'Public Feeds'))
         );
