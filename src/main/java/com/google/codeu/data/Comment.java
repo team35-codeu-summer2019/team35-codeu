@@ -9,6 +9,10 @@ public class Comment {
   private String post;
   private long timestamp;
 
+  public Comment(String user, String text, String post) {
+    this(UUID.randomUUID(), user, text, post, System.currentTimeMillis());
+  }
+
   public Comment(UUID id, String user, String text, String post, long timestamp) {
     this.id = id;
     this.user = user;

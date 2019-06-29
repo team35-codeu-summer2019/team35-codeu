@@ -40,6 +40,32 @@ public class Datastore {
     datastore.put(messageEntity);
   }
 
+
+  /**
+   * @param comment
+   * to store the comments
+   */
+  public void storeComment(Comment comment) {
+    Entity commentEntity = new Entity("Comment", comment.getId().toString());
+    commentEntity.setProperty("user", comment.getUser());
+    commentEntity.setProperty("text", comment.getText());
+    commentEntity.setProperty("post", comment.getPost());
+    commentEntity.setProperty("timestamp", comment.getTimestamp());
+    datastore.put(commentEntity);
+  }
+
+  /**
+   * @param like
+   * to store the likes
+   */
+  public void storeLike(Like like) {
+    Entity likeEntity = new Entity("Like", like.getId().toString());
+    likeEntity.setProperty("user", like.getUser());
+    likeEntity.setProperty("post", like.getPost());
+    likeEntity.setProperty("timestamp", like.getTimestamp());
+    datastore.put(likeEntity);
+  }
+
   /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
@@ -65,6 +91,84 @@ public class Datastore {
     datastore.put(placeRatingEntity);
     System.out.println("placeRating stored");
   }
+
+  /* ============= Likes ================= */
+  /**
+   * @param message
+   * @return list of likes under a post
+   */
+  public List<Like> getLikesByPost(Message message){
+    List<Like> likes = new ArrayList<Like>();
+    Query query = new Query("Like").setFilter(new Query.FilterPredicate("post", FilterOperator.EQUAL, message.getId()))
+            .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    for(Entity entity : results.asIterable()) {
+      likes.add(new Like((UUID) entity.getProperty("id"), (String)entity.getProperty("user"), (String)entity.getProperty("post"), (Long)entity.getProperty("timestamp")));
+    }
+    return likes;
+  }
+
+  /**
+   * @param like
+   * @return if delete is successful, return true; else false
+   */
+  public boolean deleteLike(Like like){
+    Query query = new Query("Like").setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, like.getId()));
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return false;
+    }
+    datastore.delete(entity.getKey());
+    return true;
+  }
+
+  /* ============= Comments ================= */
+
+  /**
+   * @param message
+   * @return list of likes under a post
+   */
+  public List<Comment> getCommentByPost(Message message){
+    List<Comment> comments = new ArrayList<Comment>();
+    Query query = new Query("Comment").setFilter(new Query.FilterPredicate("post", FilterOperator.EQUAL, message.getId()))
+            .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    for(Entity entity : results.asIterable()) {
+      comments.add(new Comment((UUID) entity.getProperty("id"), (String)entity.getProperty("user"),(String)entity.getProperty("text"),  (String)entity.getProperty("post"), (Long)entity.getProperty("timestamp")));
+    }
+    return comments;
+  }
+
+  /**
+   * @param comment
+   * @return if delete is successful, return true; else false
+   */
+  public boolean deleteComment(Comment comment){
+    Query query = new Query("Comment").setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, comment.getId()));
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return false;
+    }
+    datastore.delete(entity.getKey());
+    return true;
+  }
+
+  /**
+   * @param id
+   * @return comment
+   */
+  public Comment getCommentById(String id){
+    Query query = new Query("Comment").setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return null;
+    }
+    return new Comment((UUID) entity.getProperty("id"), (String)entity.getProperty("user"),(String)entity.getProperty("text"),(String)entity.getProperty("post"), (Long)entity.getProperty("timestamp"));
+  }
+  
 
   /**
    * Gets messages posted by a specific user.
