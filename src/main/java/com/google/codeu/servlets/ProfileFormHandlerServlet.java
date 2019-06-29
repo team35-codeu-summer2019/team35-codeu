@@ -50,17 +50,18 @@ public class ProfileFormHandlerServlet extends HttpServlet {
       response.sendRedirect("/index.html");
       return;
     }
-    
+
     String userEmail = userService.getCurrentUser().getEmail();
     String aboutMe = Jsoup.clean(request.getParameter("about"), Whitelist.relaxed());
     String name = Jsoup.clean(request.getParameter("display_name"), Whitelist.none());
-    String imageUrl=FormHandlerServlet.getUploadedFileUrl(request, "image");
-    if(imageUrl==null) {
-      User user= datastore.getUser(userEmail);
-      if(user!=null)
-        imageUrl=user.getImageUrl();
-      else
-        imageUrl="./img/placeholder.png";
+    String imageUrl = FormHandlerServlet.getUploadedFileUrl(request, "image");
+    if (imageUrl == null) {
+      User user = datastore.getUser(userEmail);
+      if (user != null) {
+        imageUrl = user.getImageUrl();
+      } else {
+        imageUrl = "./img/placeholder.png";
+      }
     }
     User user = new User(userEmail, aboutMe, name, imageUrl);
     datastore.storeUser(user);

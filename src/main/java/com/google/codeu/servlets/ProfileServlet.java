@@ -44,13 +44,11 @@ public class ProfileServlet extends HttpServlet {
       // Request is invalid, return empty response
       return;
     }
-    System.out.println(user);
     User userData = datastore.getUser(user);
 
     if (userData == null) {
       return;
     }
-    System.out.println("here3");
     Gson gson = new Gson();
     String json = gson.toJson(userData);
 

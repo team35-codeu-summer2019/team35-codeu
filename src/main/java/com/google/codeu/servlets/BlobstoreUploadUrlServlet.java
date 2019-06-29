@@ -17,10 +17,9 @@ public class BlobstoreUploadUrlServlet extends HttpServlet {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     String uploadUrl;
     String requester = request.getParameter("requester");
-    if(requester.equals("user-page")) {
+    if (requester.equals("user-page")) {
       uploadUrl = blobstoreService.createUploadUrl("/form-handler");
-    }
-    else {
+    } else {
       uploadUrl = blobstoreService.createUploadUrl("/profile-form-handler");
     }
     response.setContentType("text/html");

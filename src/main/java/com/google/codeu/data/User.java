@@ -7,11 +7,18 @@ public class User {
   private String name;
   private String imageUrl;
 
+  /**
+   * Create User
+   * @param email
+   * @param aboutMe
+   * @param name
+   * @param imageUrl
+   */
   public User(String email, String aboutMe, String name, String imageUrl) {
     this.email = email;
     this.aboutMe = aboutMe;
     this.name = name;
-    this.imageUrl =imageUrl;
+    this.imageUrl = imageUrl;
   }
 
   public String getEmail() {
