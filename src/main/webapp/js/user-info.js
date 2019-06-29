@@ -8,17 +8,17 @@ function fetchUserData() {
         fetch(`/profile?user=${loginStatus.username}`)
           .then(resp => resp.json())
           .then((user) => {
-            if (`${user.imageUrl}` !== ``) {
+            if (`${user.imageUrl}` !== '') {
               document.getElementById('img').src = `${user.imageUrl}`;
             } else {
-              document.getElementById('img').src = `./img/placeholder.png`;
+              document.getElementById('img').src = './img/placeholder.png';
             }
-            document.getElementById("name").value = `${user.name}`;
+            document.getElementById('name').value = `${user.name}`;
             quill.root.innerHTML = `${user.aboutMe}`;
         })
-        .catch(error => console.log(error));
+          .catch(error => console.log(error));
       } else {
-        document.location.href="/";
+        document.location.href = '/';
 	  }
     });
 }

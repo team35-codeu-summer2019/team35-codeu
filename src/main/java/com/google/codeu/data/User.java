@@ -8,11 +8,11 @@ public class User {
   private String imageUrl;
 
   /**
-   * Create User
-   * @param email
-   * @param aboutMe
-   * @param name
-   * @param imageUrl
+   * Create User.
+   * @param email user's email
+   * @param aboutMe user's about me
+   * @param name user's name
+   * @param imageUrl user's avatar link
    */
   public User(String email, String aboutMe, String name, String imageUrl) {
     this.email = email;
