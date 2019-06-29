@@ -16,3 +16,10 @@ function copyInput() {
   message.value = quill.root.innerHTML;
   return true;
 }
+var form = document.querySelector('form[name=profile]');
+form.onsubmit = function() {
+  // Populate hidden form on submit
+  const about = document.querySelector('input[name=about]');
+  about.value=quill.root.innerHTML;
+  return true;
+};

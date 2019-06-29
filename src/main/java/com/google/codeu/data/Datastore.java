@@ -45,6 +45,8 @@ public class Datastore {
     Entity userEntity = new Entity("User", user.getEmail());
     userEntity.setProperty("email", user.getEmail());
     userEntity.setProperty("aboutMe", user.getAboutMe());
+    userEntity.setProperty("name", user.getName());
+    userEntity.setProperty("imageUrl", user.getImageUrl());
     datastore.put(userEntity);
   }
 
@@ -138,8 +140,10 @@ public class Datastore {
     }
 
     String aboutMe = (String) userEntity.getProperty("aboutMe");
-    User user = new User(email, aboutMe);
-
+    String name = (String) userEntity.getProperty("name");
+    String imageUrl = (String) userEntity.getProperty("imageUrl");
+    User user = new User(email, aboutMe, name, imageUrl);
+    
     return user;
   }
 
