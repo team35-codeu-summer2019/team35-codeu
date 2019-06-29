@@ -20,32 +20,32 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.cloud.language.v1.*;
 import com.google.codeu.data.Datastore;
+import com.google.codeu.data.Message;
 import com.google.codeu.data.PlaceRating;
 import com.google.codeu.data.UserLocation;
-import com.google.codeu.data.Message;
 import com.google.gson.Gson;
-
-import java.io.*;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import io.ipinfo.api.IPInfo;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 
-/** Handles fetching and saving {@link Message} instances. */
+/**
+ * Handles fetching and saving {@link Message} instances.
+ */
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
 
@@ -56,7 +56,7 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
-  public List<String> getWorldCities() throws FileNotFoundException, IOException{
+  public List<String> getWorldCities() throws FileNotFoundException, IOException {
 
     URL url = new URL("https://raw.githubusercontent.com/team35-codeu-summer2019/team35-codeu/master/src/main/java/com/google/codeu/servlets/WORLD-CITIES.txt");
     List<String> result = new ArrayList<>();
@@ -76,7 +76,7 @@ public class MessageServlet extends HttpServlet {
   private String insertMediaTag(String content) {
 
     String regex = "(^|\\s|<br>|<p>|<span>)(https?://\\S+\\.(png|jpg|gif))(\\s|<br>|</p>|</span>|$)";
-    String replacement =  "<img src=\"$2\" alt=\"$2\" >";
+    String replacement = "<img src=\"$2\" alt=\"$2\" >";
     String newContent = content.replaceAll(regex, replacement);
 
     regex = "(^|\\s|<br>|<p>|<span>)!\\[(.*)]\\((https?://\\S+\\.(png|jpg|gif))\\)(\\s|<br>|</p>|</span>|$)";
@@ -119,7 +119,9 @@ public class MessageServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
-  /** Stores a new {@link Message}. */
+  /**
+   * Stores a new {@link Message}.
+   */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -162,7 +164,7 @@ public class MessageServlet extends HttpServlet {
 
     // store a place rating
     Document doc = Document.newBuilder()
-        .setContent(userEnteredContent).setType(Document.Type.PLAIN_TEXT).build();
+            .setContent(userEnteredContent).setType(Document.Type.PLAIN_TEXT).build();
     try (LanguageServiceClient language = LanguageServiceClient.create()) {
 
       // Get the rating from the sentiment analysis
@@ -172,9 +174,9 @@ public class MessageServlet extends HttpServlet {
 
       // Get the place from NER
       AnalyzeEntitiesRequest nerRequest = AnalyzeEntitiesRequest.newBuilder()
-          .setDocument(doc)
-          .setEncodingType(EncodingType.UTF16)
-          .build();
+              .setDocument(doc)
+              .setEncodingType(EncodingType.UTF16)
+              .build();
       AnalyzeEntitiesResponse nerResponse = language.analyzeEntities(nerRequest);
 
       // Print the response
@@ -190,8 +192,8 @@ public class MessageServlet extends HttpServlet {
           System.out.printf("Salience: %.3f\n", entity.getSalience());
           if (entity.getSalience() > maximum) {
             maximum = entity.getSalience();
-              maximumEntity = entityName;
-            }
+            maximumEntity = entityName;
+          }
 //          for(String str: allCities) {
 //            if(str.trim().contains(entityName)){
 //
