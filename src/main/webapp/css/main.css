@@ -31,5 +31,22 @@ body {
 
 .what-is-this-about{
   font-family: 'Pacifico', cursive;
-  margin-left:20px;
+  margin-left:30vh;
+  margin-bottom: 5vh;
+  font-size:50px;
+}
+
+.so-what-can-it-do{
+  font-family: 'Pacifico', cursive;
+  margin-right:150vh;
+  margin-bottom: 5vh;
+  font-size:50px;
+}
+
+.landing-content{
+  font-family: 'Raleway', sans-serif;
+}
+
+.login-button{
+  border-radius: 12px;
 }
