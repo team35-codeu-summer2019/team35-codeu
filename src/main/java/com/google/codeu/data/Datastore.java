@@ -77,8 +77,6 @@ public class Datastore {
     userEntity.setProperty("aboutMe", user.getAboutMe());
     userEntity.setProperty("name", user.getName());
     userEntity.setProperty("imageUrl", user.getImageUrl());
-    userEntity.setProperty("followers", user.getFollowers());
-    userEntity.setProperty("followings", user.getFollowings());
     datastore.put(userEntity);
   }
 
