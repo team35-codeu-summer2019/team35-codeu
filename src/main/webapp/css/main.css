@@ -20,39 +20,6 @@ body {
   max-width: 100%;
 }
 
-/* Remove bullet points from navigation bar. */
-
-nav ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-/* Keep navigation menu on one line. */
-
-nav li {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-
-.top-buffer {
-  margin-top: 20px;
-}
-
-.btn-primary {
-  margin-top: 10px;
-}
-
-.container {
-  padding-top: 26px;
-}
-
 .main-content {
   background-color: rgb(248, 249, 250);
   height: calc(100vh - 56px);
@@ -60,4 +27,9 @@ img {
 
 #customized-map {
   height: 500px;
+}
+
+.what-is-this-about{
+  font-family: 'Pacifico', cursive;
+  margin-left:20px;
 }
