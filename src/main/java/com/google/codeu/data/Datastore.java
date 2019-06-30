@@ -72,7 +72,7 @@ public class Datastore {
    * Stores the User in Datastore.
    */
   public void storeUser(User user) {
-    Entity userEntity = new Entity("User", user.getId().toString());
+    Entity userEntity = new Entity("User", user.getEmail());
     userEntity.setProperty("email", user.getEmail());
     userEntity.setProperty("aboutMe", user.getAboutMe());
     userEntity.setProperty("name", user.getName());
