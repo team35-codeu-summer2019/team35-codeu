@@ -22,7 +22,9 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 
 import java.util.*;
 
-/** Provides access to the data stored in Datastore. */
+/**
+ * Provides access to the data stored in Datastore.
+ */
 public class Datastore {
 
   private DatastoreService datastore;
@@ -31,7 +33,9 @@ public class Datastore {
     datastore = DatastoreServiceFactory.getDatastoreService();
   }
 
-  /** Stores the Message in Datastore. */
+  /**
+   * Stores the Message in Datastore.
+   */
   public void storeMessage(Message message) {
     Entity messageEntity = new Entity("Message", message.getId().toString());
     messageEntity.setProperty("user", message.getUser());
@@ -40,7 +44,33 @@ public class Datastore {
     datastore.put(messageEntity);
   }
 
-  /** Stores the User in Datastore. */
+
+  /**
+   * @param comment to store the comments
+   */
+  public void storeComment(Comment comment) {
+    Entity commentEntity = new Entity("Comment", comment.getId().toString());
+    commentEntity.setProperty("user", comment.getUser());
+    commentEntity.setProperty("text", comment.getText());
+    commentEntity.setProperty("post", comment.getPost());
+    commentEntity.setProperty("timestamp", comment.getTimestamp());
+    datastore.put(commentEntity);
+  }
+
+  /**
+   * @param like to store the likes
+   */
+  public void storeLike(Like like) {
+    Entity likeEntity = new Entity("Like", like.getId().toString());
+    likeEntity.setProperty("user", like.getUser());
+    likeEntity.setProperty("post", like.getPost());
+    likeEntity.setProperty("timestamp", like.getTimestamp());
+    datastore.put(likeEntity);
+  }
+
+  /**
+   * Stores the User in Datastore.
+   */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
     userEntity.setProperty("email", user.getEmail());
@@ -50,8 +80,10 @@ public class Datastore {
     datastore.put(userEntity);
   }
 
-  /** Store the geolocation in Datastore.*/
-  public void storeLocation(UserLocation userLocation){
+  /**
+   * Store the geolocation in Datastore.
+   */
+  public void storeLocation(UserLocation userLocation) {
     Entity locationEntity = new Entity("UserLocation", userLocation.getId().toString());
     locationEntity.setProperty("user", userLocation.getUser());
     locationEntity.setProperty("country", userLocation.getCountry());
@@ -59,8 +91,10 @@ public class Datastore {
     System.out.println("userLocation stored");
   }
 
-  /** Store the rating for a place in Datastore.*/
-  public void storePlaceRating(PlaceRating placeRating){
+  /**
+   * Store the rating for a place in Datastore.
+   */
+  public void storePlaceRating(PlaceRating placeRating) {
     Entity placeRatingEntity = new Entity("PlaceRating", placeRating.getId().toString());
     placeRatingEntity.setProperty("place", placeRating.getPlace());
     placeRatingEntity.setProperty("rating", placeRating.getRating());
@@ -68,15 +102,94 @@ public class Datastore {
     System.out.println("placeRating stored");
   }
 
+  /* ============= Likes ================= */
+
+  /**
+   * @param id
+   * @return list of likes under a post
+   */
+  public List<Like> getLikesByPost(String id) {
+    List<Like> likes = new ArrayList<Like>();
+    Query query = new Query("Like").setFilter(new Query.FilterPredicate("post", FilterOperator.EQUAL, id))
+            .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    for (Entity entity : results.asIterable()) {
+      likes.add(new Like((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
+    }
+    return likes;
+  }
+
+  /**
+   * @param id
+   * @return if delete is successful, return true; else false
+   */
+  public boolean deleteLike(String id) {
+    Query query = new Query("Like").setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return false;
+    }
+    datastore.delete(entity.getKey());
+    return true;
+  }
+
+  /* ============= Comments ================= */
+
+  /**
+   * @param id
+   * @return list of likes under a post
+   */
+  public List<Comment> getCommentByPost(String id) {
+    List<Comment> comments = new ArrayList<Comment>();
+    Query query = new Query("Comment").setFilter(new Query.FilterPredicate("post", FilterOperator.EQUAL, id))
+            .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    for (Entity entity : results.asIterable()) {
+      comments.add(new Comment((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
+    }
+    return comments;
+  }
+
+  /**
+   * @param id
+   * @return if delete is successful, return true; else false
+   */
+  public boolean deleteComment(String id) {
+    Query query = new Query("Comment").setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return false;
+    }
+    datastore.delete(entity.getKey());
+    return true;
+  }
+
+  /**
+   * @param id
+   * @return comment
+   */
+  public Comment getCommentById(String id) {
+    Query query = new Query("Comment").setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return null;
+    }
+    return new Comment((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp"));
+  }
+
+
   /**
    * Gets messages posted by a specific user.
    *
    * @return a list of messages posted by the user, or empty list if user has
-   *         never posted a message. List is sorted by time descending.
+   * never posted a message. List is sorted by time descending.
    */
   public List<Message> getMessages(String user) {
     Query query = new Query("Message").setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
-        .addSort("timestamp", SortDirection.DESCENDING);
+            .addSort("timestamp", SortDirection.DESCENDING);
 //    PreparedQuery results = datastore.prepare(query);
 //
 //    for (Entity entity : results.asIterable()) {
@@ -97,7 +210,7 @@ public class Datastore {
     return this.getMessagesHelper(query);
   }
 
-  private List<Message> getMessagesHelper(Query query){
+  private List<Message> getMessagesHelper(Query query) {
     List<Message> messages = new ArrayList<>();
     PreparedQuery results = datastore.prepare(query);
 
@@ -120,7 +233,7 @@ public class Datastore {
     return messages;
   }
 
-  public List<Message> getAllMessages(){
+  public List<Message> getAllMessages() {
     Query query = new Query("Message")
             .addSort("timestamp", SortDirection.DESCENDING);
     return this.getMessagesHelper(query);
@@ -147,15 +260,19 @@ public class Datastore {
     return user;
   }
 
-  /** Returns the total number of messages for all users. */
-  public int getTotalMessageCount(){
+  /**
+   * Returns the total number of messages for all users.
+   */
+  public int getTotalMessageCount() {
     Query query = new Query("Message");
     PreparedQuery results = datastore.prepare(query);
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
-  /** Returns the average length of messages for all users. */
-  public float getAverageMessageLength(){
+  /**
+   * Returns the average length of messages for all users.
+   */
+  public float getAverageMessageLength() {
     Query query = new Query("Message");
     PreparedQuery results = datastore.prepare(query);
 
@@ -173,22 +290,22 @@ public class Datastore {
   }
 
 
-  public Set<String> getUsers(){
+  public Set<String> getUsers() {
     Set<String> users = new HashSet<>();
     Query query = new Query("Message");
     PreparedQuery results = datastore.prepare(query);
-    for(Entity entity : results.asIterable()) {
+    for (Entity entity : results.asIterable()) {
       users.add((String) entity.getProperty("user"));
     }
     return users;
   }
 
 
-  public ArrayList<String> getCountries(){
+  public ArrayList<String> getCountries() {
     ArrayList<String> countries = new ArrayList<String>();
     Query query = new Query("UserLocation");
     PreparedQuery queryResults = datastore.prepare(query);
-    for(Entity entity : queryResults.asIterable()){
+    for (Entity entity : queryResults.asIterable()) {
       countries.add((String) entity.getProperty("country"));
     }
     System.out.println("countries");
@@ -196,11 +313,11 @@ public class Datastore {
     return countries;
   }
 
-  public Set<String> getUniqueCities(){
+  public Set<String> getUniqueCities() {
     ArrayList<String> cities = new ArrayList<>();
     Query query = new Query("PlaceRating");
     PreparedQuery queryResults = datastore.prepare(query);
-    for(Entity entity : queryResults.asIterable()){
+    for (Entity entity : queryResults.asIterable()) {
       cities.add((String) entity.getProperty("place"));
     }
     Set<String> uniqueCities = new HashSet<>(cities);
@@ -209,22 +326,22 @@ public class Datastore {
     return uniqueCities;
   }
 
-  public float getAverageRating(String place){
+  public float getAverageRating(String place) {
     Query query = new Query("PlaceRating");
     PreparedQuery queryResults = datastore.prepare(query);
 
     float summedResult = 0;
     int count = 0;
-    for(Entity entity : queryResults.asIterable()){
-      if(entity.getProperty("place").equals(place)){
-        count ++;
+    for (Entity entity : queryResults.asIterable()) {
+      if (entity.getProperty("place").equals(place)) {
+        count++;
         summedResult += Float.parseFloat(entity.getProperty("rating").toString());
-        System.out.printf("This entity is %s, now count is %d, now summedResult is %.3f",entity.getProperty("place"), count, summedResult);
+        System.out.printf("This entity is %s, now count is %d, now summedResult is %.3f", entity.getProperty("place"), count, summedResult);
       }
     }
 
-    float averageResult = (float)(summedResult/count);
-    System.out.printf("The average result is %.3f",averageResult);
+    float averageResult = (float) (summedResult / count);
+    System.out.printf("The average result is %.3f", averageResult);
     return averageResult;
   }
 }
