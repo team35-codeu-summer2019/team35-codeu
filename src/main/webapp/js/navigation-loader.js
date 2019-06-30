@@ -31,7 +31,7 @@ const navSlide = () =>{
 
   burger.addEventListener('click', ()=>{
     console.log("If this is invoked.");
-    nav.classList.toggle('.nav-active');
+    nav.classList.toggle('nav-active');
   });
 }
 
@@ -123,9 +123,7 @@ function addLoginOrLogoutLinkToNavigation() {
 }
 
 function goToAnchor(anchor) {
-  var loc = document.location.toString().split('#')[0];
-  document.location = loc + '#' + anchor;
-  return false;
+  window.location.hash=anchor;
 }
 
 // Fetch data and populate the UI of the page.

@@ -38,7 +38,9 @@ body {
 
 .so-what-can-it-do{
   font-family: 'Pacifico', cursive;
-  margin-right:150vh;
+  text-align: right;
+  margin-right: 30vh;
+  margin-right:30vh;
   margin-bottom: 5vh;
   font-size:50px;
 }
@@ -48,5 +50,11 @@ body {
 }
 
 .login-button{
-  border-radius: 12px;
+  background: #76B3FA;
+  border-radius: 100px;
+  padding: 20px 60px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.45em;
+  margin: 0 15px;
 }
