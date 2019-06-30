@@ -25,6 +25,8 @@ limitations under the License.
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Mali&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico|Raleway&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -32,7 +34,7 @@ limitations under the License.
     <div class="brand">
       <h2> Play Even Harder </h2>
     </div>
-    <ul id="navigation">
+    <ul id="navigation" class="navigation">
       <li><a href="#"></a></li>
     </ul>
     <div class="burger">
@@ -41,17 +43,77 @@ limitations under the License.
       <div class="line3"></div>
     </div>
   </nav>
-  <section class="sec1"></section>
-  <section class="sec2"></section>
+  <a href="#LogInAnchor"><section class="sec1"></section></a>
 
-  <div class="jumbotron text-center">
-    <h1>CodeU Starter Project</h1>
-    <p>This is the CodeU starter project. Click the links above to login and visit your page.
-      You can post messages on your page, and you can visit other user pages if you have
-      their URL.</p>
-    <p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
-      You could start by modifying this page to tell the world more about your team.</p>
+  <div class="main-content">
+
+    <div class="jumbotron text-center">
+      <h1>CodeU Starter Project</h1>
+      <p>This is the CodeU starter project. Click the links above to login and visit your page.
+        You can post messages on your page, and you can visit other user pages if you have
+        their URL.</p>
+      <p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
+        You could start by modifying this page to tell the world more about your team.</p>
+    </div>
+
+    <div data-aos="fade-right">
+      <div class="jumbotron">
+        <h1 class="what-is-this-about">What Is This About?</h1>
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <img src="./img/landingpic1.jpg" style="width:30rem;" class="card-img-top img-customized"
+                alt="Image Not Available" />
+            </div>
+            <div class="col-4">
+              <blockquote class="blockquote">
+                <p class="landing-content">You can either travel or read, but either your body or soul must be on the
+                  way. </p>
+                <footer class="blockquote-footer">
+                  <cite title="Source Title">Rome Holiday</cite>
+                </footer>
+              </blockquote>
+            </div>
+            <div class="col-2">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-aos="fade-left">
+      <div class="jumbotron">
+        <h1 class="so-what-can-it-do">So What Can It Do?</h1>
+        <div class="container">
+          <div class="row">
+            <div class="col-2">
+            </div>
+            <div class="col-4">
+              <p class="landing-content">
+                Share your travel experience with your beloved.<br /><br /><br />
+                Meet friends who might be your soul companian.<br /><br /><br />
+                Gain inspiration from the big world.<br />
+              </p>
+            </div>
+            <div class="col-6">
+              <img src="./img/landingpic2.jpg" style="width:40rem;" class="card-img-top img-customized"
+                alt="Image Not Available" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-aos="fade-up">
+      <div class="jumbotron text-center">
+        <h1 style="font-family: 'Pacifico', cursive">What Are You Waiting For?</h1>
+        <div class="text-center"><button class="login-button" onclick="goToAnchor('#LogInAnchor')">Log In</button></div>
+      </div>
+    </div>
   </div>
+  </div>
+
+
 </body>
 <footer>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -63,6 +125,10 @@ limitations under the License.
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
   <script src="/js/navigation-loader.js"></script>
 </footer>
 
