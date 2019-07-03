@@ -48,7 +48,7 @@ public class ProfileFormHandlerServlet extends HttpServlet {
       if (user != null) {
         imageUrl = user.getImageUrl();
       } else {
-        imageUrl = "./img/placeholder.png";
+        imageUrl = "./img/user-profile.png";
       }
     }
     User user = new User(userEmail, aboutMe, name, imageUrl);

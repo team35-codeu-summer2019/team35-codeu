@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
   public void init() {
     datastore = new Datastore();
   }
-  
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
       } else {
         // First time. Create a new user.
         String name = userEmail;
-        String imageUrl = "./img/placeholder.png";
+        String imageUrl = "./img/user-profile.png";
         User createdUser = new User(userEmail, "", name, imageUrl);
         datastore.storeUser(createdUser);
         response.sendRedirect("/user-info.html");
