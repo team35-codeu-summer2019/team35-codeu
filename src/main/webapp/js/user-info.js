@@ -11,7 +11,7 @@ function fetchUserData() {
             if (`${user.imageUrl}` !== '') {
               document.getElementById('img').src = `${user.imageUrl}`;
             } else {
-              document.getElementById('img').src = './img/placeholder.png';
+              document.getElementById('img').src = './img/user-profile.png';
             }
             document.getElementById('name').value = `${user.name}`;
             quill.root.innerHTML = `${user.aboutMe}`;
