@@ -23,16 +23,30 @@ if (!parameterUsername) {
   window.location.replace('/');
 }
 
-/** Sets the page title based on the URL parameter username. */
-function setPageTitle() {
-  document.getElementById('page-title').innerText = parameterUsername;
-  document.title = `${parameterUsername} - User Page`;
+/** Fetch user data and add them to the page. */
+function fetchUserData() {
+  fetch(`/profile?user=${parameterUsername}`)
+    .then(resp => resp.json())
+    .then((user) => {
+      const username = document.getElementById('username');
+      username.innerText = `${user.name}`;
+      document.title = `${user.name} - Page`;
+      const image = document.getElementById('img');
+      if (`${user.imageUrl}` !== '') {
+        image.src = `${user.imageUrl}`;
+      } else {
+        image.src = './img/user-profile.png';
+      }
+      const about = document.getElementById('about');
+      about.innerHTML = `${user.aboutMe}`;
+  })
+    .catch(error => console.log(error));
 }
 
 /**
- * Shows the message form if the user is logged in and viewing their own page.
+ * Shows the edit profile button,image form,message form if the user is logged in and viewing their own page.
  */
-function showMessageFormIfViewingSelf() {
+function removeHiddensIfViewingSelf() {
   fetch('/login-status')
     .then(response => response.json())
     .then((loginStatus) => {
@@ -40,6 +54,10 @@ function showMessageFormIfViewingSelf() {
         && loginStatus.username === parameterUsername) {
         const messageForm = document.getElementById('message-form');
         messageForm.classList.remove('hidden');
+        const imageForm = document.getElementById('image-form');
+        imageForm.classList.remove('hidden');
+        const editProfileButton = document.getElementById('edit-profile-button');
+        editProfileButton.classList.remove('hidden');
       }
     });
 }
@@ -96,15 +114,14 @@ function fetchBlobstoreUrlAndShowForm() {
     })
     .then((imageUploadUrl) => {
       const imageForm = document.getElementById('image-form');
-      imageForm.classList.remove('hidden');
       imageForm.action = imageUploadUrl;
     })
 }
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
-  setPageTitle();
-  showMessageFormIfViewingSelf();
+  fetchUserData();
+  removeHiddensIfViewingSelf();
   fetchMessages();
   fetchBlobstoreUrlAndShowForm();
 }

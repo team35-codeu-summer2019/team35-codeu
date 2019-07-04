@@ -1,8 +1,15 @@
 #form-container {
   width: 500px;
 }
+#rcorner {
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  margin-top :5px;
+  padding: 20px;
+}
 
 .row {
+  margin-left: 0px;
   margin-top: 15px;
   position: relative;
 }
@@ -10,7 +17,7 @@
   padding-left: 15px;
   padding-right: 15px;
 }
-img {
+#img {
   width: 150px;
 }
 

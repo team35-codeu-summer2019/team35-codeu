@@ -3,17 +3,18 @@ function fetchUserData() {
     .then(response => response.json())
     .then((loginStatus) => {
       if (loginStatus.isLoggedIn) {
-        document.getElementById('page-title').innerText = `${loginStatus.username}`;
         document.title = `${loginStatus.username} - User Page`;
         fetch(`/profile?user=${loginStatus.username}`)
           .then(resp => resp.json())
           .then((user) => {
+            const image = document.getElementById('img');
             if (`${user.imageUrl}` !== '') {
-              document.getElementById('img').src = `${user.imageUrl}`;
+              image.src = `${user.imageUrl}`;
             } else {
-              document.getElementById('img').src = './img/user-profile.png';
+              image.src = './img/user-profile.png';
             }
-            document.getElementById('name').value = `${user.name}`;
+            const username = document.getElementById('name');
+            username.value = `${user.name}`;
             quill.root.innerHTML = `${user.aboutMe}`;
         })
           .catch(error => console.log(error));
