@@ -36,7 +36,9 @@ limitations under the License.
       <h2> Play Even Harder </h2>
     </div>
     <ul id="navigation">
-      <li><a href="#"></a></li>
+      <li>
+        <a href="#"></a>
+      </li>
     </ul>
     <div class="burger">
       <div class="line1"></div>
@@ -51,49 +53,48 @@ limitations under the License.
     <div id="content" class="container">
       <div id="rcorner">
         <div class="row">
-            <div class="col-xs-4">
-                <img id="img" class="img-rounded" src="./img/user-profile.png">
+          <div class="col-xs-4">
+            <img id="img" class="img-rounded" src="./img/user-profile.png">
+          </div>
+          <div class="col-xs-8">
+            <div>
+              <h3 id="username">User Page</h3>
             </div>
-            <div class="col-xs-8">
-                <div>
-                    <h3 id="username">User Page</h3>
-                </div>
-                <div id="follows">
-                    <p> Followers : 0
-                        <br/>Followings : 0 </p>
-                </div>
+            <div id="follows">
+              <p> Followers : 0
+                <br/>Followings : 0 </p>
             </div>
+          </div>
         </div>
         <div id="about">
 
         </div>
         <div>
-            <button id="edit-profile-button" type="submit"
-            onclick="location.href='/user-info.html';" class="hidden">Edit Profile</button>
+          <button id="edit-profile-button" type="submit" onclick="location.href='/user-info.html';" class="hidden">Edit Profile</button>
         </div>
       </div>
-        <form id="image-form" method="POST" enctype="multipart/form-data" class="hidden">
-            <br />
-            <p>Upload an image:</p>
-            <input type="file" name="image">
-            <button>Submit</button>
-        </form>
+      <form id="image-form" method="POST" enctype="multipart/form-data" class="hidden">
+        <br />
+        <p>Upload an image:</p>
+        <input type="file" name="image">
+        <button>Submit</button>
+      </form>
 
-        <form id="message-form" action="/messages" onsubmit="return copyMessageInput();" method="POST" class="hidden">
-            <textarea name="text" id="message-input" class="hidden"></textarea>
-            <br /> Enter a new message:
-            <br />
-            <div id="editor-container">
+      <form id="message-form" action="/messages" onsubmit="return copyMessageInput();" method="POST" class="hidden">
+        <textarea name="text" id="message-input" class="hidden"></textarea>
+        <br /> Enter a new message:
+        <br />
+        <div id="editor-container">
 
-            </div>
-            <br />
-            <button id="reponse" type="submit" data-toggle="modal">Submit</button>
-        </form>
-        <hr />
+        </div>
+        <br />
+        <button id="reponse" type="submit" data-toggle="modal">Submit</button>
+      </form>
+      <hr />
 
-        <div id="message-container">Loading...</div>
+      <div id="message-container">Loading...</div>
     </div>
-</div>
+  </div>
 </body>
 <footer>
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>

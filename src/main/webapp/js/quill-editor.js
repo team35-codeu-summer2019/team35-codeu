@@ -16,7 +16,7 @@ function copyMessageInput() {
   message.value = quill.root.innerHTML;
   return true;
 }
-function copyProfileInput(){
+function copyProfileInput() {
   // Populate hidden form on submit
   const about = document.querySelector('input[name=about]');
   about.value = quill.root.innerHTML;
