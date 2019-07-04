@@ -39,12 +39,12 @@ function fetchUserData() {
       }
       const about = document.getElementById('about');
       about.innerHTML = `${user.aboutMe}`;
-  })
-    .catch(error => console.log(error));
+    })
+      .catch(error => console.log(error));
 }
 
 /**
- * Shows the edit profile button,image form,message form if the user is logged in and viewing their own page.
+ * Shows the hidden form and button if the user is logged in and viewing their own page.
  */
 function removeHiddensIfViewingSelf() {
   fetch('/login-status')
