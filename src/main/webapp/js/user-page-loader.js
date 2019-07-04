@@ -39,8 +39,7 @@ function fetchUserData() {
       }
       const about = document.getElementById('about');
       about.innerHTML = `${user.aboutMe}`;
-    })
-      .catch(error => console.log(error));
+    });
 }
 
 /**
