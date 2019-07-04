@@ -2,14 +2,14 @@
   width: 500px;
 }
 #rcorner {
-  border-radius: 25px;
   border: 1px solid #ccc;
+  border-radius: 25px;
   margin-top :5px;
   padding: 20px;
 }
 
 .row {
-  margin-left: 0px;
+  margin-left: 0;
   margin-top: 15px;
   position: relative;
 }
