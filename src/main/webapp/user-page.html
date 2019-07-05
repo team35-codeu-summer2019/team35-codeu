@@ -30,7 +30,7 @@ limitations under the License.
 
 </head>
 
-<body onload="buildUI();">
+<body>
   <nav>
     <div class="brand">
       <h2> Play Even Harder </h2>
@@ -58,22 +58,15 @@ limitations under the License.
     <div id="content" class="container">
       <h1 id="page-title">User Page</h1>
 
-      <div id="about-me-container">Loading...</div>
-      <div id="about-me-form" class="hidden">
-        <form action="/about" method="POST">
-          <textarea name="about-me" placeholder="about me" rows=4 required></textarea>
-          <br />
-          <input type="submit" value="Submit">
-        </form>
-      </div>
+      
 
       <form id="image-form" class="hidden" method="POST" enctype="multipart/form-data">
-        <br/>
+        <br />
         <p>Upload an image:</p>
         <input type="file" name="image">
         <button>Submit</button>
       </form>
-      
+
       <form id="message-form" action="/messages" onsubmit="return copyInput();" method="POST" class="hidden">
         <textarea name="text" id="message-input" class="hidden"></textarea>
         <br />
@@ -83,7 +76,7 @@ limitations under the License.
 
         </div>
         <br />
-        <input id="reponse" type="submit" value="Submit">
+        <button id="reponse" type="submit" data-toggle="modal">Submit</button>
       </form>
       <hr />
 

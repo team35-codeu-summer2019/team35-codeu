@@ -19,11 +19,15 @@ package com.google.codeu.servlets;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.codeu.data.Datastore;
+import com.google.codeu.data.User;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * Redirects the user to the Google login page or their page if they're already logged in.
@@ -31,15 +35,33 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
+  private Datastore datastore;
+
+  @Override
+  public void init() {
+    datastore = new Datastore();
+  }
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     UserService userService = UserServiceFactory.getUserService();
 
-    // If the user is already logged in, redirect to their page
+    // If the user is already logged in, redirect to their page.
     if (userService.isUserLoggedIn()) {
-      String user = userService.getCurrentUser().getEmail();
-      response.sendRedirect("/user-page.html?user=" + user);
+      String userEmail = userService.getCurrentUser().getEmail();
+      User user = datastore.getUser(userEmail);
+      if (user != null) {
+        // Old user.
+        response.sendRedirect("/user-page.html?user=" + userEmail);
+      } else {
+        // First time. Create a new user.
+        String name = userEmail;
+        String imageUrl = "./img/user-profile.png";
+        User createdUser = new User(userEmail, "", name, imageUrl);
+        datastore.storeUser(createdUser);
+        response.sendRedirect("/user-info.html");
+      }
       return;
     }
 

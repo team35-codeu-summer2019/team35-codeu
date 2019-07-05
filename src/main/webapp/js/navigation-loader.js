@@ -25,13 +25,13 @@
  * @return {Element} li element
  */
 const navSlide = () =>{
-  
+
   const burger = document.querySelector('.burger');
   const nav = document.querySelector('nav ul');
 
   burger.addEventListener('click', ()=>{
     console.log("If this is invoked.");
-    nav.classList.toggle('.nav-active');
+    nav.classList.toggle('nav-active');
   });
 }
 
@@ -84,7 +84,9 @@ function addLoginOrLogoutLinkToNavigation() {
             )
           )
         );
-
+        navigationElement.appendChild(
+          createListItem(createLink('/user-info.html', 'Your profile'))
+        );
         navigationElement.appendChild(
           createListItem(createLink('/feed.html', 'Public Feeds'))
         );
@@ -120,9 +122,13 @@ function addLoginOrLogoutLinkToNavigation() {
     });
 }
 
+function goToAnchor(anchor) {
+  window.location.hash=anchor;
+}
 
 // Fetch data and populate the UI of the page.
 function buildUI() {
-  navSlide(); 
+  navSlide();
   addLoginOrLogoutLinkToNavigation();
 }
+window.onload = buildUI();

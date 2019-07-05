@@ -1,0 +1,19 @@
+#form-container {
+  width: 500px;
+}
+
+.row {
+  margin-top: 15px;
+  position: relative;
+}
+.col-xs-8{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+img {
+  width: 150px;
+}
+
+#editor-container {
+  height: 130px;
+}
