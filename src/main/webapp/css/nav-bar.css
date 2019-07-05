@@ -24,6 +24,9 @@ nav {
   box-sizing: border-box;
 }
 
+nav .navleft {
+  float: left;
+}
 nav .brand {
   float: left;
   height: 100%;
@@ -36,8 +39,52 @@ nav .brand h2 {
   color: #fff;
 }
 
-nav ul {
+nav .search-container {
+  padding-top: 10px;
   float: right;
+}
+
+nav input[type=text] {
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ccc;
+  font-size: 17px;
+  border: none;
+}
+
+nav .search-container button {
+  float: right;
+  padding: 6px; 
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+nav .search-container button:hover {
+  background: #262626;
+}
+
+@media screen and (max-width: 600px) {
+  nav .search-container {
+    float: none;
+  }
+  nav a, .topnav input[type=text], .topnav .search-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  nav input[type=text] {
+    border: 1px solid #ccc;  
+  }
+}
+
+nav ul {
+  float: left;
   display: flex;
   margin: 0;
   padding: 0;
