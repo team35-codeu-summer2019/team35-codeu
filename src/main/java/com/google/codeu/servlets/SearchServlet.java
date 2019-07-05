@@ -33,7 +33,7 @@ public class SearchServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    String pattern = request.getParameter("text");
+    String pattern = "(.*)" + request.getParameter("q") + "(.*)";
 
     Set<String> userList = datastore.getUsers();
     Set<String> matchedUsers = new HashSet<>();
@@ -47,6 +47,10 @@ public class SearchServlet extends HttpServlet {
     String json = gson.toJson(matchedUsers);
 
     response.getOutputStream().println(json);
+  }
 
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String pattern = request.getParameter("text");
+    response.sendRedirect("search.html?q=" + pattern);
   }
 }
