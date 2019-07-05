@@ -67,43 +67,23 @@ function fetchMessages() {
   fetch(url)
     .then(response => response.json())
     .then((messages) => {
-      const messagesContainer = document.getElementById('message-container');
+      const messageContainer = document.getElementById('message-container');
       if (messages.length === 0) {
-        messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
+        messageContainer.innerHTML = '<p>This user has no posts yet.</p>';
       } else {
-        messagesContainer.innerHTML = '';
+        messageContainer.innerHTML = '';
       }
+      let profilePromise = fetch(`/profile?user=${parameterUsername}`)
+        .then(res => {return res.json(); });
+      var messageIndex = 0;
       messages.forEach((message) => {
-        const messageDiv = buildMessageDiv(message);
-        messagesContainer.appendChild(messageDiv);
+        const messageDiv = buildMessageDiv(message, messageIndex, profilePromise);
+        messageContainer.appendChild(messageDiv);
+        messageIndex += 1;
       });
     });
 }
 
-
-/**
- * Builds an element that displays the message.
- * @param {Message} message
- * @return {Element}
- */
-function buildMessageDiv(message) {
-  const headerDiv = document.createElement('div');
-  headerDiv.classList.add('message-header');
-  headerDiv.appendChild(document.createTextNode(
-    `${message.user} - ${new Date(message.timestamp)}`
-  ));
-
-  const bodyDiv = document.createElement('div');
-  bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text;
-
-  const messageDiv = document.createElement('div');
-  messageDiv.classList.add('message-div');
-  messageDiv.appendChild(headerDiv);
-  messageDiv.appendChild(bodyDiv);
-
-  return messageDiv;
-}
 
 /** fetch blobstore upload url */
 function fetchBlobstoreUrlAndShowForm() {
