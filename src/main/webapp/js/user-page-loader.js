@@ -73,9 +73,10 @@ function fetchMessages() {
       } else {
         messageContainer.innerHTML = '';
       }
-      let profilePromise = fetch(`/profile?user=${parameterUsername}`)
-        .then(res => {return res.json(); });
-      var messageIndex = 0;
+      const profileUrl = `/profile?user=${parameterUsername}`;
+      const profilePromise = fetch(profileUrl)
+        .then(res => { return res.json(); });
+      let messageIndex = 0;
       messages.forEach((message) => {
         const messageDiv = buildMessageDiv(message, messageIndex, profilePromise);
         messageContainer.appendChild(messageDiv);

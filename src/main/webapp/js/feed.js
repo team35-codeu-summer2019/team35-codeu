@@ -10,18 +10,18 @@ function fetchMessages() {
       } else {
         messageContainer.innerHTML = '';
       }
-      let profilePromises = new Map();
+      const profilePromises = new Map();
       messages.forEach((message) => {
-        if(profilePromises.get(message.user) === undefined){
-          const url = '/profile?user=' + message.user;
-          profilePromises.set(message.user, fetch(url)
-            .then(res => {return res.json(); }));
+        if (profilePromises.get(message.user) === undefined) {
+          const profileUrl = '/profile?user=' + message.user;
+          profilePromises.set(message.user, fetch(profileUrl)
+            .then(res => { return res.json(); }));
         }
       });
 
       Promise.all(profilePromises).then(values => {
-          var messageIndex = 0;
-          messages.forEach((message) => {
+        let messageIndex = 0;
+        messages.forEach((message) => {
           const messageDiv = buildMessageDiv(message, messageIndex, profilePromises.get(message.user));
           messageContainer.appendChild(messageDiv);
           messageIndex += 1;

@@ -69,10 +69,10 @@ function buildProfileDiv(message, profilePromise) {
   profileDiv.classList.add('row');
   profileDiv.style.cursor = 'pointer';
 
-  profilePromise.then(function(profile) {
+  profilePromise.then( function(profile) {
     image.setAttribute('src', profile.imageUrl);
     usernameDiv.appendChild(document.createTextNode(profile.name));
-    profileDiv.setAttribute('onclick',`location.href=\'/user-page.html?user=${profile.email}\'`);
+    profileDiv.setAttribute('onclick', `location.href='/user-page.html?user=${profile.email}'`);
   });
 
   profileDiv.appendChild(imageDiv);
@@ -86,7 +86,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
 
   const bodyDiv = document.createElement('div');
   const bodyMessageId = 'message-body-' + messageIndex.toString();
-  bodyDiv.setAttribute("id", bodyMessageId);
+  bodyDiv.setAttribute('id', bodyMessageId);
   bodyDiv.classList.add('message-body');
   bodyDiv.innerHTML = message.text;
 
@@ -95,7 +95,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   langList.setAttribute('id', langId);
 
   const translateButton = document.createElement('button');
-  translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\''+ bodyMessageId + '\');');
+  translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\'' + bodyMessageId + '\');');
   translateButton.innerText = 'Translate';
 
   const audio = document.createElement('audio');
