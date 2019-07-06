@@ -23,6 +23,7 @@ function buildLanguageSelectList() {
   return langSelect;
 }
 
+// eslint-disable-next-line no-unused-vars
 function requestTranslator(langId, bodyMessageId) {
   const messageBody = document.getElementById(bodyMessageId);
   const content = messageBody.innerHTML;
@@ -69,7 +70,7 @@ function buildProfileDiv(message, profilePromise) {
   profileDiv.classList.add('row');
   profileDiv.style.cursor = 'pointer';
 
-  profilePromise.then( function(profile) {
+  profilePromise.then((profile) => {
     image.setAttribute('src', profile.imageUrl);
     usernameDiv.appendChild(document.createTextNode(profile.name));
     profileDiv.setAttribute('onclick', `location.href='/user-page.html?user=${profile.email}'`);
@@ -81,30 +82,37 @@ function buildProfileDiv(message, profilePromise) {
   return profileDiv;
 }
 
+// eslint-disable-next-line no-unused-vars
 function buildMessageDiv(message, messageIndex, profilePromise) {
   const profileDiv = buildProfileDiv(message, profilePromise);
 
   const bodyDiv = document.createElement('div');
-  const bodyMessageId = 'message-body-' + messageIndex.toString();
+  const bodyMessageId = `message-body-${messageIndex.toString()}`;
   bodyDiv.setAttribute('id', bodyMessageId);
   bodyDiv.classList.add('message-body');
   bodyDiv.innerHTML = message.text;
 
   const langList = buildLanguageSelectList();
-  const langId = 'lang-' + messageIndex.toString();
+  const langId = `lang-${messageIndex.toString()}`;
   langList.setAttribute('id', langId);
 
   const translateButton = document.createElement('button');
-  translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\'' + bodyMessageId + '\');');
+  translateButton.setAttribute('onclick', `requestTranslator('${langId}','${bodyMessageId}');`);
   translateButton.innerText = 'Translate';
 
   const audio = document.createElement('audio');
-  const audioId = 'audio-' + messageIndex.toString();
+  const audioId = `audio-${messageIndex.toString()}`;
   audio.setAttribute('id', audioId);
 
   const audioButton = document.createElement('button');
-  audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
+  audioButton.setAttribute('onclick', `play('${audioId}','${bodyMessageId}');`);
   audioButton.innerText = 'Play';
+
+  const viewDetail = document.createElement('button');
+  viewDetail.setAttribute('onclick', `window.location.href="messageDetail.html?id=${message.id}"`);
+  viewDetail.classList.add('btn');
+  viewDetail.classList.add('btn-info');
+  viewDetail.innerText = 'View Detail';
 
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
@@ -113,6 +121,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   headerDiv.appendChild(translateButton);
   headerDiv.appendChild(audio);
   headerDiv.appendChild(audioButton);
+  headerDiv.appendChild(viewDetail);
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
