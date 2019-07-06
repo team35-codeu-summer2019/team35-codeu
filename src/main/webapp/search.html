@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Play Even Harder</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/nav-bar.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Mali&display=swap" rel="stylesheet">
+  <script src="/js/navigation-loader.js"></script>
+  <script>
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const pattern = urlParams.get('q')
+
+    /** Fetches users and adds them to the page. */
+    function fetchUserList() {
+      const url = '/search?q=' + pattern;
+      fetch(url).then((response) => {
+        return response.json();
+      }).then((users) => {
+        const list = document.getElementById('list');
+        list.innerHTML = '';
+
+        users.forEach((user) => {
+          const userListItem = buildUserListItem(user);
+          list.appendChild(userListItem);
+        });
+      });
+    }
+
+    /**
+     * Builds a list element that contains a link to a user page, e.g.
+     * <li><a href="/user-page.html?user=test@example.com">test@example.com</a></li>
+     */
+    function buildUserListItem(user) {
+      const userLink = document.createElement('a');
+      userLink.setAttribute('href', '/user-page.html?user=' + user);
+      userLink.appendChild(document.createTextNode(user));
+      const userListItem = document.createElement('li');
+      userListItem.appendChild(userLink);
+      return userListItem;
+    }
+  </script>
+</head>
+
+<body>
+  <nav>
+    <div class="brand">
+      <h2> Play Even Harder </h2>
+    </div>
+    <ul id="navigation">
+      <li><a href="#"></a></li>
+    </ul>
+    <div class="search-container">
+      <form action="/search" method = "POST">
+        <input name = "text" type="text" placeholder="Find other .." name="search">
+        <button>Search</i></button>
+      </form>
+    </div>
+    <div class="burger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+  
+  <section class="sec1"></section>
+  <section class="sec2"></section>
+
+  <div id="content">
+    <hr />
+    <ul id="list">Loading...</ul>
+  </div>
+  <script>
+    fetchUserList();
+  </script>
+</body>
+<footer>
+  <script src="./js/navigation-loader.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</footer>
+
+</html>
