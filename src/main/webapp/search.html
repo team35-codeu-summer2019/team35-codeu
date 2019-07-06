@@ -42,16 +42,10 @@
       userListItem.appendChild(userLink);
       return userListItem;
     }
-
-    /** Fetches data and populates the UI of the page. */
-    function buildUI() {
-      fetchUserList();
-      addLoginOrLogoutLinkToNavigation();
-    }
   </script>
 </head>
 
-<body onload="buildUI()">
+<body>
   <nav>
     <div class="brand">
       <h2> Play Even Harder </h2>
@@ -79,6 +73,9 @@
     <hr />
     <ul id="list">Loading...</ul>
   </div>
+  <script>
+    fetchUserList();
+  </script>
 </body>
 <footer>
   <script src="./js/navigation-loader.js"></script>
