@@ -118,7 +118,7 @@ function addLoginOrLogoutLinkToNavigation() {
         );
 
         navigationElement.appendChild(
-          createListItem(createLink('/bugs-issues', 'Bugs'))
+          createListItem(createLink('/bugs-issues.html', 'Bugs'))
         );
 
         navigationElement.appendChild(
