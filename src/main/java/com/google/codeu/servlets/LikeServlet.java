@@ -43,12 +43,12 @@ public class LikeServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String post = request.getParameter("postId");
+    String post = request.getParameter("id");
 
     Like l = new Like(user, post);
     datastore.storeLike(l);
     Gson gson = new Gson();
-    String json = gson.toJson(true);
+    String json = gson.toJson(l);
     response.getOutputStream().println(json);
   }
 

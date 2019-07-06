@@ -1,0 +1,22 @@
+h4{
+  color: #27789a;
+}
+span.message-detail-title{
+  float:right;
+}
+#likes-container{
+  margin-top:20px;
+  margin-bottom:20px;
+}
+.id-hidden{
+  display:hidden;
+}
+#comment-create-container{
+  margin-bottom:20px;
+}
+.list-group-item > span{
+  margin-left: 20px;
+}
+small{
+  float:right;
+}

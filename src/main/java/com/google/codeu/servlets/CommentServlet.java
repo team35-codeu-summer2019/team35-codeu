@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/comment")
 public class CommentServlet extends HttpServlet {
@@ -46,8 +47,12 @@ public class CommentServlet extends HttpServlet {
 
     Comment c = new Comment(user, text, post);
     datastore.storeComment(c);
+
+    response.setContentType("application/json");
+    List<Comment> comments = datastore.getCommentByPost(post);
     Gson gson = new Gson();
-    String json = gson.toJson(true);
+    String json = gson.toJson(comments);
+
     response.getOutputStream().println(json);
   }
 

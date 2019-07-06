@@ -6,36 +6,82 @@ function httpOptions(method) {
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     redirect: 'follow', // manual, *follow, error
-    referrer: 'no-referrer', // no-referrer, *client
+    referrer: 'no-referrer' // no-referrer, *client
     // body: JSON.stringify(data), // body data type must match "Content-Type" header
   };
 }
+function buildCommentDiv(comment, index) {
+  const li = document.createElement('li');
+  li.classList.add('list-group-item');
+  li.innerHTML = `${index}<span>${
+    comment.text
+  }</span><br/><small class='comment-user'>Commented By: ${
+    comment.user
+  }</small>`;
 
+  return li;
+}
+function fetchComments() {
+  fetch(`comments?postId=${url.split('=')[1]}`)
+    .then(response => response.json())
+    .then((comments) => {
+      const container = document.getElementById('comments-container-ul');
+      if (comments.length === 0) {
+        container.innerHTML = '<p>There are no comments yet.</p>';
+      } else {
+        container.innerHTML = '';
+      }
+      let index = 0;
+      comments.forEach((c) => {
+        console.log(c);
+        const commentDiv = buildCommentDiv(c, index);
+        container.appendChild(commentDiv);
+        index += 1;
+      });
+    });
+}
 // eslint-disable-next-line no-unused-vars
 function createNewComment() {
   const textarea = document.getElementById('comment-create-input');
   console.log(textarea);
-  fetch(`comment?postId=${url.split('=')[1]}&text=${textarea.innerHTML}`, httpOptions('POST'))
+  fetch(
+    `comment?postId=${url.split('=')[1]}&text=${textarea.value}`,
+    httpOptions('POST')
+  )
     .then(response => response.json())
-    .then((res) => {
-      console.log(res);
+    .then((comments) => {
+      const container = document.getElementById('comments-container-ul');
+      if (comments.length === 0) {
+        container.innerHTML = '<p>There are no comments yet.</p>';
+      } else {
+        container.innerHTML = '';
+      }
+      let index = 0;
+      comments.forEach((c) => {
+        console.log(c);
+        const commentDiv = buildCommentDiv(c, index);
+        container.appendChild(commentDiv);
+        index += 1;
+      });
     });
 }
 
 function postLike() {
-  fetch(`like?postId=${url.split('=')[1]}`, httpOptions('DELETE'))
+  fetch(`like?id=${url.split('=')[1]}`, httpOptions('POST'))
     .then(response => response.json())
     .then((res) => {
       console.log(res);
+      document.getElementById('like-id').innerText = res.id;
     });
 }
 
 function deleteLike() {
-  fetch(`like?postId=${url.split('=')[1]}`, httpOptions('DELETE'))
+  const id = document.getElementById('like-id').innerText;
+  fetch(`like?id=${id}`, httpOptions('DELETE'))
     .then(response => response.json())
     .then((res) => {
       console.log(res);
@@ -78,53 +124,17 @@ function fetchLike() {
     });
 }
 
-function buildCommentDiv(comment, index) {
-  const bodyDiv = document.createElement('div');
-  const bodyMessageId = `comment-body-${index.toString()}`;
-  bodyDiv.setAttribute('id', bodyMessageId);
-  bodyDiv.classList.add('comment-body');
-  bodyDiv.innerHTML = comment.text;
-
-  const headerDiv = document.createElement('div');
-  headerDiv.innerHTML = `<span class='comment-user'>${
-    comment.user
-  }</span><span class='comment-timestamp>${comment.timestamp}</span>`;
-
-  const commentDiv = document.createElement('div');
-  commentDiv.classList.add('comment-div');
-  commentDiv.appendChild(headerDiv);
-  commentDiv.appendChild(bodyDiv);
-
-  return commentDiv;
-}
-
-function fetchComments() {
-  fetch(`comments?postId=${url.split('=')[1]}`)
-    .then(response => response.json())
-    .then((comments) => {
-      const container = document.getElementById('comments-container');
-      if (comments.length === 0) {
-        container.innerHTML = '<p>There are no comments yet.</p>';
-      } else {
-        container.innerHTML = '';
-      }
-      let index = 0;
-      comments.forEach((c) => {
-        console.log(c);
-        const commentDiv = buildCommentDiv(c, index);
-        container.appendChild(commentDiv);
-        index += 1;
-      });
-    });
-}
-
 function fetchMessage() {
   fetch(`messageDetail?postId=${url.split('=')[1]}`)
     .then(response => response.json())
     .then((messages) => {
       console.log(messages);
-      document.getElementById('post-user').innerHTML = `<span class="message-detail-title">Created By:</span> ${messages.user}`;
-      document.getElementById('post-text').innerHTML = `<span class="message-detail-title">Content:</span> ${messages.text}`;
+      document.getElementById(
+        'post-user'
+      ).innerHTML = `<span class="message-detail-title">Created By: ${
+        messages.user
+      }</span>`;
+      document.getElementById('post-text').innerHTML = `${messages.text}`;
 
       // document.getElementById('post-timestamp').innerText = messages.timestamp;
     });
