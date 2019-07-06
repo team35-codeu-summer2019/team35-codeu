@@ -2,43 +2,13 @@
 <html>
 
 <head>
-  <title>Community</title>
+  <title>One Glance</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/nav-bar.css">
+  <link rel="stylesheet" href="/css/stats.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Mali&display=swap" rel="stylesheet">
-  <script>
-
-    /** Fetches users and adds them to the page. */
-    function fetchUserList() {
-      const url = '/user-list';
-      fetch(url).then((response) => {
-        return response.json();
-      }).then((users) => {
-        const list = document.getElementById('list');
-        list.innerHTML = '';
-
-        users.forEach((user) => {
-          const userListItem = buildUserListItem(user);
-          list.appendChild(userListItem);
-        });
-      });
-    }
-
-    /**
-     * Builds a list element that contains a link to a user page, e.g.
-     * <li><a href="/user-page.html?user=test@example.com">test@example.com</a></li>
-     */
-    function buildUserListItem(user) {
-      const userLink = document.createElement('a');
-      userLink.setAttribute('href', '/user-page.html?user=' + user);
-      userLink.appendChild(document.createTextNode(user));
-      const userListItem = document.createElement('li');
-      userListItem.appendChild(userLink);
-      return userListItem;
-    }
-  </script>
 </head>
 
 <body>
@@ -58,19 +28,49 @@
   <section class="sec1"></section>
   <section class="sec2"></section>
 
-  <div id="content">
-    <div class="text-center">
-      <h1>Community Page</h1>
-      <p>Here is a list of every user who has posted a message:</p>
+  <div class="main-content">
+    <div class="transbox">
+      <h1 class="title">Site Statistics</h1>
+      <hr />
+      <table class="table table-sm table-hover">
+        <tbody>
+          <tr>
+            <td>
+              <div id="stats-container">Loading...</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="user-stats-container">Loading...</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="avg-stats-container">Loading...</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <h3 class="top10-most-active-users">Top 10 most active users</h3>
+      <div id="top10-most-active-users">Loading...</div>
+      <hr />
+      <h3 class="geochart-of-places">Where do our users come from?</h3>
+      <div id="geochart-of-places">Loading...</div>
+      <hr />
+      <h3 class="top10-places">What are the Top 10 Places with the Highest Ranking Now?</h3>
+      <div id="top10-places">Loading...</div>
     </div>
-    <hr />
-    <ul id="list">Loading...</ul>
   </div>
-  <script>
-    fetchUserList();
-  </script>
+
 </body>
 <footer>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmsBaZDSm50H1fqB3PVmAr-BIwopAdsOg&callback=initMap"
+    type="text/javascript"></script>
+  <script type="text/javascript" src="./js/chart.js"></script>
+  <script src="./js/stats.js"></script>
   <script src="./js/navigation-loader.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
