@@ -84,20 +84,26 @@ function buildProfileDiv(message, profilePromise) {
 
 // eslint-disable-next-line no-unused-vars
 function buildMessageDiv(message, messageIndex, profilePromise) {
+  var feedDetailUrl = "/messageDetails.html?postId=" + message.postId;
+
   const profileDiv = buildProfileDiv(message, profilePromise);
 
   const bodyDiv = document.createElement('div');
   const bodyMessageId = `message-body-${messageIndex.toString()}`;
   bodyDiv.setAttribute('id', bodyMessageId);
   bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text;
+  bodyDiv.innerHTML = '<a href=' + feedDetailUrl + ' style="text-decoration:none">' + message.message + '</a>';
 
   const langList = buildLanguageSelectList();
   const langId = `lang-${messageIndex.toString()}`;
   langList.setAttribute('id', langId);
 
   const translateButton = document.createElement('button');
-  translateButton.setAttribute('onclick', `requestTranslator('${langId}','${bodyMessageId}');`);
+  translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\'' + bodyMessageId + '\');');
+  translateButton.style.setProperty("color","primary");
+  translateButton.style.setProperty("margin-left","20px");
+  translateButton.style.setProperty("background-color","#00a1b7")
+  translateButton.style.setProperty("corner-radius","2px");
   translateButton.innerText = 'Translate';
 
   const audio = document.createElement('audio');
@@ -105,14 +111,20 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   audio.setAttribute('id', audioId);
 
   const audioButton = document.createElement('button');
-  audioButton.setAttribute('onclick', `play('${audioId}','${bodyMessageId}');`);
+  audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
+  audioButton.style.setProperty("color","primary");
+  audioButton.style.setProperty("margin-left","20px");
+  audioButton.style.setProperty("background-color","#00a1b7")
+  audioButton.style.setProperty("corner-radius","2px");
   audioButton.innerText = 'Play';
 
-  const viewDetail = document.createElement('button');
-  viewDetail.setAttribute('onclick', `window.location.href="messageDetail.html?id=${message.id}"`);
-  viewDetail.classList.add('btn');
-  viewDetail.classList.add('btn-info');
-  viewDetail.innerText = 'View Detail';
+  const followButton = document.createElement('button');
+  followButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
+  followButton.style.setProperty("color","primary");
+  followButton.style.setProperty("margin-left","20px");
+  followButton.style.setProperty("background-color","#00a1b7")
+  followButton.style.setProperty("corner-radius","2px");
+  followButton.innerText = 'Play';
 
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');

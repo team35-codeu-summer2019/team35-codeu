@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/nav-bar.css">
   <link rel="stylesheet" href="/css/user-page.css">
+  <link rel="stylesheet" href="./css/messageDetail.css">
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -32,19 +33,11 @@
 
   <div class="main-content">
     <div id="content" class="container">
-      <h1>See Around</h1>
+      <h1>Hear others' stories</h1>
       <hr />
-      <div id="feed-create-container">
-          <form>
-            <div class="form-group">
-              <label for="feed">Create New Feed:</label>
-              <textarea id="feed-create-input" class="form-control" rows="5" ></textarea>
-            </div>
-          </form>
-          <button onclick="createNewFeed()" type="button" class="btn btn-info">Submit</button>
-        </div>
-      
-      <div id="message-container">Loading...</div>
+      <div id="message-container">
+        <p>Loading...</p>
+      </div>
     </div>
   </div>
 </body>
@@ -53,6 +46,7 @@
   <script src="/js/text-to-speech.js"></script>
   <script src="./js/build-message.js"></script>
   <script src="./js/feed.js"></script>
+  <script src="./js/feedDetail.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
