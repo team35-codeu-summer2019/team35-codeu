@@ -23,16 +23,29 @@ if (!parameterUsername) {
   window.location.replace('/');
 }
 
-/** Sets the page title based on the URL parameter username. */
-function setPageTitle() {
-  document.getElementById('page-title').innerText = parameterUsername;
-  document.title = `${parameterUsername} - User Page`;
+/** Fetch user data and add them to the page. */
+function fetchUserData() {
+  fetch(`/profile?user=${parameterUsername}`)
+    .then(resp => resp.json())
+    .then((user) => {
+      const username = document.getElementById('username');
+      username.innerText = `${user.name}`;
+      document.title = `${user.name} - Page`;
+      const image = document.getElementById('img');
+      if (`${user.imageUrl}` !== '') {
+        image.src = `${user.imageUrl}`;
+      } else {
+        image.src = './img/user-profile.png';
+      }
+      const about = document.getElementById('about');
+      about.innerHTML = `${user.aboutMe}`;
+    });
 }
 
 /**
- * Shows the message form if the user is logged in and viewing their own page.
+ * Shows the hidden form and button if the user is logged in and viewing their own page.
  */
-function showMessageFormIfViewingSelf() {
+function removeHiddensIfViewingSelf() {
   fetch('/login-status')
     .then(response => response.json())
     .then((loginStatus) => {
@@ -40,6 +53,10 @@ function showMessageFormIfViewingSelf() {
         && loginStatus.username === parameterUsername) {
         const messageForm = document.getElementById('message-form');
         messageForm.classList.remove('hidden');
+        const imageForm = document.getElementById('image-form');
+        imageForm.classList.remove('hidden');
+        const editProfileButton = document.getElementById('edit-profile-button');
+        editProfileButton.classList.remove('hidden');
       }
     });
 }
@@ -50,43 +67,24 @@ function fetchMessages() {
   fetch(url)
     .then(response => response.json())
     .then((messages) => {
-      const messagesContainer = document.getElementById('message-container');
+      const messageContainer = document.getElementById('message-container');
       if (messages.length === 0) {
-        messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
+        messageContainer.innerHTML = '<p>This user has no posts yet.</p>';
       } else {
-        messagesContainer.innerHTML = '';
+        messageContainer.innerHTML = '';
       }
+      const profileUrl = `/profile?user=${parameterUsername}`;
+      const profilePromise = fetch(profileUrl)
+        .then(res => { return res.json(); });
+      let messageIndex = 0;
       messages.forEach((message) => {
-        const messageDiv = buildMessageDiv(message);
-        messagesContainer.appendChild(messageDiv);
+        const messageDiv = buildMessageDiv(message, messageIndex, profilePromise);
+        messageContainer.appendChild(messageDiv);
+        messageIndex += 1;
       });
     });
 }
 
-
-/**
- * Builds an element that displays the message.
- * @param {Message} message
- * @return {Element}
- */
-function buildMessageDiv(message) {
-  const headerDiv = document.createElement('div');
-  headerDiv.classList.add('message-header');
-  headerDiv.appendChild(document.createTextNode(
-    `${message.user} - ${new Date(message.timestamp)}`
-  ));
-
-  const bodyDiv = document.createElement('div');
-  bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text;
-
-  const messageDiv = document.createElement('div');
-  messageDiv.classList.add('message-div');
-  messageDiv.appendChild(headerDiv);
-  messageDiv.appendChild(bodyDiv);
-
-  return messageDiv;
-}
 
 /** fetch blobstore upload url */
 function fetchBlobstoreUrlAndShowForm() {
@@ -96,15 +94,14 @@ function fetchBlobstoreUrlAndShowForm() {
     })
     .then((imageUploadUrl) => {
       const imageForm = document.getElementById('image-form');
-      imageForm.classList.remove('hidden');
       imageForm.action = imageUploadUrl;
     })
 }
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
-  setPageTitle();
-  showMessageFormIfViewingSelf();
+  fetchUserData();
+  removeHiddensIfViewingSelf();
   fetchMessages();
   fetchBlobstoreUrlAndShowForm();
 }

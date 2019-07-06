@@ -1,16 +1,22 @@
 #form-container {
   width: 500px;
 }
+#rcorner {
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  margin-top :5px;
+  padding: 20px;
+}
 
 .row {
-  margin-top: 15px;
+  margin-left: 0;
   position: relative;
 }
 .col-xs-8{
   padding-left: 15px;
   padding-right: 15px;
 }
-img {
+#img {
   width: 150px;
 }
 

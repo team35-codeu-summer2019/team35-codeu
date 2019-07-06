@@ -10,16 +10,15 @@ const quill = new Quill('#editor-container', {
   placeholder: 'Compose a message...',
   theme: 'snow'
 });
-function copyInput() {
+function copyMessageInput() {
   // Populate hidden form on submit
   const message = document.querySelector('textarea[name=text]');
   message.value = quill.root.innerHTML;
   return true;
 }
-const form = document.querySelector('form[name=profile]');
-form.onsubmit = function() {
+function copyProfileInput() {
   // Populate hidden form on submit
   const about = document.querySelector('input[name=about]');
   about.value = quill.root.innerHTML;
   return true;
-};
+}
