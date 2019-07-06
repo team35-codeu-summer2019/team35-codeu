@@ -97,16 +97,12 @@ function addLoginOrLogoutLinkToNavigation() {
         );
 
         navigationElement.appendChild(
-          createListItem(createLink('/bugs-issues', 'Bugs'))
-        );
-
-        navigationElement.appendChild(
           createListItem(createLink('/logout', 'Logout'))
         );
 
         // Probably this is not needed in our prototype
         // navigationElement.appendChild(
-        //   createListItem(createLink('/feed.html', 'Public Feeds'))
+        //   createListItem(createLink('/community.html', 'Community'))
         // );
       } else {
         navigationElement.appendChild(
