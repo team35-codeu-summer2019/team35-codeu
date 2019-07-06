@@ -1,3 +1,19 @@
+function httpOptions(method) {
+  return {
+    method, // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, cors, *same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrer: 'no-referrer' // no-referrer, *client
+    // body: JSON.stringify(data), // body data type must match "Content-Type" header
+  };
+}
+
 function buildLanguageOption(value, name) {
   const langOption = document.createElement('option');
   langOption.setAttribute('value', value);
@@ -54,29 +70,29 @@ function buildMessageDiv(message, messageIndex) {
   timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
 
   const langList = buildLanguageSelectList();
-  const langId = 'lang-' + messageIndex.toString();
+  const langId = `lang-${  messageIndex.toString()}`;
   langList.setAttribute('id', langId);
 
   const bodyDiv = document.createElement('div');
-  const bodyMessageId = 'message-body-' + messageIndex.toString();
-  bodyDiv.setAttribute("id", bodyMessageId);
+  const bodyMessageId = `message-body-${  messageIndex.toString()}`;
+  bodyDiv.setAttribute('id', bodyMessageId);
   bodyDiv.classList.add('message-body');
   bodyDiv.innerHTML = message.text;
 
   const translateButton = document.createElement('button');
-  translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\''+ bodyMessageId + '\');');
+  translateButton.setAttribute('onclick', `requestTranslator('${  langId  }','${ bodyMessageId  }');`);
   translateButton.innerText = 'Translate';
 
   const audio = document.createElement('audio');
-  const audioId = 'audio-' + messageIndex.toString();
+  const audioId = `audio-${  messageIndex.toString()}`;
   audio.setAttribute('id', audioId);
 
   const audioButton = document.createElement('button');
-  audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
+  audioButton.setAttribute('onclick', `play('${  audioId  }','${  bodyMessageId  }');`);
   audioButton.innerText = 'Play';
 
   const viewDetail = document.createElement('button');
-  audioButton.setAttribute('onclick', 'window.location.href="messageDetail.html?id='+message.id+'"');
+  audioButton.setAttribute('onclick', `window.location.href="messageDetail.html?id=${message.id}"`);
   audioButton.innerText = 'View Detail';
 
   const headerDiv = document.createElement('div');
@@ -108,7 +124,7 @@ function fetchMessages() {
       } else {
         messageContainer.innerHTML = '';
       }
-      var messageIndex = 0;
+      let messageIndex = 0;
       messages.forEach((message) => {
         console.log(message);
         const messageDiv = buildMessageDiv(message, messageIndex);
@@ -116,6 +132,12 @@ function fetchMessages() {
         messageIndex += 1;
       });
     });
+}
+
+// eslint-disable-next-line no-unused-vars
+function createNewFeed() {
+  const textarea = document.getElementById('feed-create-input');
+  console.log(textarea);
 }
 
 
