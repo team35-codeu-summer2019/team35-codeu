@@ -106,6 +106,10 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
   audioButton.innerText = 'Play';
 
+  const viewDetail = document.createElement('button');
+  audioButton.setAttribute('onclick', 'window.location.href="messageDetail.html?id='+message.id+'"');
+  audioButton.innerText = 'View Detail';
+
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(profileDiv);
@@ -113,6 +117,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   headerDiv.appendChild(translateButton);
   headerDiv.appendChild(audio);
   headerDiv.appendChild(audioButton);
+  headerDiv.appendChild(viewDetail);
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
