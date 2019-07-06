@@ -58,3 +58,11 @@ body {
   font-size: 1.45em;
   margin: 0 15px;
 }
+
+.img-icon{
+  width: 17px;
+}
+
+.like-count{
+  display: inline-block;
+}

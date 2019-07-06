@@ -13,6 +13,10 @@ public class Comment {
     this(UUID.randomUUID(), user, text, post, System.currentTimeMillis());
   }
 
+  public Comment(UUID id) {
+    this.id = id;
+  }
+
   public Comment(UUID id, String user, String text, String post, long timestamp) {
     this.id = id;
     this.user = user;

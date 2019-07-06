@@ -34,6 +34,16 @@
     <div id="content" class="container">
       <h1>Message Feed</h1>
       <hr />
+      <div id="feed-create-container">
+          <form>
+            <div class="form-group">
+              <label for="feed">Create New Feed:</label>
+              <textarea id="feed-create-input" class="form-control" rows="5" ></textarea>
+            </div>
+          </form>
+          <button onclick="createNewFeed()" type="button" class="btn btn-info">Submit</button>
+        </div>
+      
       <div id="message-container">Loading...</div>
     </div>
   </div>

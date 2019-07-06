@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 // Fetch messages and add them to the page.
 function fetchMessages() {
   const url = '/feed';
@@ -13,13 +15,13 @@ function fetchMessages() {
       const profilePromises = new Map();
       messages.forEach((message) => {
         if (profilePromises.get(message.user) === undefined) {
-          const profileUrl = '/profile?user=' + message.user;
+          const profileUrl = `/profile?user=${message.user}`;
           profilePromises.set(message.user, fetch(profileUrl)
-            .then(res => { return res.json(); }));
+            .then(res => res.json()));
         }
       });
 
-      Promise.all(profilePromises).then(values => {
+      Promise.all(profilePromises).then((values) => {
         let messageIndex = 0;
         messages.forEach((message) => {
           const messageDiv = buildMessageDiv(message, messageIndex, profilePromises.get(message.user));
@@ -30,3 +32,9 @@ function fetchMessages() {
     });
 }
 window.onload = fetchMessages();
+
+// eslint-disable-next-line no-unused-vars
+function createNewFeed() {
+  const textarea = document.getElementById('feed-create-input');
+  console.log(textarea);
+}
