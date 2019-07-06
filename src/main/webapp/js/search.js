@@ -17,8 +17,7 @@ function buildUserListItem(user) {
 /** Fetches users and adds them to the page. */
 function fetchUserList() {
   const url = '/search?q='.concat(pattern);
-  fetch(url)
-  .then( response => {
+  fetch(url).then( response => {
     return response.json();
   }).then((users) => {
     const list = document.getElementById('list');
