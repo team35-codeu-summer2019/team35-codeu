@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 // Fetch messages and add them to the page.
 function fetchMessages() {
-  const url = '/feed';
+  const url = '/all-messages';
   fetch(url)
     .then(response => response.json())
     .then((messages) => {
