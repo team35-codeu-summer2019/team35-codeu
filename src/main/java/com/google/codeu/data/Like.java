@@ -15,6 +15,10 @@ public class Like {
     this(UUID.randomUUID(), user, post, System.currentTimeMillis());
   }
 
+  public Like(UUID id) {
+    this.id = id;
+  }
+
   public Like(UUID id, String user, String post, long timestamp) {
     this.id = id;
     this.user = user;

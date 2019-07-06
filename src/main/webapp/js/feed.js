@@ -75,6 +75,10 @@ function buildMessageDiv(message, messageIndex) {
   audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
   audioButton.innerText = 'Play';
 
+  const viewDetail = document.createElement('button');
+  audioButton.setAttribute('onclick', 'window.location.href="messageDetail.html?id='+message.id+'"');
+  audioButton.innerText = 'View Detail';
+
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(usernameDiv);
@@ -106,12 +110,14 @@ function fetchMessages() {
       }
       var messageIndex = 0;
       messages.forEach((message) => {
+        console.log(message);
         const messageDiv = buildMessageDiv(message, messageIndex);
         messageContainer.appendChild(messageDiv);
         messageIndex += 1;
       });
     });
 }
+
 
 // Fetch data and populate the UI of the page.
 window.onload = fetchMessages();

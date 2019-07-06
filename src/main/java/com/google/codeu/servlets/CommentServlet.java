@@ -26,7 +26,6 @@ public class CommentServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
     String id = request.getParameter("id");
-    response.setContentType("application/json");
     Comment c = datastore.getCommentById(id);
     Gson gson = new Gson();
     String json = gson.toJson(c);
@@ -47,6 +46,9 @@ public class CommentServlet extends HttpServlet {
 
     Comment c = new Comment(user, text, post);
     datastore.storeComment(c);
+    Gson gson = new Gson();
+    String json = gson.toJson(true);
+    response.getOutputStream().println(json);
   }
 
   @Override
@@ -58,5 +60,8 @@ public class CommentServlet extends HttpServlet {
     }
 
     datastore.deleteComment(req.getParameter("id"));
+    Gson gson = new Gson();
+    String json = gson.toJson(true);
+    resp.getOutputStream().println(json);
   }
 }

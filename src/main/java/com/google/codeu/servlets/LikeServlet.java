@@ -27,8 +27,7 @@ public class LikeServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    String id = request.getParameter("id");
-    response.setContentType("application/json");
+    String id = request.getParameter("postId");
     List<Like> likes = datastore.getLikesByPost(id);
     Gson gson = new Gson();
     String json = gson.toJson(likes);
@@ -48,6 +47,9 @@ public class LikeServlet extends HttpServlet {
 
     Like l = new Like(user, post);
     datastore.storeLike(l);
+    Gson gson = new Gson();
+    String json = gson.toJson(true);
+    response.getOutputStream().println(json);
   }
 
   @Override
@@ -59,5 +61,8 @@ public class LikeServlet extends HttpServlet {
     }
 
     datastore.deleteLike(req.getParameter("id"));
+    Gson gson = new Gson();
+    String json = gson.toJson(true);
+    resp.getOutputStream().println(json);
   }
 }
