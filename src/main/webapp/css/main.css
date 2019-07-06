@@ -47,6 +47,7 @@ body {
 
 .landing-content{
   font-family: 'Raleway', sans-serif;
+  font-size:22px;
 }
 
 .login-button{
@@ -57,4 +58,18 @@ body {
   text-decoration: none;
   font-size: 1.45em;
   margin: 0 15px;
+  text-decoration: none;
+}
+
+.log-in-button-container{
+  align-items: center;
+  margin-top:15vh;
+}
+
+.img-icon{
+  width: 17px;
+}
+
+.like-count{
+  display: inline-block;
 }

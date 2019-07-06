@@ -2,22 +2,27 @@
 <html>
 
 <head>
-  <title>Message Feed</title>
+  <title>One Glance</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/nav-bar.css">
-  <link rel="stylesheet" href="/css/user-page.css">
-  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/stats.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Mali&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmsBaZDSm50H1fqB3PVmAr-BIwopAdsOg&callback=initMap"
+    type="text/javascript"></script>
+  <script type="text/javascript" src="./js/chart.js"></script>
+  <script src="./js/stats.js"></script>
 </head>
 
-<body>
+<body onload="buildUI()">
   <nav>
     <div class="brand">
-      <h2> Play Even Harder </h2>
+        <a style="text-decoration:none" href="/index.html"><h2>Play Even Harder</h2></a>
     </div>
-    <ul id="navigation">
+    <ul id="navigation" class="navigation">
       <li><a href="#"></a></li>
     </ul>
     <div class="search-container">
@@ -32,22 +37,47 @@
       <div class="line3"></div>
     </div>
   </nav>
-  
+      
   <section class="sec1"></section>
   <section class="sec2"></section>
 
   <div class="main-content">
-    <div id="content" class="container">
-      <h1>Message Feed</h1>
+    <div class="transbox">
+      <h1 class="title">Site Statistics</h1>
       <hr />
-      <div id="message-container">Loading...</div>
+      <table class="table table-sm table-hover">
+        <tbody>
+          <tr>
+            <td>
+              <div id="stats-container">Loading...</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="user-stats-container">Loading...</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="avg-stats-container">Loading...</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <h3 class="top10-most-active-users">Top 10 most active users</h3>
+      <div id="top10-most-active-users">Loading...</div>
+      <hr />
+      <h3 class="geochart-of-places">Where do our users come from?</h3>
+      <div id="geochart-of-places">Loading...</div>
+      <hr />
+      <div id="book_chart">Loading...</div>
     </div>
   </div>
+
 </body>
 <footer>
   <script src="./js/navigation-loader.js"></script>
-  <script src="./js/feed.js"></script>
-  <script src="/js/text-to-speech.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>

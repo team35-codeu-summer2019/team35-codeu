@@ -124,14 +124,15 @@ public class Datastore {
    * @return if delete is successful, return true; else false
    */
   public boolean deleteLike(String id) {
-    Query query = new Query("Like").setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
-    PreparedQuery results = datastore.prepare(query);
-    Entity entity = results.asSingleEntity();
-    if (entity == null) {
+    try{
+      Key key = KeyFactory.createKey("Like", id);
+      Entity entity = datastore.get(key);
+      datastore.delete(entity.getKey());
+      return true;
+    }catch(Exception ex) {
+      ex.printStackTrace();
       return false;
     }
-    datastore.delete(entity.getKey());
-    return true;
   }
 
   /* ============= Comments ================= */
@@ -156,14 +157,15 @@ public class Datastore {
    * @return if delete is successful, return true; else false
    */
   public boolean deleteComment(String id) {
-    Query query = new Query("Comment").setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
-    PreparedQuery results = datastore.prepare(query);
-    Entity entity = results.asSingleEntity();
-    if (entity == null) {
+    try{
+      Key key = KeyFactory.createKey("Comment", id);
+      Entity entity = datastore.get(key);
+      datastore.delete(entity.getKey());
+      return true;
+    }catch(Exception ex) {
+      ex.printStackTrace();
       return false;
     }
-    datastore.delete(entity.getKey());
-    return true;
   }
 
   /**
@@ -171,13 +173,30 @@ public class Datastore {
    * @return comment
    */
   public Comment getCommentById(String id) {
-    Query query = new Query("Comment").setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
-    PreparedQuery results = datastore.prepare(query);
-    Entity entity = results.asSingleEntity();
-    if (entity == null) {
+    try{
+      Key key = KeyFactory.createKey("Comment", id);
+      Entity entity = datastore.get(key);
+      return new Comment((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp"));
+    }catch(Exception ex) {
+      ex.printStackTrace();
       return null;
     }
-    return new Comment((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp"));
+  }
+
+
+  /**
+   * @param id
+   * @return message
+   */
+  public Message getPostById(String id) {
+    try{
+      Key key = KeyFactory.createKey("Message", id);
+      Entity entity = datastore.get(key);
+      return new Message((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (Long) entity.getProperty("timestamp"));
+    }catch(Exception ex) {
+      ex.printStackTrace();
+      return null;
+    }
   }
 
 
@@ -190,23 +209,6 @@ public class Datastore {
   public List<Message> getMessages(String user) {
     Query query = new Query("Message").setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
             .addSort("timestamp", SortDirection.DESCENDING);
-//    PreparedQuery results = datastore.prepare(query);
-//
-//    for (Entity entity : results.asIterable()) {
-//      try {
-//        String idString = entity.getKey().getName();
-//        UUID id = UUID.fromString(idString);
-//        String text = (String) entity.getProperty("text");
-//        long timestamp = (long) entity.getProperty("timestamp");
-//
-//        Message message = new Message(id, user, text, timestamp);
-//        messages.add(message);
-//      } catch (Exception e) {
-//        System.err.println("Error reading message.");
-//        System.err.println(entity.toString());
-//        e.printStackTrace();
-//      }
-//    }
     return this.getMessagesHelper(query);
   }
 

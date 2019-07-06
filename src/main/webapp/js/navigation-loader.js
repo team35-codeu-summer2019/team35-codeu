@@ -30,7 +30,6 @@ const navSlide = () =>{
   const nav = document.querySelector('nav ul');
 
   burger.addEventListener('click', ()=>{
-    console.log("If this is invoked.");
     nav.classList.toggle('nav-active');
   });
 }
@@ -69,11 +68,11 @@ function addLoginOrLogoutLinkToNavigation() {
     .then((loginStatus) => {
       if (loginStatus.isLoggedIn) {
         navigationElement.appendChild(
-          createListItem(createLink('/index.html', 'Home'))
+          createListItem(createLink('/aboutus.html', 'Our Team'))
         );
 
         navigationElement.appendChild(
-          createListItem(createLink('/aboutus.html', 'Our Team'))
+          createListItem(createLink('/user-info.html', 'Your Profile'))
         );
 
         navigationElement.appendChild(
@@ -84,28 +83,27 @@ function addLoginOrLogoutLinkToNavigation() {
             )
           )
         );
+
         navigationElement.appendChild(
-          createListItem(createLink('/user-info.html', 'Your profile'))
-        );
-        navigationElement.appendChild(
-          createListItem(createLink('/feed.html', 'Public Feeds'))
+          createListItem(createLink('/see-around.html', 'See Around'))
         );
 
         navigationElement.appendChild(
-          createListItem(createLink('/map.html', 'Map'))
+          createListItem(createLink('/one-glance.html', 'One Glance'))
         );
 
         navigationElement.appendChild(
-          createListItem(createLink('/stats.html', 'Statistics'))
-        );
-
-        navigationElement.appendChild(
-          createListItem(createLink('/community.html', 'Community'))
+          createListItem(createLink('https://www.google.com/maps/search/google+map/', 'Map'))
         );
 
         navigationElement.appendChild(
           createListItem(createLink('/logout', 'Logout'))
         );
+
+        // Probably this is not needed in our prototype
+        // navigationElement.appendChild(
+        //   createListItem(createLink('/community.html', 'Community'))
+        // );
       } else {
         navigationElement.appendChild(
           createListItem(createLink('/index.html', 'Home'))
