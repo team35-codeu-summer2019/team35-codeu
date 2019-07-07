@@ -35,7 +35,7 @@ public class SearchServlet extends HttpServlet {
     response.setContentType("application/json");
     String pattern = "(.*)" + request.getParameter("q") + "(.*)";
 
-    Set<String> userList = datastore.getUsers();
+    Set<String> userList = datastore.getActiveUsers();
     Set<String> matchedUsers = new HashSet<>();
 
     for (String user : userList) {
