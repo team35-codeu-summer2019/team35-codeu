@@ -125,15 +125,31 @@ function toggleFollow(user, currentUser, messageIndex) {
   const element = document.getElementById(elementID);
   if (element.className === 'btn btn-primary') {
     follow(user, currentUser);
-    element.setAttribute('class', 'btn btn-secondary');
-    element.innerText = "Unfollow";
   } else {
     unFollow(user, currentUser);
-    element.setAttribute('class', 'btn btn-primary');
-    element.innerText = "Follow";
   }
 }
 
+function createFollowButton(user, currentUser, messageIndex){
+  const elementID = "follow-button-" + messageIndex.toString();
+  const element = document.getElementById(elementID);
+  // check follower list
+  const url = "/followers?user=" + user;
+  fetch(url)
+  .then((res) => res.json())
+  .then((response) =>{
+    console.log(response);
+    if(response.indexOf(currentUser) > -1){
+      console.log("Here is executed (1)");
+      element.setAttribute('class', 'btn btn-secondary');
+      element.innerText = "Unfollow";
+    }else{
+      console.log("Here is executed (2)");
+      element.setAttribute('class', 'btn btn-primary');
+      element.innerText = "Follow";
+    }
+  })
+}
 // eslint-disable-next-line no-unused-vars
 function buildMessageDiv(message, messageIndex, profilePromise) {
   var feedDetailUrl = "/messageDetail.html?postId=" + message.id;
@@ -183,12 +199,28 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
       const followButton = document.createElement('button');
       const followButtonId = `follow-button-${messageIndex.toString()}`;
       followButton.setAttribute('id', followButtonId);
-      followButton.setAttribute('class', 'btn btn-primary');
-      followButton.setAttribute('onclick', 'toggleFollow(\'' + message.user + '\',\'' + res.username + '\',\'' + messageIndex + '\');');
-      followButton.style.setProperty("margin-left", "20px");
-      followButton.style.setProperty("corner-radius", "2px");
-      followButton.innerText = 'Follow';
-      headerDiv.appendChild(followButton);
+
+      const url = "/followers?user=" + message.user;
+      const followButtonStylePromise = fetch(url).then(res2 => {return res2.json()});
+      followButtonStylePromise.then((res2) =>{
+        if(res2.indexOf(res.username) > -1){
+          console.log("Here is executed (1)");
+          followButton.setAttribute('class', 'btn btn-secondary');
+          followButton.innerText = "Unfollow";
+          followButton.setAttribute('onclick', 'toggleFollow(\'' + message.user + '\',\'' + res.username + '\',\'' + messageIndex + '\');');
+          followButton.style.setProperty("margin-left", "20px");
+          followButton.style.setProperty("corner-radius", "2px");
+          headerDiv.appendChild(followButton);
+        }else{
+          console.log("Here is executed (2)");
+          followButton.setAttribute('class', 'btn btn-primary');
+          followButton.innerText = "Follow";
+          followButton.setAttribute('onclick', 'toggleFollow(\'' + message.user + '\',\'' + res.username + '\',\'' + messageIndex + '\');');
+          followButton.style.setProperty("margin-left", "20px");
+          followButton.style.setProperty("corner-radius", "2px");
+          headerDiv.appendChild(followButton);
+        }
+      });
     }
   })
 

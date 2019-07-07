@@ -50,7 +50,6 @@ public class FollowServlet extends HttpServlet {
 		if(currU==null){
 			currU = new ArrayList<>();
 			currU.add(followUser);
-			u.setFollowers(currU);
 		}else if(currU.contains(followUser)){
 			System.out.println(followUser + " has already been added");
 		}else{
@@ -60,13 +59,18 @@ public class FollowServlet extends HttpServlet {
 		if(currFu==null){
 			currFu = new ArrayList<>();
 			currFu.add(user);
-			fu.setFollowings(currFu);
 		}else if(currFu.contains(user)){
 			System.out.println(user + " has already been added");
 		}else{
 			currFu.add(user);
 		}
 
+		u.setFollowings(currU);
+		fu.setFollowers(currFu);
+		datastore.storeUser(u);
+		datastore.storeUser(fu);
+
+		System.out.println("Add following follower pair");
 		System.out.println(u);
 		System.out.println(fu);
 
@@ -107,6 +111,12 @@ public class FollowServlet extends HttpServlet {
 
 		u.setFollowings(currU);
 		fu.setFollowers(currFu);
+		datastore.storeUser(u);
+		datastore.storeUser(fu);
+
+		System.out.println("Delete following follower pair");
+		System.out.println(u);
+		System.out.println(fu);
 
 		resultArray = new JsonArray();
 		Gson gson = new Gson();

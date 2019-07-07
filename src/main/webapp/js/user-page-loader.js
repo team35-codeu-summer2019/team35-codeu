@@ -87,22 +87,34 @@ function fetchMessages() {
 
 
 function fetchFollowers(){
-  // const followersElement = document.getElementById("followers-num");
+  const followersElement = document.getElementById("followers-num");
   const url = "/followers?user=" + parameterUsername;
   fetch(url)
   .then(response => response.json())
   .then((res) => {
-    console.log(res.length);
+    console.log(res);
+    if(res == null){
+      followersElement.innerText = '0';
+    }else{
+      console.log(res.length);
+      followersElement.innerText = res.length;
+    }
   })
 }
 
 function fetchFollowings(){
-  // const followingsElement = document.getElementById("followings-num");
+  const followingsElement = document.getElementById("followings-num");
   const url = "/followings?user=" + parameterUsername;
   fetch(url)
   .then(response => response.json())
   .then((res) => {
-    console.log(res.length);
+    console.log(res);
+    if(res == null){
+      followingsElement.innerText = '0';
+    }else{
+      console.log(res.length);
+      followingsElement.innerText = res.length;
+    }
   })
 }
 
