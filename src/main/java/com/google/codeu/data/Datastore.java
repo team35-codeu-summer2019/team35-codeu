@@ -292,7 +292,7 @@ public class Datastore {
   }
 
 
-  public Set<String> getActiveUsers() {
+  public Set<String> getAllUsers() {
     Set<String> users = new HashSet<>();
     Query query = new Query("User");
     PreparedQuery results = datastore.prepare(query);
