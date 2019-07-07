@@ -15,17 +15,26 @@
 <body>
   <nav>
     <div class="brand">
-      <h2> Play Even Harder </h2>
+      <a style="text-decoration:none" href="/index.html"><h2>Play Even Harder</h2></a>
     </div>
-    <ul id="navigation">
-      <li><a href="#"></a></li>
+    <ul id="navigation" class="navigation">
+      <li>
+        <a href="#"></a>
+      </li>
     </ul>
+    <div class="search-container">
+      <form action="/search" method = "POST">
+        <input name = "text" type="text" placeholder="Find other .." name="search">
+        <button>Search</i></button>
+      </form>
+    </div>
     <div class="burger">
       <div class="line1"></div>
       <div class="line2"></div>
       <div class="line3"></div>
     </div>
   </nav>
+
   <div class="main-content">
     <div id="content" class="container" style="
     margin-top: 76px;

@@ -2,15 +2,12 @@
 <html>
 
 <head>
-  <title>See Around</title>
+  <title>Search</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/nav-bar.css">
-  <link rel="stylesheet" href="/css/user-page.css">
-  <meta charset="UTF-8">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Mali&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/user-info.css">
 </head>
 
 <body>
@@ -39,29 +36,18 @@
   <section class="sec1"></section>
   <section class="sec2"></section>
 
-  <div class="main-content">
-    <div id="content" class="container">
-      <h1>See Around</h1>
-      <hr />
-      <div id="feed-create-container">
-          <form>
-            <div class="form-group">
-              <label for="feed">Create New Feed:</label>
-              <textarea id="feed-create-input" class="form-control" rows="5" ></textarea>
-            </div>
-          </form>
-          <button onclick="createNewFeed()" type="button" class="btn btn-info">Submit</button>
-        </div>
-      
-      <div id="message-container">Loading...</div>
+  <div id="content">
+    <div class="text-center">
+      <p>Here is a list of matched users:</p>
     </div>
+    <hr />
+    <ul id="list">Loading...</ul>
   </div>
+
 </body>
 <footer>
   <script src="./js/navigation-loader.js"></script>
-  <script src="/js/text-to-speech.js"></script>
-  <script src="./js/build-message.js"></script>
-  <script src="./js/feed.js"></script>
+  <script src="./js/search.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>

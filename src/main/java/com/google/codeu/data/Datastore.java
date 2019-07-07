@@ -292,6 +292,16 @@ public class Datastore {
   }
 
 
+  public Set<String> getAllUsers() {
+    Set<String> users = new HashSet<>();
+    Query query = new Query("User");
+    PreparedQuery results = datastore.prepare(query);
+    for (Entity entity : results.asIterable()) {
+      users.add((String) entity.getProperty("email"));
+    }
+    return users;
+  }
+
   public Set<String> getUsers() {
     Set<String> users = new HashSet<>();
     Query query = new Query("Message");
