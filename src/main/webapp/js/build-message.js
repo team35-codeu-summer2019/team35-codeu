@@ -119,7 +119,7 @@ function unFollow(message) {
     });
 }
 
-function toggleFollow(message) {
+function toggleFollow(message,element) {
   const element = document.getElementById('follow-button');
   console.log(element.className);
   if (element.className === 'btn btn-secondary') {
@@ -147,7 +147,7 @@ function checkDifferentUser(message){
 
 // eslint-disable-next-line no-unused-vars
 function buildMessageDiv(message, messageIndex, profilePromise) {
-  var feedDetailUrl = "/messageDetails.html?postId=" + message.postId;
+  var feedDetailUrl = "/messageDetail.html?postId=" + message.postId;
 
   const profileDiv = buildProfileDiv(message, profilePromise);
 
@@ -183,7 +183,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
     const followButton = document.createElement('button');
     followButton.setAttribute('id','follow-button');
     followButton.setAttribute('class', 'btn btn-secondary');
-    followButton.setAttribute('onclick', toggleFollow(message));
+    followButton.setAttribute('onclick', toggleFollow(message,followButton));
     followButton.style.setProperty("margin-left","20px");
     followButton.style.setProperty("corner-radius","2px");
     followButton.innerText = 'Follow';
