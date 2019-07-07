@@ -86,98 +86,86 @@ function fetchMessages() {
 }
 
 
-function fetchFollowersNumber(){
+function fetchFollowersNumber() {
   const followersElement = document.getElementById("followers-num");
   const url = "/followers?user=" + parameterUsername;
   fetch(url)
-  .then(response => response.json())
-  .then((res) => {
-    console.log(res);
-    if(res == null){
-      followersElement.innerText = '0';
-    }else{
-      console.log(res.length);
-      followersElement.innerText = res.length;
-    }
-  })
+    .then(response => response.json())
+    .then((res) => {
+      console.log(res);
+      if (res == null) {
+        followersElement.innerText = '0';
+      } else {
+        console.log(res.length);
+        followersElement.innerText = res.length;
+      }
+    })
 }
 
-function fetchFollowingsNumber(){
+function fetchFollowingsNumber() {
   const followingsElement = document.getElementById("followings-num");
   const url = "/followings?user=" + parameterUsername;
   fetch(url)
-  .then(response => response.json())
-  .then((res) => {
-    console.log(res);
-    if(res == null){
-      followingsElement.innerText = '0';
-    }else{
-      console.log(res.length);
-      followingsElement.innerText = res.length;
-    }
-  })
+    .then(response => response.json())
+    .then((res) => {
+      console.log(res);
+      if (res == null) {
+        followingsElement.innerText = '0';
+      } else {
+        console.log(res.length);
+        followingsElement.innerText = res.length;
+      }
+    })
 }
 
-function fetchFollowers(){
+function fetchFollowers() {
   const url = "/followers?user=" + parameterUsername;
   fetch(url)
-  .then(response => response.json())
-  .then((responses) => {
-    if(responses === null){
-
-    }else{
-      responses.forEach((response) => {
-        const followersElement = setInterval(function(){
-          document.getElementById("followers-details-modal-body");
-        },100);
-        
-        if(followersElement){
+    .then(response => response.json())
+    .then((responses) => {
+      const followersElement = document.getElementById("followers-details-modal-body");
+      if (responses === null) {
+        followersElement.appendChild(document.createTextNode("You don't have any followers yet."));
+      } else {
+        responses.forEach((response) => {
           console.log("Exists!");
-          console.log(followingsElement);
-        }
-  
-        // var userDiv = document.createElement("p");
-        // var userDivNode = document.createTextNode(response);
-        // userDiv.appendChild(userDivNode);
-        // console.log(response);
-        // console.log(userDiv);
-        // userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
+          console.log(followersElement);
 
-        // followersElement.appendChild(userDiv);
-        // return followersElement;
-      });
-    }
-  })
+          var userDiv = document.createElement("p");
+          var userDivNode = document.createTextNode(response);
+          userDiv.appendChild(userDivNode);
+          console.log(response);
+          userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
+
+          followersElement.appendChild(userDiv);
+        });
+      }
+    })
 }
 
-function fetchFollowings(){
+function fetchFollowings() {
   const url = "/followings?user=" + parameterUsername;
   fetch(url)
-  .then(response => response.json())
-  .then((responses) => {
-    if(responses === null){
-
-    }else{
-      responses.forEach((response) => {
-        const followingsElement = setInterval(function(){
-          document.getElementById("followings-details-modal-body");
-        },100);
-        
-        if(followingsElement){
+    .then(response => response.json())
+    .then((responses) => {
+      const followingsElement = document.getElementById("followings-details-modal-body");
+      if (responses === null) {
+        followingsElement.appendChild(document.createTextNode("You haven't followed anyone yet."));
+      } else {
+        responses.forEach((response) => {
           console.log("Exists!");
           console.log(followingsElement);
-        }
-        // var userDiv = document.createElement("p");
-        // var userDivNode = document.createTextNode(response);
-        // userDiv.appendChild(userDivNode);
-        // console.log(reponse);
-        // userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
 
-        // followersElement.appendChild(userDiv);
-        // return followingsElement;
-      });
-    }
-  })
+          var userDiv = document.createElement("p");
+          var userDivNode = document.createTextNode(response);
+          userDiv.appendChild(userDivNode);
+          console.log(reponse);
+          userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
+
+          followersElement.appendChild(userDiv);
+        });
+      }
+    })
 }
 
 /** fetch blobstore upload url */
@@ -199,8 +187,6 @@ function buildUI() {
   fetchMessages();
   fetchFollowersNumber();
   fetchFollowingsNumber();
-  fetchFollowers();
-  fetchFollowings();
   fetchBlobstoreUrlAndShowForm();
 }
 window.onload = buildUI();

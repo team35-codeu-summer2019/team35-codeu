@@ -2,6 +2,7 @@ package com.google.codeu.servlets;
 
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
+import com.google.gson.Gson;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,24 +53,22 @@ public class FeaturedPostsServlet extends HttpServlet {
 			 messageWithLikes.put(m.get(i), datastore.getLikesByPost(m.get(i).getId().toString()).size());
 		}
 
-		Map<String, Integer> sortedMessageWithLikes = sortByValue(messageWithLikes);
-		Map<String, Integer> result = new HashMap<>();
-		System.out.println("Map sortedUserFreq");
-		System.out.println(sortedUserFreq);
+		Map<Message, Integer> sortedMessageWithLikes = sortByValue(messageWithLikes);
+		Map<Message, Integer> result = new HashMap<>();
 
-		if(userFreq.size() <= 10){
+		if(messageWithLikes.size() <= 10){
 			System.out.println("Less than 10 is executed");
-			result = sortedUserFreq;
+			result = sortedMessageWithLikes;
 		}else{
 			System.out.println("More than 10 is executed");
-			int length = sortedUserFreq.size();
+			int length = sortedMessageWithLikes.size();
 			int count = 0;
 
-			Iterator it = sortedUserFreq.entrySet().iterator();
+			Iterator it = sortedMessageWithLikes.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry)it.next();
 				if(length-count<=10){  // Meaning the last 10
-					result.put(pair.getKey().toString(), Integer.parseInt(pair.getValue().toString()));
+					result.put((Message) pair.getKey(), Integer.parseInt(pair.getValue().toString()));
 				}
 				count++;
 				it.remove();
@@ -78,5 +77,10 @@ public class FeaturedPostsServlet extends HttpServlet {
 		System.out.println("Map result");
 		System.out.println(result);
 
+		List<Message> resultMessages = new ArrayList<>();
+		Gson gson = new Gson();
+		String json = gson.toJson(resultMessages);
+
+		response.getOutputStream().println(json);
 	}
 }
