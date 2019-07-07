@@ -6,6 +6,7 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,6 +41,8 @@ public class ProfileFormHandlerServlet extends HttpServlet {
     }
 
     String userEmail = userService.getCurrentUser().getEmail();
+    ArrayList<String> followers = datastore.getUser(userEmail).getFollowers();
+    ArrayList<String> followings = datastore.getUser(userEmail).getFollowings();
     String aboutMe = Jsoup.clean(request.getParameter("about"), Whitelist.relaxed());
     String name = Jsoup.clean(request.getParameter("display_name"), Whitelist.none());
     String imageUrl = FormHandlerServlet.getUploadedFileUrl(request, "image");
@@ -51,7 +54,7 @@ public class ProfileFormHandlerServlet extends HttpServlet {
         imageUrl = "./img/user-profile.png";
       }
     }
-    User user = new User(userEmail, aboutMe, name, imageUrl);
+    User user = new User(userEmail, aboutMe, name, imageUrl, followers, followings);
     datastore.storeUser(user);
 
     response.sendRedirect("/user-page.html?user=" + userEmail);
