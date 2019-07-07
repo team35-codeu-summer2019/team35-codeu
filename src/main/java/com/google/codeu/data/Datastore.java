@@ -324,7 +324,7 @@ public class Datastore {
     return users;
   }
 
-  public ArrayList<String> getFollowingFollowerNumber(String email, String type){
+  public ArrayList<String> getFollowingFollower(String email, String type){
     Query query = new Query("User").setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
     PreparedQuery results = datastore.prepare(query);
     Entity userEntity = results.asSingleEntity();

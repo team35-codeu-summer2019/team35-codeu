@@ -22,7 +22,7 @@ public class GetFollowerServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String user = request.getParameter("user");
-		ArrayList<String> result = datastore.getFollowingFollowerNumber(user,"followers");
+		ArrayList<String> result = datastore.getFollowingFollower(user,"followers");
 
 		Gson gson = new Gson();
 		String json = gson.toJson(result);

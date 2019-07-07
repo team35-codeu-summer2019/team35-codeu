@@ -1,7 +1,5 @@
 package com.google.codeu.servlets;
 
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
 import com.google.gson.Gson;
@@ -39,18 +37,36 @@ public class FollowServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		UserService userService = UserServiceFactory.getUserService();
-		String user = userService.getCurrentUser().getEmail();
-		String followUser = request.getParameter("email");
+		String user = request.getParameter("followeremail");
+		String followUser = request.getParameter("followingemail");
 
 		User u = datastore.getUser(user);   // u is going to follow fu, so add u's following list, add fu's follower list
 		User fu = datastore.getUser(followUser);
 
 		ArrayList<String> currU = u.getFollowings();
-		currU.add(followUser);
-
 		ArrayList<String> currFu = fu.getFollowers();
-		currFu.add(user);
+
+
+		if(currU==null){
+			currU = new ArrayList<>();
+			currU.add(followUser);
+		}else if(currU.contains(followUser)){
+			System.out.println(followUser + " has already been added");
+		}else{
+			currU.add(followUser);
+		}
+
+		if(currFu==null){
+			currFu = new ArrayList<>();
+			currFu.add(user);
+		}else if(currFu.contains(user)){
+			System.out.println(user + " has already been added");
+		}else{
+			currFu.add(user);
+		}
+
+		u.setFollowings(currU);
+		fu.setFollowers(currFu);
 
 		resultArray = new JsonArray();
 		Gson gson = new Gson();
@@ -62,18 +78,33 @@ public class FollowServlet extends HttpServlet {
 
 	@Override
 	public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserService userService = UserServiceFactory.getUserService();
-		String user = userService.getCurrentUser().getEmail();
-		String followUser = request.getParameter("email");
+		String user = request.getParameter("followeremail");
+		String followUser = request.getParameter("followingemail");
 
 		User u = datastore.getUser(user);
 		User fu = datastore.getUser(followUser);
 
 		ArrayList<String> currU = u.getFollowings();
-		currU.remove(followUser);
-
 		ArrayList<String> currFu = fu.getFollowers();
-		currFu.remove(user);
+
+		if(currU!=null){
+			try{
+				currU.remove(followUser);
+			}catch (Exception e) {
+				System.out.println("There is no such followed user");
+			}
+		}
+
+		if(currFu!=null){
+			try{
+				currFu.remove(user);
+			}catch (Exception e) {
+				System.out.println("There is no such user following");
+			}
+		}
+
+		u.setFollowings(currU);
+		fu.setFollowers(currFu);
 
 		resultArray = new JsonArray();
 		Gson gson = new Gson();

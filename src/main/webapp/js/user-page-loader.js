@@ -86,6 +86,26 @@ function fetchMessages() {
 }
 
 
+function fetchFollowers(){
+  // const followersElement = document.getElementById("followers-num");
+  const url = "/followers?user=" + parameterUsername;
+  fetch(url)
+  .then(response => response.json())
+  .then((res) => {
+    console.log(res.length);
+  })
+}
+
+function fetchFollowings(){
+  // const followingsElement = document.getElementById("followings-num");
+  const url = "/followings?user=" + parameterUsername;
+  fetch(url)
+  .then(response => response.json())
+  .then((res) => {
+    console.log(res.length);
+  })
+}
+
 /** fetch blobstore upload url */
 function fetchBlobstoreUrlAndShowForm() {
   fetch('/blobstore-upload-url?requester=user-page')
@@ -103,6 +123,8 @@ function buildUI() {
   fetchUserData();
   removeHiddensIfViewingSelf();
   fetchMessages();
+  fetchFollowers();
+  fetchFollowings();
   fetchBlobstoreUrlAndShowForm();
 }
 window.onload = buildUI();
