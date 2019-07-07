@@ -20,6 +20,7 @@ import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -77,6 +78,8 @@ public class Datastore {
     userEntity.setProperty("aboutMe", user.getAboutMe());
     userEntity.setProperty("name", user.getName());
     userEntity.setProperty("imageUrl", user.getImageUrl());
+    userEntity.setProperty("followers", user.getFollowers());
+    userEntity.setProperty("followings", user.getFollowings());
     datastore.put(userEntity);
   }
 
@@ -183,6 +186,7 @@ public class Datastore {
     }
   }
 
+  /* ============= Posts and Messages ================= */
 
   /**
    * @param id
@@ -212,6 +216,7 @@ public class Datastore {
     return this.getMessagesHelper(query);
   }
 
+
   private List<Message> getMessagesHelper(Query query) {
     List<Message> messages = new ArrayList<>();
     PreparedQuery results = datastore.prepare(query);
@@ -235,32 +240,13 @@ public class Datastore {
     return messages;
   }
 
+
   public List<Message> getAllMessages() {
     Query query = new Query("Message")
             .addSort("timestamp", SortDirection.DESCENDING);
     return this.getMessagesHelper(query);
   }
 
-  /**
-   * Returns the User owned by the email address, or null if no matching User was
-   * found.
-   */
-  public User getUser(String email) {
-
-    Query query = new Query("User").setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
-    PreparedQuery results = datastore.prepare(query);
-    Entity userEntity = results.asSingleEntity();
-    if (userEntity == null) {
-      return null;
-    }
-
-    String aboutMe = (String) userEntity.getProperty("aboutMe");
-    String name = (String) userEntity.getProperty("name");
-    String imageUrl = (String) userEntity.getProperty("imageUrl");
-    User user = new User(email, aboutMe, name, imageUrl);
-    
-    return user;
-  }
 
   /**
    * Returns the total number of messages for all users.
@@ -270,6 +256,7 @@ public class Datastore {
     PreparedQuery results = datastore.prepare(query);
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
+
 
   /**
    * Returns the average length of messages for all users.
@@ -289,6 +276,31 @@ public class Datastore {
 
     float result = (float) totalLength / numberOfMessages;
     return result;
+  }
+
+  /* ============= Users ================= */
+
+  /**
+   * Returns the User owned by the email address, or null if no matching User was
+   * found.
+   */
+  public User getUser(String email) {
+
+    Query query = new Query("User").setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+    PreparedQuery results = datastore.prepare(query);
+    Entity userEntity = results.asSingleEntity();
+    if (userEntity == null) {
+      return null;
+    }
+
+    String aboutMe = (String) userEntity.getProperty("aboutMe");
+    String name = (String) userEntity.getProperty("name");
+    String imageUrl = (String) userEntity.getProperty("imageUrl");
+    ArrayList<String> followers = (ArrayList) userEntity.getProperty("followers");
+    ArrayList<String> followings = (ArrayList) userEntity.getProperty("followings");
+    User user = new User(email, aboutMe, name, imageUrl, followers, followings);
+    
+    return user;
   }
 
 
@@ -312,6 +324,15 @@ public class Datastore {
     return users;
   }
 
+  public ArrayList<String> getFollowingFollowerNumber(String email, String type){
+    Query query = new Query("User").setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+    PreparedQuery results = datastore.prepare(query);
+    Entity userEntity = results.asSingleEntity();
+    ArrayList<String> requestedResult = (ArrayList<String>) userEntity.getProperty(type);
+    return requestedResult;
+  }
+
+  /* ============= Stats Related ================= */
 
   public ArrayList<String> getCountries() {
     ArrayList<String> countries = new ArrayList<String>();
