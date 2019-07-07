@@ -99,34 +99,32 @@ function httpOptions(method) {
   };
 }
 
-function follow(message) {
-  const followUser = message.user;
-  console.log(message.user);
-  fetch(`follow?email=${followUser}`, httpOptions('POST'))
+function follow(user) {
+  console.log(user);
+  fetch(`follow?email=${user}`, httpOptions('POST'))
     .then(response => response.json())
     .then((res) => {
       console.log(res);
     });
 }
 
-function unFollow(message) {
-  const followUser = message.user;
-  console.log(message.user);
-  fetch(`follow?email=${followUser}`, httpOptions('DELETE')) // gives followUser undefined
+function unFollow(user) {
+  console.log(user);
+  fetch(`follow?email=${user}`, httpOptions('DELETE')) // gives followUser undefined
     .then(response => response.json())
     .then((res) => {
       console.log(res);
     });
 }
 
-function toggleFollow(message) {
+function toggleFollow(user) {
   const element = document.getElementById('follow-button');
   if (element.className === 'btn btn-secondary') {
-    follow(message);
+    follow(user);
     element.setAttribute('class','btn btn-primary');
     element.innerText = "Unfollow";
   } else {
-    unFollow(message);
+    unFollow(user);
     element.setAttribute('class','btn btn-secondary');
     element.innerText = "Follow";
   }
@@ -183,7 +181,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
     const followButton = document.createElement('button');
     followButton.setAttribute('id','follow-button');
     followButton.setAttribute('class', 'btn btn-secondary');
-    followButton.setAttribute('onclick', 'toggleFollow(\'' + message + '\');');
+    followButton.setAttribute('onclick', 'toggleFollow(\'' + message.user + '\');');
     followButton.style.setProperty("margin-left","20px");
     followButton.style.setProperty("corner-radius","2px");
     followButton.innerText = 'Follow';
