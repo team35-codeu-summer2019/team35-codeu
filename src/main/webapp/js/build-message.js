@@ -123,20 +123,20 @@ function toggleFollow(user, currentUser, messageIndex) {
   console.log("Debugging point 3 " + currentUser);
   const elementID = "follow-button-" + messageIndex.toString();
   const element = document.getElementById(elementID);
-  if (element.className === 'btn btn-secondary') {
+  if (element.className === 'btn btn-primary') {
     follow(user, currentUser);
-    element.setAttribute('class', 'btn btn-primary');
+    element.setAttribute('class', 'btn btn-secondary');
     element.innerText = "Unfollow";
   } else {
     unFollow(user, currentUser);
-    element.setAttribute('class', 'btn btn-secondary');
+    element.setAttribute('class', 'btn btn-primary');
     element.innerText = "Follow";
   }
 }
 
 // eslint-disable-next-line no-unused-vars
 function buildMessageDiv(message, messageIndex, profilePromise) {
-  var feedDetailUrl = "/messageDetail.html?postId=" + message.postId;
+  var feedDetailUrl = "/messageDetail.html?postId=" + message.id;
 
   const profileDiv = buildProfileDiv(message, profilePromise);
 
@@ -144,7 +144,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   const bodyMessageId = `message-body-${messageIndex.toString()}`;
   bodyDiv.setAttribute('id', bodyMessageId);
   bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = '<a href=' + feedDetailUrl + ' style="text-decoration:none">' + message.message + '</a>';
+  bodyDiv.innerHTML = '<a href=' + feedDetailUrl + ' style="text-decoration:none">' + message.text + '</a>';
 
   const langList = buildLanguageSelectList();
   const langId = `lang-${messageIndex.toString()}`;
@@ -183,7 +183,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
       const followButton = document.createElement('button');
       const followButtonId = `follow-button-${messageIndex.toString()}`;
       followButton.setAttribute('id', followButtonId);
-      followButton.setAttribute('class', 'btn btn-secondary');
+      followButton.setAttribute('class', 'btn btn-primary');
       followButton.setAttribute('onclick', 'toggleFollow(\'' + message.user + '\',\'' + res.username + '\',\'' + messageIndex + '\');');
       followButton.style.setProperty("margin-left", "20px");
       followButton.style.setProperty("corner-radius", "2px");
