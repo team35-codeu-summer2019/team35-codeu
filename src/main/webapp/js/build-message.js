@@ -121,6 +121,7 @@ function unFollow(message) {
 
 function toggleFollow(message) {
   const element = document.getElementById('follow-button');
+  console.log(element.className);
   if (element.className === 'btn btn-secondary') {
     console.log("Can detect color secondary");
     follow(message);
@@ -178,15 +179,15 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   audioButton.style.setProperty("border-radius","8px;");
   audioButton.innerText = 'Play';
 
-  if(checkDifferentUser(message)){
+  // if(checkDifferentUser(message)){
     const followButton = document.createElement('button');
-    followButton.setAttribute('id','follow-button')
-    followButton.setAttribute('onclick', toggleFollow(message));
+    followButton.setAttribute('id','follow-button');
     followButton.setAttribute('class', 'btn btn-secondary');
+    followButton.setAttribute('onclick', toggleFollow(message));
     followButton.style.setProperty("margin-left","20px");
     followButton.style.setProperty("corner-radius","2px");
     followButton.innerText = 'Follow';
-  }
+  // }
 
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
