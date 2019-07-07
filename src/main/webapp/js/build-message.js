@@ -204,7 +204,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
       const followButtonStylePromise = fetch(url).then(res2 => { return res2.json() });
       followButtonStylePromise.then((res2) => {
         if (res2 === null) {
-          console.log("Here is executed (2)");
+          console.log("Here is executed (1)");
           followButton.setAttribute('class', 'btn btn-primary');
           followButton.innerText = "Follow";
           followButton.setAttribute('onclick', 'toggleFollow(\'' + message.user + '\',\'' + res.username + '\',\'' + messageIndex + '\');');
@@ -213,7 +213,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
           headerDiv.appendChild(followButton);
         } else {
           if (res2.indexOf(res.username) > -1) {
-            console.log("Here is executed (1)");
+            console.log("Here is executed (2)");
             followButton.setAttribute('class', 'btn btn-secondary');
             followButton.innerText = "Unfollow";
             followButton.setAttribute('onclick', 'toggleFollow(\'' + message.user + '\',\'' + res.username + '\',\'' + messageIndex + '\');');
@@ -221,7 +221,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
             followButton.style.setProperty("corner-radius", "2px");
             headerDiv.appendChild(followButton);
           } else {
-            console.log("Here is executed (2)");
+            console.log("Here is executed (3)");
             followButton.setAttribute('class', 'btn btn-primary');
             followButton.innerText = "Follow";
             followButton.setAttribute('onclick', 'toggleFollow(\'' + message.user + '\',\'' + res.username + '\',\'' + messageIndex + '\');');

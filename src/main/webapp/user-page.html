@@ -33,7 +33,9 @@ limitations under the License.
 <body>
   <nav>
     <div class="brand">
-      <a style="text-decoration:none" href="/index.html"><h2>Play Even Harder</h2></a>
+      <a style="text-decoration:none" href="/index.html">
+        <h2>Play Even Harder</h2>
+      </a>
     </div>
     <ul id="navigation" class="navigation">
       <li>
@@ -41,8 +43,8 @@ limitations under the License.
       </li>
     </ul>
     <div class="search-container">
-      <form action="/search" method = "POST">
-        <input name = "text" type="text" placeholder="Find other .." name="search">
+      <form action="/search" method="POST">
+        <input name="text" type="text" placeholder="Find other .." name="search">
         <button>Search</i></button>
       </form>
     </div>
@@ -52,8 +54,7 @@ limitations under the License.
       <div class="line3"></div>
     </div>
   </nav>
-  
-  <section class="sec1"></section>
+
   <section class="sec2"></section>
 
   <div class="main-content">
@@ -69,8 +70,54 @@ limitations under the License.
             </div>
             <div id="follows">
               <p> Followers : <p id="followers-num">0</p>
-                  <br/>
-                  Followings : <p id="followings-num">0</p>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#FollowersDetails">View
+                  Details</button>
+                <!-- Follower Model -->
+                <div class="modal fade" id="FollowersDetails" tabindex="-1" role="dialog"
+                  aria-labelledby="FollowersDetailsLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Your followers</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="followers-details-modal-body">
+                        <p>Loading...</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- The end of Follower Model -->
+                <br />
+                Followings : <p id="followings-num">0</p>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#FollowingsDetails">View
+                  Details</button>
+                <!-- Followings Model -->
+                <div class="modal fade" id="FollowingsDetails" tabindex="-1" role="dialog"
+                  aria-labelledby="FollowingsDetailsLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Who You Are Following</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="followings-details-modal-body">
+                          <p>Loading...</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- The end of Following Model -->
               </p>
             </div>
           </div>
@@ -79,7 +126,8 @@ limitations under the License.
 
         </div>
         <div>
-          <button id="edit-profile-button" type="submit" onclick="location.href='/user-info.html';" class="hidden">Edit Profile</button>
+          <button id="edit-profile-button" type="submit" onclick="location.href='/user-info.html';" class="hidden">Edit
+            Profile</button>
         </div>
       </div>
       <form id="image-form" method="POST" enctype="multipart/form-data" class="hidden">
