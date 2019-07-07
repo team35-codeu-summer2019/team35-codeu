@@ -23,6 +23,7 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +59,9 @@ public class LoginServlet extends HttpServlet {
         // First time. Create a new user.
         String name = userEmail;
         String imageUrl = "./img/user-profile.png";
-        User createdUser = new User(userEmail, "", name, imageUrl);
+        ArrayList<String> followers = new ArrayList<>();
+        ArrayList<String> followings = new ArrayList<>();
+        User createdUser = new User(userEmail, "", name, imageUrl, followers, followings);
         datastore.storeUser(createdUser);
         response.sendRedirect("/user-info.html");
       }

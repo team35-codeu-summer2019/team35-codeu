@@ -82,6 +82,68 @@ function buildProfileDiv(message, profilePromise) {
   return profileDiv;
 }
 
+// TODO
+function httpOptions(method) {
+  return {
+    method, // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, cors, *same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrer: 'no-referrer' // no-referrer, *client
+    // body: JSON.stringify(data), // body data type must match "Content-Type" header
+  };
+}
+
+function follow(message) {
+  const followUser = message.user;
+  fetch(`follow?user=${followUser}`, httpOptions('POST'))
+    .then(response => response.json())
+    .then((res) => {
+      console.log(res);
+      document.getElementById('follow-button').innerText = "Unfollow";
+    });
+}
+
+function unFollow(message) {
+  const followUser = message.user;
+  fetch(`follow?user=${followUser}`, httpOptions('DELETE'))
+    .then(response => response.json())
+    .then((res) => {
+      console.log(res);
+      document.getElementById('follow-button').innerText = "Follow";
+    });
+}
+
+function toggleFollow(message) {
+  const element = document.getElementById('follow-button');
+  if (element.className === 'btn btn-secondary') {
+    console.log("Can detect color secondary");
+    follow(message);
+    element.setAttribute('class','btn btn-primary');
+  } else {
+    unFollow(message);
+    element.setAttribute('class','btn btn-secondary');
+  }
+}
+
+// if the current user is the same as the post user, then there is no follow button
+function checkDifferentUser(message){
+  fetch('/login-status')
+    .then(response => response.json())
+    .then((loginStatus) => {
+      if (loginStatus.isLoggedIn && loginStatus.username != message.user){
+        return true;
+      }else{
+        return false;
+      }
+    });
+}
+
 // eslint-disable-next-line no-unused-vars
 function buildMessageDiv(message, messageIndex, profilePromise) {
   var feedDetailUrl = "/messageDetails.html?postId=" + message.postId;
@@ -100,10 +162,9 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
 
   const translateButton = document.createElement('button');
   translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\'' + bodyMessageId + '\');');
-  translateButton.style.setProperty("color","primary");
+  translateButton.setAttribute('class','btn btn-light');
   translateButton.style.setProperty("margin-left","20px");
-  translateButton.style.setProperty("background-color","#00a1b7")
-  translateButton.style.setProperty("corner-radius","2px");
+  translateButton.style.setProperty("border-radius","8px;");
   translateButton.innerText = 'Translate';
 
   const audio = document.createElement('audio');
@@ -112,19 +173,20 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
 
   const audioButton = document.createElement('button');
   audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
-  audioButton.style.setProperty("color","primary");
+  audioButton.setAttribute('class','btn btn-light');
   audioButton.style.setProperty("margin-left","20px");
-  audioButton.style.setProperty("background-color","#00a1b7")
-  audioButton.style.setProperty("corner-radius","2px");
+  audioButton.style.setProperty("border-radius","8px;");
   audioButton.innerText = 'Play';
 
-  const followButton = document.createElement('button');
-  followButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
-  followButton.style.setProperty("color","primary");
-  followButton.style.setProperty("margin-left","20px");
-  followButton.style.setProperty("background-color","#00a1b7")
-  followButton.style.setProperty("corner-radius","2px");
-  followButton.innerText = 'Play';
+  if(checkDifferentUser(message)){
+    const followButton = document.createElement('button');
+    followButton.setAttribute('id','follow-button')
+    followButton.setAttribute('onclick', toggleFollow(message));
+    followButton.setAttribute('class', 'btn btn-secondary');
+    followButton.style.setProperty("margin-left","20px");
+    followButton.style.setProperty("corner-radius","2px");
+    followButton.innerText = 'Follow';
+  }
 
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
@@ -133,7 +195,6 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   headerDiv.appendChild(translateButton);
   headerDiv.appendChild(audio);
   headerDiv.appendChild(audioButton);
-  headerDiv.appendChild(viewDetail);
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
