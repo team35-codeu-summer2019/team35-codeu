@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("all-messages")
+@WebServlet("/all-messages")
 public class SeeAroundSevlet extends HttpServlet {
 	private Datastore datastore;
 	private JsonArray postArray;
+
 	@Override
 	public void init() {
 		datastore = new Datastore();
