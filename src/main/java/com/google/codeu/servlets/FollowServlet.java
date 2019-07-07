@@ -4,6 +4,8 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,10 +18,23 @@ import java.util.ArrayList;
 @WebServlet("/follow")
 public class FollowServlet extends HttpServlet {
 	private Datastore datastore;
+	private JsonArray resultArray;
 
 	@Override
 	public void init() {
 		datastore = new Datastore();
+	}
+
+	private static class result {
+		String type;
+		String user;
+		ArrayList<String> resultArrayList;
+
+		private result (String type, String user, ArrayList<String> resultArrayList) {
+			this.type = type;
+			this.user = user;
+			this.resultArrayList = resultArrayList;
+		}
 	}
 
 	@Override
@@ -36,6 +51,13 @@ public class FollowServlet extends HttpServlet {
 
 		ArrayList<String> currFu = fu.getFollowers();
 		currFu.add(user);
+
+		resultArray = new JsonArray();
+		Gson gson = new Gson();
+		resultArray.add(gson.toJsonTree(new result("Follower", user, currU)));
+		resultArray.add(gson.toJsonTree(new result("Following", followUser, currFu)));
+
+		response.getOutputStream().println(resultArray.toString());
 	}
 
 	@Override
@@ -52,5 +74,12 @@ public class FollowServlet extends HttpServlet {
 
 		ArrayList<String> currFu = fu.getFollowers();
 		currFu.remove(user);
+
+		resultArray = new JsonArray();
+		Gson gson = new Gson();
+		resultArray.add(gson.toJsonTree(new result("Follower", user, currU)));
+		resultArray.add(gson.toJsonTree(new result("Following", followUser, currFu)));
+
+		response.getOutputStream().println(resultArray.toString());
 	}
 }

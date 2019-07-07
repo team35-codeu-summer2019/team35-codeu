@@ -101,34 +101,34 @@ function httpOptions(method) {
 
 function follow(message) {
   const followUser = message.user;
-  fetch(`follow?user=${followUser}`, httpOptions('POST'))
+  console.log(message.user);
+  fetch(`follow?email=${followUser}`, httpOptions('POST'))
     .then(response => response.json())
     .then((res) => {
       console.log(res);
-      document.getElementById('follow-button').innerText = "Unfollow";
     });
 }
 
 function unFollow(message) {
   const followUser = message.user;
-  fetch(`follow?user=${followUser}`, httpOptions('DELETE'))
+  console.log(message.user);
+  fetch(`follow?email=${followUser}`, httpOptions('DELETE')) // gives followUser undefined
     .then(response => response.json())
     .then((res) => {
       console.log(res);
-      document.getElementById('follow-button').innerText = "Follow";
     });
 }
 
-function toggleFollow(message,element) {
+function toggleFollow(message) {
   const element = document.getElementById('follow-button');
-  console.log(element.className);
   if (element.className === 'btn btn-secondary') {
-    console.log("Can detect color secondary");
     follow(message);
     element.setAttribute('class','btn btn-primary');
+    element.innerText = "Unfollow";
   } else {
     unFollow(message);
     element.setAttribute('class','btn btn-secondary');
+    element.innerText = "Follow";
   }
 }
 
@@ -183,7 +183,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
     const followButton = document.createElement('button');
     followButton.setAttribute('id','follow-button');
     followButton.setAttribute('class', 'btn btn-secondary');
-    followButton.setAttribute('onclick', toggleFollow(message,followButton));
+    followButton.setAttribute('onclick', 'toggleFollow(\'' + message + '\');');
     followButton.style.setProperty("margin-left","20px");
     followButton.style.setProperty("corner-radius","2px");
     followButton.innerText = 'Follow';
@@ -196,6 +196,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   headerDiv.appendChild(translateButton);
   headerDiv.appendChild(audio);
   headerDiv.appendChild(audioButton);
+  headerDiv.appendChild(followButton);
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
