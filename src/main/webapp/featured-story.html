@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>See Around</title>
+  <title>Featured Story</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/nav-bar.css">
   <link rel="stylesheet" href="/css/user-page.css">
@@ -17,7 +17,9 @@
 <body>
   <nav>
     <div class="brand">
-      <a style="text-decoration:none" href="/index.html"><h2>Play Even Harder</h2></a>
+      <a style="text-decoration:none" href="/index.html">
+        <h2>Play Even Harder</h2>
+      </a>
     </div>
     <ul id="navigation" class="navigation">
       <li>
@@ -25,8 +27,8 @@
       </li>
     </ul>
     <div class="search-container">
-      <form action="/search" method = "POST">
-        <input name = "text" type="text" placeholder="Find other .." name="search">
+      <form action="/search" method="POST">
+        <input name="text" type="text" placeholder="Find other .." name="search">
         <button>Search</i></button>
       </form>
     </div>
@@ -43,7 +45,7 @@
     <div id="content" class="container">
       <h1>Hear others' stories</h1>
       <hr />
-      <div id="message-container">
+      <div id="featured-story-container">
         <p>Loading...</p>
       </div>
     </div>
@@ -64,6 +66,38 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+  <script>
+    function fetchMessages() {
+      const url = '/featured-posts';
+      fetch(url)
+        .then(response => response.json())
+        .then((messages) => {
+          const messageContainer = document.getElementById('featured-story-container');
+          if (messages.length === 0) {
+            messageContainer.innerHTML = '<p>There are no featured stories yet.</p>';
+          } else {
+            messageContainer.innerHTML = '';
+          }
+          const profilePromises = new Map();
+          messages.forEach((message) => {
+            if (profilePromises.get(message.user) === undefined) {
+              const profileUrl = `/profile?user=${message.user}`;
+              profilePromises.set(message.user, fetch(profileUrl)
+                .then(res => res.json()));
+            }
+          });
+
+          Promise.all(profilePromises).then((values) => {
+            let messageIndex = 0;
+            messages.forEach((message) => {
+              const messageDiv = buildMessageDiv(message, messageIndex, profilePromises.get(message.user));
+              messageContainer.appendChild(messageDiv);
+              messageIndex += 1;
+            });
+          });
+        });
+    }
+  </script>
 </footer>
 
 </html>
