@@ -67,7 +67,7 @@ public class FeaturedPostsServlet extends HttpServlet {
 			Iterator it = sortedMessageWithLikes.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry)it.next();
-				if(length-count<=10){  // Meaning the last 10
+				if((length-count<=10) & (Integer.parseInt(pair.getValue().toString()) > 0)){  // Meaning the last 10 and they have to own more than 0 likes
 					result.put((Message) pair.getKey(), Integer.parseInt(pair.getValue().toString()));
 				}
 				count++;
