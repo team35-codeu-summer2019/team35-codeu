@@ -50,6 +50,9 @@
       </div>
     </div>
   </div>
+  <script>
+    fetchFeaturedStories();
+  </script>
 </body>
 <footer>
   <script src="./js/navigation-loader.js"></script>
@@ -67,7 +70,7 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script>
-    function fetchMessages() {
+    function fetchFeaturedStories() {
       const url = '/featured-posts';
       fetch(url)
         .then(response => response.json())

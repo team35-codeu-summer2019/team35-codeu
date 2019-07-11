@@ -131,10 +131,11 @@ function fetchFollowers() {
           console.log("Exists!");
           console.log(followersElement);
 
-          var userDiv = document.createElement("p");
+          var userDiv = document.createElement("a");
           var userDivNode = document.createTextNode(response);
           userDiv.appendChild(userDivNode);
           console.log(response);
+          userDiv.setAttribute('class','list-group-item list-group-item-action');
           userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
 
           followersElement.appendChild(userDiv);
@@ -156,10 +157,11 @@ function fetchFollowings() {
           console.log("Exists!");
           console.log(followingsElement);
 
-          var userDiv = document.createElement("p");
+          var userDiv = document.createElement("a");
           var userDivNode = document.createTextNode(response);
           userDiv.appendChild(userDivNode);
           console.log(reponse);
+          userDiv.setAttribute('class','list-group-item list-group-item-action');
           userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
 
           followersElement.appendChild(userDiv);
