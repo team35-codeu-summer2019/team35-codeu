@@ -97,7 +97,7 @@ function addLoginOrLogoutLinkToNavigation() {
         );
 
         navigationElement.appendChild(
-          createListItem(createLink('https://www.google.com/maps/search/google+map/', 'Map'))
+          createListItem(createLink('https://www.google.com/maps/', 'Map'))
         );
 
         navigationElement.appendChild(
