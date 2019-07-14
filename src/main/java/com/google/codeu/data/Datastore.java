@@ -20,7 +20,6 @@ import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -67,6 +66,15 @@ public class Datastore {
     likeEntity.setProperty("post", like.getPost());
     likeEntity.setProperty("timestamp", like.getTimestamp());
     datastore.put(likeEntity);
+  }
+
+  /**
+   * Store the saving of a user in Datastore.
+   */
+  public void storeSaving(Saving saving) {
+    Entity placeRatingEntity = new Entity("Saving", saving.getUser());
+    placeRatingEntity.setProperty("post", saving.getPost());
+    datastore.put(placeRatingEntity);
   }
 
   /**
@@ -136,6 +144,23 @@ public class Datastore {
       ex.printStackTrace();
       return false;
     }
+  }
+
+  /* ============= Savings ================= */
+
+  /**
+   * @param id
+   * @return list of savings under a user email
+   */
+  public ArrayList<String> getSavingByUser(String id) {
+    Query query = new Query("Saving").setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, id))
+      .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    Entity savingEntity = results.asSingleEntity();
+
+    ArrayList<String> savings = new ArrayList<String>();
+    savings = (ArrayList<String>) savingEntity.getProperty("post");
+    return savings;
   }
 
   /* ============= Comments ================= */

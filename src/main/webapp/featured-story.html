@@ -50,14 +50,12 @@
       </div>
     </div>
   </div>
-  <script>
-    fetchFeaturedStories();
-  </script>
 </body>
 <footer>
   <script src="./js/navigation-loader.js"></script>
   <script src="./js/text-to-speech.js"></script>
   <script src="./js/build-message.js"></script>
+  <script src="./js/featured-story.js"></script>
   <script src="./js/feed.js"></script>
   <script src="./js/feedDetail.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -69,38 +67,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <script>
-    function fetchFeaturedStories() {
-      const url = '/featured-posts';
-      fetch(url)
-        .then(response => response.json())
-        .then((messages) => {
-          const messageContainer = document.getElementById('featured-story-container');
-          if (messages.length === 0) {
-            messageContainer.innerHTML = '<p>There are no featured stories yet.</p>';
-          } else {
-            messageContainer.innerHTML = '';
-          }
-          const profilePromises = new Map();
-          messages.forEach((message) => {
-            if (profilePromises.get(message.user) === undefined) {
-              const profileUrl = `/profile?user=${message.user}`;
-              profilePromises.set(message.user, fetch(profileUrl)
-                .then(res => res.json()));
-            }
-          });
-
-          Promise.all(profilePromises).then((values) => {
-            let messageIndex = 0;
-            messages.forEach((message) => {
-              const messageDiv = buildMessageDiv(message, messageIndex, profilePromises.get(message.user));
-              messageContainer.appendChild(messageDiv);
-              messageIndex += 1;
-            });
-          });
-        });
-    }
-  </script>
 </footer>
 
 </html>

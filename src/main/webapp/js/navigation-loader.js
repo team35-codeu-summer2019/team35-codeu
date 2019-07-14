@@ -89,6 +89,10 @@ function addLoginOrLogoutLinkToNavigation() {
         );
 
         navigationElement.appendChild(
+          createListItem(createLink('/featured-story.html', 'Featured Story'))
+        );
+
+        navigationElement.appendChild(
           createListItem(createLink('/one-glance.html', 'One Glance'))
         );
 
