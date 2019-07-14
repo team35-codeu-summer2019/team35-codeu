@@ -20,6 +20,7 @@ package com.google.codeu.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
+import com.google.codeu.data.Saving;
 import com.google.codeu.data.User;
 
 import java.io.IOException;
@@ -63,6 +64,12 @@ public class LoginServlet extends HttpServlet {
         ArrayList<String> followings = new ArrayList<>();
         User createdUser = new User(userEmail, "", name, imageUrl, followers, followings);
         datastore.storeUser(createdUser);
+
+        // First time. Create a new saving entity.
+
+        Saving saving = new Saving(userEmail, new ArrayList<>());
+        datastore.storeSaving(saving);
+
         response.sendRedirect("/user-info.html");
       }
       return;

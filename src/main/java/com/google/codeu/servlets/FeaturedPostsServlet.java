@@ -2,6 +2,8 @@ package com.google.codeu.servlets;
 
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
+import com.google.codeu.data.Saving;
+import com.google.codeu.data.User;
 import com.google.gson.Gson;
 
 import javax.servlet.annotation.WebServlet;
@@ -20,24 +22,24 @@ public class FeaturedPostsServlet extends HttpServlet {
 		datastore = new Datastore();
 	}
 
-	public static Map<Message, Integer> sortByValue(Map<Message, Integer> hm)
+	public static Map<String, Integer> sortByValue(Map<String, Integer> hm)
 	{
 		// Create a list from elements of HashMap
-		List<Map.Entry<Message, Integer> > list =
-			new LinkedList<Map.Entry<Message, Integer> >(hm.entrySet());
+		List<Map.Entry<String, Integer> > list =
+			new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
 
 		// Sort the list
-		Collections.sort(list, new Comparator<Map.Entry<Message, Integer> >() {
-			public int compare(Map.Entry<Message, Integer> o1,
-			                   Map.Entry<Message, Integer> o2)
+		Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() {
+			public int compare(Map.Entry<String, Integer> o1,
+			                   Map.Entry<String, Integer> o2)
 			{
 				return (o1.getValue()).compareTo(o2.getValue());
 			}
 		});
 
 		// put data from sorted list to hashmap
-		HashMap<Message, Integer> temp = new LinkedHashMap<Message, Integer>();
-		for (Map.Entry<Message, Integer> aa : list) {
+		HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
+		for (Map.Entry<String, Integer> aa : list) {
 			temp.put(aa.getKey(), aa.getValue());
 		}
 		return temp;
@@ -47,18 +49,28 @@ public class FeaturedPostsServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 		List<Message> m = datastore.getAllMessages();
-		Map<Message, Integer> messageWithLikes = new HashMap<>();
+		Map<String, Integer> messageWithLikes = new HashMap<>();
 
+		// Get all messages and their assciated likes
 		for(int i = 0; i < m.size(); i ++){
-			 messageWithLikes.put(m.get(i), datastore.getLikesByPost(m.get(i).getId().toString()).size());
+			 messageWithLikes.put(m.get(i).getId().toString(), datastore.getLikesByPost(m.get(i).getId().toString()).size());
 		}
 
-		Map<Message, Integer> sortedMessageWithLikes = sortByValue(messageWithLikes);
-		Map<Message, Integer> result = new HashMap<>();
+		// Sort the result and the top 10 messages with the highest number of like (#of like has to be larger than 0)
+		Map<String, Integer> sortedMessageWithLikes = sortByValue(messageWithLikes);
+		System.out.println(sortedMessageWithLikes);
+		Map<String, Integer> result = new HashMap<>();
 
 		if(messageWithLikes.size() <= 10){
 			System.out.println("Less than 10 is executed");
-			result = sortedMessageWithLikes;
+
+			Iterator it = sortedMessageWithLikes.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pair = (Map.Entry) it.next();
+				if (Integer.parseInt(pair.getValue().toString()) > 0) {
+					result.put((String) pair.getKey(), Integer.parseInt(pair.getValue().toString()));
+				}
+			}
 		}else{
 			System.out.println("More than 10 is executed");
 			int length = sortedMessageWithLikes.size();
@@ -68,7 +80,7 @@ public class FeaturedPostsServlet extends HttpServlet {
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry)it.next();
 				if((length-count<=10) & (Integer.parseInt(pair.getValue().toString()) > 0)){  // Meaning the last 10 and they have to own more than 0 likes
-					result.put((Message) pair.getKey(), Integer.parseInt(pair.getValue().toString()));
+					result.put((String) pair.getKey(), Integer.parseInt(pair.getValue().toString()));
 				}
 				count++;
 				it.remove();
@@ -77,9 +89,22 @@ public class FeaturedPostsServlet extends HttpServlet {
 		System.out.println("Map result");
 		System.out.println(result);
 
-		List<Message> resultMessages = new ArrayList<>();
+		// Convert the result back to json
+		List<Message> messages = new ArrayList<Message>();
+		Iterator it = result.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry pair = (Map.Entry)it.next();
+			Message e = datastore.getPostById(pair.getKey().toString());
+			System.out.println("Debugging point 1");
+			System.out.println(e.getId()); // Debugging stage: this gives null
+			messages.add(e);
+			it.remove();
+		}
+		System.out.println("Final Message");
+		System.out.println(messages);
+
 		Gson gson = new Gson();
-		String json = gson.toJson(resultMessages);
+		String json = gson.toJson(messages);
 
 		response.getOutputStream().println(json);
 	}

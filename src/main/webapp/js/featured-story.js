@@ -1,88 +1,3 @@
-function buildLanguageOption(value, name) {
-  const langOption = document.createElement('option');
-  langOption.setAttribute('value', value);
-  langOption.innerHTML = name;
-
-  return langOption;
-}
-
-function buildLanguageSelectList() {
-  const englishOption = buildLanguageOption('en', 'English');
-  const chineseOption = buildLanguageOption('zh', 'Chinese');
-  const spanishOption = buildLanguageOption('es', 'Spanish');
-  const hindiOption = buildLanguageOption('hi', 'Hindi');
-  const arabicOption = buildLanguageOption('ar', 'Arabic');
-
-  const langSelect = document.createElement('select');
-  langSelect.appendChild(englishOption);
-  langSelect.appendChild(chineseOption);
-  langSelect.appendChild(spanishOption);
-  langSelect.appendChild(hindiOption);
-  langSelect.appendChild(arabicOption);
-
-  return langSelect;
-}
-
-// eslint-disable-next-line no-unused-vars
-function requestTranslator(langId, bodyMessageId) {
-  const messageBody = document.getElementById(bodyMessageId);
-  const content = messageBody.innerHTML;
-  const languageCode = document.getElementById(langId).value;
-
-  messageBody.innerHTML = 'Loading...';
-
-  const params = new URLSearchParams();
-  params.append('text', content);
-  params.append('languageCode', languageCode);
-
-  fetch('/translate', {
-    method: 'POST',
-    body: params
-  })
-    .then(response => response.text())
-    .then((translatedMessage) => {
-      messageBody.innerHTML = translatedMessage;
-    });
-}
-
-function buildProfileDiv(message, profilePromise) {
-  const image = document.createElement('img');
-  image.setAttribute('height', '50px');
-  image.setAttribute('width', '50px');
-  image.style.borderRadius = '50%';
-  image.style.backgroundPosition = 'center center';
-
-  const imageDiv = document.createElement('div');
-  imageDiv.classList.add('col-xs-4');
-  imageDiv.appendChild(image);
-
-  const usernameDiv = document.createElement('div');
-
-  const timeDiv = document.createElement('div');
-  timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
-
-  const nameAndTimeDiv = document.createElement('div');
-  nameAndTimeDiv.classList.add('col-xs-8');
-  nameAndTimeDiv.appendChild(usernameDiv);
-  nameAndTimeDiv.appendChild(timeDiv);
-
-  const profileDiv = document.createElement('div');
-  profileDiv.classList.add('row');
-  profileDiv.style.cursor = 'pointer';
-
-  profilePromise.then((profile) => {
-    image.setAttribute('src', profile.imageUrl);
-    usernameDiv.appendChild(document.createTextNode(profile.name));
-    profileDiv.setAttribute('onclick', `location.href='/user-page.html?user=${profile.email}'`);
-  });
-
-  profileDiv.appendChild(imageDiv);
-  profileDiv.appendChild(nameAndTimeDiv);
-
-  return profileDiv;
-}
-
-// TODO
 function httpOptions(method) {
   return {
     method, // *GET, POST, PUT, DELETE, etc.
@@ -99,69 +14,74 @@ function httpOptions(method) {
   };
 }
 
-function follow(user, currentUser) {
-  console.log(user);
-  console.log(currentUser);
-  fetch(`follow?followeremail=${currentUser}&followingemail=${user}`, httpOptions('POST'))
+function fetchFeaturedStories() {
+  const url = '/featured-posts';
+  fetch(url)
     .then(response => response.json())
-    .then((res) => {
-      console.log(res);
+    .then((messages) => {
+      const messageContainer = document.getElementById('featured-story-container');
+      if (messages.length === 0) {
+        messageContainer.innerHTML = '<p>There are no featured stories yet.</p>';
+      } else {
+        messageContainer.innerHTML = '';
+      }
+      const profilePromises = new Map();
+      messages.forEach((message) => {
+        if (profilePromises.get(message.user) === undefined) {
+          const profileUrl = `/profile?user=${message.user}`;
+          profilePromises.set(message.user, fetch(profileUrl)
+            .then(res => res.json()));
+        }
+      });
+
+      Promise.all(profilePromises).then((values) => {
+        let messageIndex = 0;
+        messages.forEach((message) => {
+          const messageDiv = buildFeaturedStoryDiv(message, messageIndex, profilePromises.get(message.user));
+          messageContainer.appendChild(messageDiv);
+          messageIndex += 1;
+        });
+      });
     });
-  const buttons = document.getElementsByName(user);
-  buttons.forEach((button) => {
-    button.setAttribute('class', 'btn btn-secondary');
-    button.innerText = 'Unfollow';
-  });
 }
 
-function unFollow(user, currentUser) {
+function save(user, post, elementID) {
   console.log(user);
-  console.log(currentUser);
-  fetch(`follow?followeremail=${currentUser}&followingemail=${user}`, httpOptions('DELETE')) //
+  console.log(post);
+  fetch(`saving?user=${user}&post=${post}`, httpOptions('POST'))
     .then(response => response.json())
     .then((res) => {
       console.log(res);
     });
-  const buttons = document.getElementsByName(user);
-  buttons.forEach((button) => {
+  const button = document.getElementById(elementID);
+  button.setAttribute('class', 'btn btn-secondary');
+  button.innerText = 'Unsave';
+}
+
+function unSave(user, post, elementID) {
+  console.log(user);
+  console.log(post);
+  fetch(`saving?user=${user}&post=${post}`, httpOptions('DELETE')) //
+    .then(response => response.json())
+    .then((res) => {
+      console.log(res);
+    });
+    const button = document.getElementById(elementID);
     button.setAttribute('class', 'btn btn-primary');
-    button.innerText = 'Follow';
-  });
+    button.innerText = 'Save';
 }
 
-function toggleFollow(user, currentUser, messageIndex) {
-  console.log("Debugging point 3 " + currentUser);
-  const elementID = "follow-button-" + messageIndex.toString();
+function toggleSave(user, post, messageIndex) {
+  const elementID = "save-button-" + messageIndex.toString();
   const element = document.getElementById(elementID);
   if (element.className === 'btn btn-primary') {
-    follow(user, currentUser);
+    save(user, post, elementID);
   } else {
-    unFollow(user, currentUser);
+    unSave(user, post, elementID);
   }
 }
 
-function createFollowButton(user, currentUser, messageIndex) {
-  const elementID = "follow-button-" + messageIndex.toString();
-  const element = document.getElementById(elementID);
-  // check follower list
-  const url = "/followers?user=" + user;
-  fetch(url)
-    .then((res) => res.json())
-    .then((response) => {
-      console.log(response);
-      if (response.indexOf(currentUser) > -1) {
-        console.log("Here is executed (1)");
-        element.setAttribute('class', 'btn btn-secondary');
-        element.innerText = "Unfollow";
-      } else {
-        console.log("Here is executed (2)");
-        element.setAttribute('class', 'btn btn-primary');
-        element.innerText = "Follow";
-      }
-    })
-}
-// eslint-disable-next-line no-unused-vars
-function buildMessageDiv(message, messageIndex, profilePromise) {
+function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
   var feedDetailUrl = "/messageDetail.html?postId=" + message.id;
 
   const profileDiv = buildProfileDiv(message, profilePromise);
@@ -205,11 +125,11 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
   const currentUserPromise = fetch("/login-status").then(res => { return res.json() });
   currentUserPromise.then((res) => {
     console.log(res.username);
+    // create the button follow
     if (res.username != message.user) {
       const followButton = document.createElement('button');
       const followButtonId = `follow-button-${messageIndex.toString()}`;
       followButton.setAttribute('id', followButtonId);
-      followButton.setAttribute('name', message.user);
 
       const url = "/followers?user=" + message.user;
       const followButtonStylePromise = fetch(url).then(res2 => { return res2.json() });
@@ -243,12 +163,43 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
         }
       });
     }
+
+    // create the button save
+    console.log(message.id);
+    const savedStoryPrmise = fetch("/saving?user="+res.username+"&post="+message.id, httpOptions('GET')).then(res => { return res.json() });
+    savedStoryPrmise.then((res) => {
+      console.log(res);
+      const saveButton = document.createElement('button');
+      const saveButtonId = `save-button-${messageIndex.toString()}`;
+      saveButton.setAttribute('id', saveButtonId);
+      saveButton.style.setProperty("margin-left", "20px");
+      saveButton.style.setProperty("corner-radius", "2px");
+
+      if (res === 'Not Stored') {
+        saveButton.setAttribute('class','btn btn-primary');
+        saveButton.innerText = 'Save';
+      } else if (res === 'Stored') {
+        saveButton.setAttribute('class','btn btn-secondary');
+        saveButton.innerText = 'Unsave';
+      }
+      fetch('/login-status')
+        .then(response => response.json())
+        .then((loginStatus) => {
+          if (loginStatus.isLoggedIn) {
+            saveButton.setAttribute('onclick', 'toggleSave(\'' + loginStatus.username + '\', \'' + message.id + '\', \'' + messageIndex + '\');');
+            headerDiv.appendChild(saveButton);
+          }
+        });
+    })
   })
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
   messageDiv.appendChild(headerDiv);
   messageDiv.appendChild(bodyDiv);
+  console.log("BUILDING!");
 
   return messageDiv;
 }
+
+window.onload = fetchFeaturedStories();

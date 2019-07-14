@@ -141,7 +141,7 @@ function fetchFollowers() {
           var userDivNode = document.createTextNode(response);
           userDiv.appendChild(userDivNode);
           console.log(response);
-          userDiv.setAttribute('class','list-group-item list-group-item-action');
+          userDiv.setAttribute('class', 'list-group-item list-group-item-action');
           userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
 
           followersElement.appendChild(userDiv);
@@ -173,7 +173,7 @@ function fetchFollowings() {
           var userDivNode = document.createTextNode(response);
           userDiv.appendChild(userDivNode);
           console.log(reponse);
-          userDiv.setAttribute('class','list-group-item list-group-item-action');
+          userDiv.setAttribute('class', 'list-group-item list-group-item-action');
           userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
 
           followingsElement.appendChild(userDiv);
@@ -182,6 +182,28 @@ function fetchFollowings() {
     })
 }
 
+function fetchSavings() {
+  const url = "/get-savings?user=" + parameterUsername;
+  fetch(url)
+    .then(responses => responses.json())
+    .then((responses) => {
+      if (responses.length === 0) {
+        var savingDetailsDiv = document.createElement('a');
+        var savingDetailsNode = document.createTextNode("You haven't saved any post yet");
+        savingDetailsElement.appendChild(savingDetailsDiv);
+      } else {
+        const savingDetailsElement = document.getElementById('saving-details');
+        responses.forEach((response) => {
+          var savingDetailsDiv = document.createElement('a');
+          var savingDetailsNode = document.createTextNode("Post: " + response);
+          savingDetailsDiv.appendChild(savingDetailsNode);
+          savingDetailsDiv.setAttribute('href', 'messageDetail.html?postId='+response);
+          // savingDetailsDiv.setAttribute('onclick', `location.href='/messageDetail.html?postId=${response}'`);
+          savingDetailsElement.appendChild(savingDetailsDiv);
+        })
+      }
+    })
+}
 /** fetch blobstore upload url */
 function fetchBlobstoreUrlAndShowForm() {
   fetch('/blobstore-upload-url?requester=user-page')
@@ -201,6 +223,7 @@ function buildUI() {
   fetchMessages();
   fetchFollowersNumber();
   fetchFollowingsNumber();
+  fetchSavings();
   fetchBlobstoreUrlAndShowForm();
 }
 window.onload = buildUI();

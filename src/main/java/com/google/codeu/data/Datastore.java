@@ -20,7 +20,6 @@ import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -67,6 +66,15 @@ public class Datastore {
     likeEntity.setProperty("post", like.getPost());
     likeEntity.setProperty("timestamp", like.getTimestamp());
     datastore.put(likeEntity);
+  }
+
+  /**
+   * Store the saving of a user in Datastore.
+   */
+  public void storeSaving(Saving saving) {
+    Entity placeRatingEntity = new Entity("Saving", saving.getUser());
+    placeRatingEntity.setProperty("post", saving.getPost());
+    datastore.put(placeRatingEntity);
   }
 
   /**
@@ -117,7 +125,7 @@ public class Datastore {
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
-      likes.add(new Like((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
+      likes.add(new Like(UUID.fromString(entity.getKey().getName()), (String) entity.getProperty("user"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
     }
     return likes;
   }
@@ -138,6 +146,28 @@ public class Datastore {
     }
   }
 
+  /* ============= Savings ================= */
+
+  /**
+   * @param id
+   * @return list of savings under a user email
+   */
+  public ArrayList<String> getSavingByUser(String id) {
+    try {
+      Key key = KeyFactory.createKey("Saving", id);
+      Entity savingEntity = datastore.get(key);
+      if (((ArrayList<String>) savingEntity.getProperty("post")) == null) {
+        return new ArrayList<String>();
+      } else {
+        return (ArrayList<String>) savingEntity.getProperty("post");
+      }
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      return null;
+    }
+
+  }
+
   /* ============= Comments ================= */
 
   /**
@@ -150,7 +180,7 @@ public class Datastore {
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
-      comments.add(new Comment((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
+      comments.add(new Comment(UUID.fromString(entity.getKey().getName()), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
     }
     return comments;
   }
@@ -179,7 +209,7 @@ public class Datastore {
     try{
       Key key = KeyFactory.createKey("Comment", id);
       Entity entity = datastore.get(key);
-      return new Comment((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp"));
+      return new Comment(UUID.fromString(entity.getKey().getName()), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp"));
     }catch(Exception ex) {
       ex.printStackTrace();
       return null;
@@ -196,7 +226,7 @@ public class Datastore {
     try{
       Key key = KeyFactory.createKey("Message", id);
       Entity entity = datastore.get(key);
-      return new Message((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (Long) entity.getProperty("timestamp"));
+      return new Message(UUID.fromString(entity.getKey().getName()), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (Long) entity.getProperty("timestamp"));
     }catch(Exception ex) {
       ex.printStackTrace();
       return null;
@@ -299,7 +329,7 @@ public class Datastore {
     ArrayList<String> followers = (ArrayList) userEntity.getProperty("followers");
     ArrayList<String> followings = (ArrayList) userEntity.getProperty("followings");
     User user = new User(email, aboutMe, name, imageUrl, followers, followings);
-    
+
     return user;
   }
 
