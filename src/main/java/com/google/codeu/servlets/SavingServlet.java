@@ -17,19 +17,24 @@ public class SavingServlet extends HttpServlet {
 	private Datastore datastore;
 
 	@Override
+	public void init() {
+		datastore = new Datastore();
+	}
+
+	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException{
 		String userEmail = request.getParameter("user");
 		String post = request.getParameter("post"); // this one should be the post id
 
 		User user = datastore.getUser(userEmail);
-		ArrayList<String> savingList  = datastore.getSavingByUser(userEmail);
 
 		Gson gson = new Gson();
 		String result;
-		if(savingList.isEmpty()){
+		if(datastore.getSavingByUser(userEmail).isEmpty()){
 			result = "Not Stored";
 		}else{
+			ArrayList<String> savingList = datastore.getSavingByUser(userEmail);
 			if(savingList.contains(post)){
 				result = "Stored";
 			}else{

@@ -125,7 +125,7 @@ public class Datastore {
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
-      likes.add(new Like((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
+      likes.add(new Like(UUID.fromString(entity.getKey().getName()), (String) entity.getProperty("user"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
     }
     return likes;
   }
@@ -158,9 +158,11 @@ public class Datastore {
     PreparedQuery results = datastore.prepare(query);
     Entity savingEntity = results.asSingleEntity();
 
-    ArrayList<String> savings = new ArrayList<String>();
-    savings = (ArrayList<String>) savingEntity.getProperty("post");
-    return savings;
+    if(((ArrayList<String>) savingEntity.getProperty("post")) == null){
+      return new ArrayList<String>();
+    }else{
+      return (ArrayList<String>) savingEntity.getProperty("post");
+    }
   }
 
   /* ============= Comments ================= */
@@ -175,7 +177,7 @@ public class Datastore {
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
-      comments.add(new Comment((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
+      comments.add(new Comment(UUID.fromString(entity.getKey().getName()), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp")));
     }
     return comments;
   }
@@ -204,7 +206,7 @@ public class Datastore {
     try{
       Key key = KeyFactory.createKey("Comment", id);
       Entity entity = datastore.get(key);
-      return new Comment((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp"));
+      return new Comment(UUID.fromString(entity.getKey().getName()), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (String) entity.getProperty("post"), (Long) entity.getProperty("timestamp"));
     }catch(Exception ex) {
       ex.printStackTrace();
       return null;
