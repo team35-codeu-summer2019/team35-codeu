@@ -1,7 +1,6 @@
 package com.google.codeu.servlets;
 
 import com.google.codeu.data.Datastore;
-import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 
 import javax.servlet.annotation.WebServlet;
@@ -9,10 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
-@WebServlet("/all-messages")
-public class SeeAroundSevlet extends HttpServlet {
+@WebServlet("/get-savings")
+public class GetSavingServlet extends HttpServlet {
 	private Datastore datastore;
 
 	@Override
@@ -22,12 +21,11 @@ public class SeeAroundSevlet extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.setContentType("application/json");
+		String user = request.getParameter("user");
+		ArrayList<String> result = datastore.getSavingByUser(user);
 
-		List<Message> m = datastore.getAllMessages();
-		System.out.println(m);
 		Gson gson = new Gson();
-		String json = gson.toJson(m);
+		String json = gson.toJson(result);
 		response.getOutputStream().println(json);
 	}
 }

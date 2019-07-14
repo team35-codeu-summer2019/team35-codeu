@@ -141,7 +141,7 @@ function fetchFollowers() {
           var userDivNode = document.createTextNode(response);
           userDiv.appendChild(userDivNode);
           console.log(response);
-          userDiv.setAttribute('class','list-group-item list-group-item-action');
+          userDiv.setAttribute('class', 'list-group-item list-group-item-action');
           userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
 
           followersElement.appendChild(userDiv);
@@ -173,7 +173,7 @@ function fetchFollowings() {
           var userDivNode = document.createTextNode(response);
           userDiv.appendChild(userDivNode);
           console.log(reponse);
-          userDiv.setAttribute('class','list-group-item list-group-item-action');
+          userDiv.setAttribute('class', 'list-group-item list-group-item-action');
           userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
 
           followingsElement.appendChild(userDiv);
@@ -182,6 +182,22 @@ function fetchFollowings() {
     })
 }
 
+function fetchSavings() {
+  const url = "/get-savings?user=" + parameterUsername;
+  fetch(url)
+    .then(responses => responses.json())
+    .then((responses) => {
+      const savingDetailsElement = document.getElementById('saving-details');
+      responses.forEach((response) => {
+        var savingDetailsDiv = document.createElement('a');
+        var savingDetailsNode = document.createTextNode(response);
+        savingDetailsDiv.appendChild(savingDetailsNode);
+        savingDetailsDiv.setAttribute('class', 'list-group-item list-group-item-action');
+        savingDetailsDiv.setAttribute('onclick', "/messageDetail.html?postId=" + response);
+        savingDetailsElement.appendChild(savingDetailsDiv);
+      })
+    })
+}
 /** fetch blobstore upload url */
 function fetchBlobstoreUrlAndShowForm() {
   fetch('/blobstore-upload-url?requester=user-page')

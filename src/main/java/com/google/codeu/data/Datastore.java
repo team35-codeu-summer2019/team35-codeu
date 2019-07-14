@@ -221,7 +221,7 @@ public class Datastore {
     try{
       Key key = KeyFactory.createKey("Message", id);
       Entity entity = datastore.get(key);
-      return new Message((UUID) entity.getProperty("id"), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (Long) entity.getProperty("timestamp"));
+      return new Message(UUID.fromString(entity.getKey().getName()), (String) entity.getProperty("user"), (String) entity.getProperty("text"), (Long) entity.getProperty("timestamp"));
     }catch(Exception ex) {
       ex.printStackTrace();
       return null;

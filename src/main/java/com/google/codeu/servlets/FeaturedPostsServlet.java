@@ -95,6 +95,8 @@ public class FeaturedPostsServlet extends HttpServlet {
 		while(it.hasNext()){
 			Map.Entry pair = (Map.Entry)it.next();
 			Message e = datastore.getPostById(pair.getKey().toString());
+			System.out.println("Debugging point 1");
+			System.out.println(e.getId()); // Debugging stage: this gives null
 			messages.add(e);
 			it.remove();
 		}

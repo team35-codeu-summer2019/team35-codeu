@@ -45,6 +45,42 @@ function fetchFeaturedStories() {
     });
 }
 
+function save(user, post, elementID) {
+  console.log(user);
+  console.log(post);
+  fetch(`saving?user=${user}&post=${post}`, httpOptions('POST'))
+    .then(response => response.json())
+    .then((res) => {
+      console.log(res);
+    });
+  const button = document.getElementById(elementID);
+  button.setAttribute('class', 'btn btn-secondary');
+  button.innerText = 'Unsave';
+}
+
+function unSave(user, post, elementID) {
+  console.log(user);
+  console.log(post);
+  fetch(`saving?user=${user}&post=${post}`, httpOptions('DELETE')) //
+    .then(response => response.json())
+    .then((res) => {
+      console.log(res);
+    });
+    const button = document.getElementById(elementID);
+    button.setAttribute('class', 'btn btn-primary');
+    button.innerText = 'Save';
+}
+
+function toggleSave(user, post, messageIndex) {
+  const elementID = "save-button-" + messageIndex.toString();
+  const element = document.getElementById(elementID);
+  if (element.className === 'btn btn-primary') {
+    save(user, post, elementID);
+  } else {
+    unSave(user, post, elementID);
+  }
+}
+
 function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
   var feedDetailUrl = "/messageDetail.html?postId=" + message.id;
 
@@ -94,7 +130,6 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
       const followButton = document.createElement('button');
       const followButtonId = `follow-button-${messageIndex.toString()}`;
       followButton.setAttribute('id', followButtonId);
-      followButton.setAttribute('name', message.user);
 
       const url = "/followers?user=" + message.user;
       const followButtonStylePromise = fetch(url).then(res2 => { return res2.json() });
@@ -131,11 +166,12 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
 
     // create the button save
     console.log(message.id);
-    const savedStoryPrmise = fetch("/saving?user="+res.username+"?post="+message.id, httpOptions('GET')).then(res => { return res.json() });
+    const savedStoryPrmise = fetch("/saving?user="+res.username+"&post="+message.id, httpOptions('GET')).then(res => { return res.json() });
     savedStoryPrmise.then((res) => {
       console.log(res);
       const saveButton = document.createElement('button');
       const saveButtonId = `save-button-${messageIndex.toString()}`;
+      saveButton.setAttribute('id', saveButtonId);
       saveButton.style.setProperty("margin-left", "20px");
       saveButton.style.setProperty("corner-radius", "2px");
 
