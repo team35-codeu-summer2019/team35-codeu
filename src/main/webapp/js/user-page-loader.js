@@ -127,6 +127,9 @@ function fetchFollowers() {
       if (responses === null) {
         followersElement.appendChild(document.createTextNode("You don't have any followers yet."));
       } else {
+        while (followersElement.firstChild) {
+          followersElement.removeChild(followersElement.firstChild);
+        }
         responses.forEach((response) => {
           console.log("Exists!");
           console.log(followersElement);
@@ -153,6 +156,9 @@ function fetchFollowings() {
       if (responses === null) {
         followingsElement.appendChild(document.createTextNode("You haven't followed anyone yet."));
       } else {
+        while (followingsElement.firstChild) {
+          followingsElement.removeChild(followingsElement.firstChild);
+        }
         responses.forEach((response) => {
           console.log("Exists!");
           console.log(followingsElement);
@@ -164,7 +170,7 @@ function fetchFollowings() {
           userDiv.setAttribute('class','list-group-item list-group-item-action');
           userDiv.setAttribute('onclick', `location.href='/user-page.html?user=${response}'`);
 
-          followersElement.appendChild(userDiv);
+          followingsElement.appendChild(userDiv);
         });
       }
     })
