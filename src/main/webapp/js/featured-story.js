@@ -178,7 +178,7 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
       if (res === 'Not Stored') {
         saveButton.setAttribute('class','btn btn-primary');
         saveButton.innerText = 'Save';
-      } else if (res === 'Stored'){
+      } else if (res === 'Stored') {
         saveButton.setAttribute('class','btn btn-secondary');
         saveButton.innerText = 'Unsave';
       }
@@ -186,7 +186,7 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
         .then(response => response.json())
         .then((loginStatus) => {
           if (loginStatus.isLoggedIn) {
-            saveButton.setAttribute('onclick','toggleSave(\'' + loginStatus.username + '\',\'' + message.id + '\',\'' + messageIndex + '\');');
+            saveButton.setAttribute('onclick', 'toggleSave(\'' + loginStatus.username + '\', \'' + message.id + '\', \'' + messageIndex + '\');');
             headerDiv.appendChild(saveButton);
           }
         });
