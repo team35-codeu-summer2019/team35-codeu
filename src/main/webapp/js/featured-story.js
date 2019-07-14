@@ -175,17 +175,21 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
       saveButton.style.setProperty("margin-left", "20px");
       saveButton.style.setProperty("corner-radius", "2px");
 
-      if (res === "Not Stored") {  
+      if (res === 'Not Stored') {
         saveButton.setAttribute('class','btn btn-primary');
-        saveButton.innerText = "Save";
-        saveButton.setAttribute("onclick",'');
-        headerDiv.appendChild(saveButton);
-      }else if (res === "Stored"){
+        saveButton.innerText = 'Save';
+      } else if (res === 'Stored'){
         saveButton.setAttribute('class','btn btn-secondary');
-        saveButton.innerText = "Unsave";
-        saveButton.setAttribute("onclick",'');
-        headerDiv.appendChild(saveButton);
+        saveButton.innerText = 'Unsave';
       }
+      fetch('/login-status')
+        .then(response => response.json())
+        .then((loginStatus) => {
+          if (loginStatus.isLoggedIn) {
+            saveButton.setAttribute('onclick','toggleSave(\'' + loginStatus.username + '\',\'' + message.id + '\',\'' + messageIndex + '\');');
+            headerDiv.appendChild(saveButton);
+          }
+        });
     })
   })
 
