@@ -187,15 +187,21 @@ function fetchSavings() {
   fetch(url)
     .then(responses => responses.json())
     .then((responses) => {
-      const savingDetailsElement = document.getElementById('saving-details');
-      responses.forEach((response) => {
+      if (responses.length === 0) {
         var savingDetailsDiv = document.createElement('a');
-        var savingDetailsNode = document.createTextNode(response);
-        savingDetailsDiv.appendChild(savingDetailsNode);
-        savingDetailsDiv.setAttribute('class', 'list-group-item list-group-item-action');
-        savingDetailsDiv.setAttribute('onclick', "/messageDetail.html?postId=" + response);
+        var savingDetailsNode = document.createTextNode("You haven't saved any post yet");
         savingDetailsElement.appendChild(savingDetailsDiv);
-      })
+      } else {
+        const savingDetailsElement = document.getElementById('saving-details');
+        responses.forEach((response) => {
+          var savingDetailsDiv = document.createElement('a');
+          var savingDetailsNode = document.createTextNode("Post: " + response);
+          savingDetailsDiv.appendChild(savingDetailsNode);
+          savingDetailsDiv.setAttribute('href', 'messageDetail.html?postId='+response);
+          // savingDetailsDiv.setAttribute('onclick', `location.href='/messageDetail.html?postId=${response}'`);
+          savingDetailsElement.appendChild(savingDetailsDiv);
+        })
+      }
     })
 }
 /** fetch blobstore upload url */
@@ -217,6 +223,7 @@ function buildUI() {
   fetchMessages();
   fetchFollowersNumber();
   fetchFollowingsNumber();
+  fetchSavings();
   fetchBlobstoreUrlAndShowForm();
 }
 window.onload = buildUI();

@@ -72,15 +72,22 @@ public class SavingServlet extends HttpServlet {
 		String userEmail = request.getParameter("user");
 		String post = request.getParameter("post"); // this one should be the post id
 
+		System.out.println("If delete is being called");
 		User user = datastore.getUser(userEmail);
 		ArrayList<String> savingList  = datastore.getSavingByUser(userEmail);
-		if(savingList.isEmpty()){
+		System.out.println(savingList);
+		if(!savingList.isEmpty()){
+			System.out.println(savingList.contains(post));
 			if(savingList.contains(post)){
 				savingList.remove(post);
 
 				Saving saving = new Saving(userEmail, savingList);
 				datastore.storeSaving(saving);
 				System.out.println(saving);
+
+				Gson gson = new Gson();
+				String json = gson.toJson(saving);
+				response.getOutputStream().print(json);
 			}
 		}
 	}
