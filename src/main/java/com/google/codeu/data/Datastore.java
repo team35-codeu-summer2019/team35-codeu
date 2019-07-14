@@ -153,16 +153,19 @@ public class Datastore {
    * @return list of savings under a user email
    */
   public ArrayList<String> getSavingByUser(String id) {
-    Query query = new Query("Saving").setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, id))
-      .addSort("timestamp", SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
-    Entity savingEntity = results.asSingleEntity();
-
-    if(((ArrayList<String>) savingEntity.getProperty("post")) == null){
-      return new ArrayList<String>();
-    }else{
-      return (ArrayList<String>) savingEntity.getProperty("post");
+    try{
+      Key key = KeyFactory.createKey("Saving", id);
+      Entity savingEntity = datastore.get(key);
+      if(((ArrayList<String>) savingEntity.getProperty("post")) == null){
+        return new ArrayList<String>();
+      }else{
+        return (ArrayList<String>) savingEntity.getProperty("post");
+      }
+    }catch(Exception ex) {
+      ex.printStackTrace();
+      return null;
     }
+
   }
 
   /* ============= Comments ================= */
@@ -326,7 +329,7 @@ public class Datastore {
     ArrayList<String> followers = (ArrayList) userEntity.getProperty("followers");
     ArrayList<String> followings = (ArrayList) userEntity.getProperty("followings");
     User user = new User(email, aboutMe, name, imageUrl, followers, followings);
-    
+
     return user;
   }
 
