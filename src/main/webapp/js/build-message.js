@@ -107,16 +107,26 @@ function follow(user, currentUser) {
     .then((res) => {
       console.log(res);
     });
+  const bottons = document.getElementsByName(user);
+  bottons.forEach((button) => {
+    button.setAttribute('class', 'btn btn-secondary');
+    button.innerText = 'Unfollow';
+  });
 }
 
 function unFollow(user, currentUser) {
   console.log(user);
   console.log(currentUser);
-  fetch(`follow?followeremail=${currentUser}&followingemail=${user}`, httpOptions('DELETE')) // 
+  fetch(`follow?followeremail=${currentUser}&followingemail=${user}`, httpOptions('DELETE')) //
     .then(response => response.json())
     .then((res) => {
       console.log(res);
     });
+  const bottons = document.getElementsByName(user);
+  bottons.forEach((button) => {
+    button.setAttribute('class', 'btn btn-primary');
+    button.innerText = 'Follow';
+  });
 }
 
 function toggleFollow(user, currentUser, messageIndex) {
@@ -199,6 +209,7 @@ function buildMessageDiv(message, messageIndex, profilePromise) {
       const followButton = document.createElement('button');
       const followButtonId = `follow-button-${messageIndex.toString()}`;
       followButton.setAttribute('id', followButtonId);
+      followButton.setAttribute('name', message.user);
 
       const url = "/followers?user=" + message.user;
       const followButtonStylePromise = fetch(url).then(res2 => { return res2.json() });
