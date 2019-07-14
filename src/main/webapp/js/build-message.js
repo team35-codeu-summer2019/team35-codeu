@@ -108,7 +108,7 @@ function follow(user, currentUser) {
       console.log(res);
     });
   const bottons = document.getElementsByName(user);
-  bottons.forEach(function(button) {
+  bottons.forEach((button) => {
     button.setAttribute('class', 'btn btn-secondary');
     button.innerText = 'Unfollow';
   });
@@ -123,7 +123,7 @@ function unFollow(user, currentUser) {
       console.log(res);
     });
   const bottons = document.getElementsByName(user);
-  bottons.forEach(function(button) {
+  bottons.forEach((button) => {
     button.setAttribute('class', 'btn btn-primary');
     button.innerText = 'Follow';
   });

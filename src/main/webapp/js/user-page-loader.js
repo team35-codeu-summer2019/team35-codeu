@@ -127,7 +127,7 @@ function fetchFollowers() {
       while (followersElement.firstChild) {
         followersElement.removeChild(followersElement.firstChild);
       }
-      const followersNumberElement = document.getElementById("followers-num");
+      const followersNumberElement = document.getElementById('followers-num');
       if (responses === null) {
         followersElement.appendChild(document.createTextNode("You don't have any followers yet."));
         followersNumberElement.innerText = '0';
@@ -159,7 +159,7 @@ function fetchFollowings() {
       while (followingsElement.firstChild) {
         followingsElement.removeChild(followingsElement.firstChild);
       }
-      const followingsNumberElement = document.getElementById("followings-num");
+      const followingsNumberElement = document.getElementById('followings-num');
       if (responses === null) {
         followingsElement.appendChild(document.createTextNode("You haven't followed anyone yet."));
         followingsNumberElement.innerText = '0';
