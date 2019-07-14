@@ -124,12 +124,15 @@ function fetchFollowers() {
     .then(response => response.json())
     .then((responses) => {
       const followersElement = document.getElementById("followers-details-modal-body");
+      while (followersElement.firstChild) {
+        followersElement.removeChild(followersElement.firstChild);
+      }
+      const followersNumberElement = document.getElementById("followers-num");
       if (responses === null) {
         followersElement.appendChild(document.createTextNode("You don't have any followers yet."));
+        followersNumberElement.innerText = '0';
       } else {
-        while (followersElement.firstChild) {
-          followersElement.removeChild(followersElement.firstChild);
-        }
+        followersNumberElement.innerText = responses.length;
         responses.forEach((response) => {
           console.log("Exists!");
           console.log(followersElement);
@@ -153,12 +156,15 @@ function fetchFollowings() {
     .then(response => response.json())
     .then((responses) => {
       const followingsElement = document.getElementById("followings-details-modal-body");
+      while (followingsElement.firstChild) {
+        followingsElement.removeChild(followingsElement.firstChild);
+      }
+      const followingsNumberElement = document.getElementById("followings-num");
       if (responses === null) {
         followingsElement.appendChild(document.createTextNode("You haven't followed anyone yet."));
+        followingsNumberElement.innerText = '0';
       } else {
-        while (followingsElement.firstChild) {
-          followingsElement.removeChild(followingsElement.firstChild);
-        }
+        followingsNumberElement.innerText = responses.length;
         responses.forEach((response) => {
           console.log("Exists!");
           console.log(followingsElement);
