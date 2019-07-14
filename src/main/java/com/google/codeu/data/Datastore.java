@@ -153,15 +153,15 @@ public class Datastore {
    * @return list of savings under a user email
    */
   public ArrayList<String> getSavingByUser(String id) {
-    try{
+    try {
       Key key = KeyFactory.createKey("Saving", id);
       Entity savingEntity = datastore.get(key);
-      if(((ArrayList<String>) savingEntity.getProperty("post")) == null){
+      if (((ArrayList<String>) savingEntity.getProperty("post")) == null) {
         return new ArrayList<String>();
-      }else{
+      } else {
         return (ArrayList<String>) savingEntity.getProperty("post");
       }
-    }catch(Exception ex) {
+    } catch (Exception ex) {
       ex.printStackTrace();
       return null;
     }
