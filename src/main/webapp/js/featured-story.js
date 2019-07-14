@@ -178,12 +178,12 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
       if (res === "Not Stored") {  
         saveButton.setAttribute('class','btn btn-primary');
         saveButton.innerText = "Save";
-        saveButton.setAttribute("onclick",'');
+        saveButton.setAttribute("onclick",'toggleFollow(\'' + res.username + '\',\'' + message.id + '\',\'' + messageIndex + '\');');
         headerDiv.appendChild(saveButton);
       }else if (res === "Stored"){
         saveButton.setAttribute('class','btn btn-secondary');
         saveButton.innerText = "Unsave";
-        saveButton.setAttribute("onclick",'');
+        saveButton.setAttribute("onclick",'toggleFollow(\'' + res.username + '\',\'' + message.id + '\',\'' + messageIndex + '\');');
         headerDiv.appendChild(saveButton);
       }
     })
