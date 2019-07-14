@@ -56,23 +56,14 @@ public class SavingServlet extends HttpServlet {
 		User user = datastore.getUser(userEmail);
 		ArrayList<String> savingList  = datastore.getSavingByUser(userEmail);
 		if(savingList.isEmpty()){
-
-			ArrayList<String> temp = new ArrayList<>();
-			temp.add(post);
-
-			Saving saving = new Saving(userEmail, temp);
-			datastore.storeSaving(saving);
-			System.out.println(saving);
-
-		}else{
-
-			savingList.add(post);
-
-			Saving saving = new Saving(userEmail, savingList);
-			datastore.storeSaving(saving);
-			System.out.println(saving);
-
+			savingList = new ArrayList<>();
 		}
+    savingList.add(post);
+    Saving saving = new Saving(userEmail, savingList);
+    datastore.storeSaving(saving);
+    Gson gson = new Gson();
+    String json = gson.toJson(saving);
+    response.getOutputStream().println(json);
 	}
 
 	@Override
