@@ -202,10 +202,12 @@ public class MessageServlet extends HttpServlet {
         }
       }
       System.out.printf("Maximum Entity: %s, Salience: %.3f\n", maximumEntity, maximum);
+      if (!maximumEntity.equals("")) { //Location found
+        // Store into the database
+        PlaceRating placeRating = new PlaceRating(maximumEntity, score);
+        datastore.storePlaceRating(placeRating);
+      }
 
-      // Store into the database
-      PlaceRating placeRating = new PlaceRating(maximumEntity, score);
-      datastore.storePlaceRating(placeRating);
     }
 
 

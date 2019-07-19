@@ -130,7 +130,7 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
       const followButton = document.createElement('button');
       const followButtonId = `follow-button-${messageIndex.toString()}`;
       followButton.setAttribute('id', followButtonId);
-
+      followButton.setAttribute('name', message.user);
       const url = "/followers?user=" + message.user;
       const followButtonStylePromise = fetch(url).then(res2 => { return res2.json() });
       followButtonStylePromise.then((res2) => {
