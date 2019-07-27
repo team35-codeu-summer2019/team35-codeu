@@ -111,6 +111,19 @@ function buildLikeDiv(likes) {
 
   likeDiv.appendChild(likeSpan);
   likeDiv.classList.add('like-count');
+  fetch('/login-status')
+    .then(response => response.json())
+    .then((loginStatus) => {
+      if (loginStatus.isLoggedIn) {
+        for (let like of likes) {
+          if (like.user === loginStatus.username) {
+            document.getElementById('img-icon-heart').style.fill = 'red';
+            document.getElementById('like-id').innerText = like.id;
+            break;
+          }
+        }
+      }
+    });
   return likeDiv;
 }
 

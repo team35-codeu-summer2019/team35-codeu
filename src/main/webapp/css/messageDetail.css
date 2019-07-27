@@ -9,7 +9,7 @@ span.message-detail-title{
   margin-bottom:20px;
 }
 .id-hidden{
-  visibility:hidden;
+  display: none;
 }
 #comment-create-container{
   margin-bottom:20px;
