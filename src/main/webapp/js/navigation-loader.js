@@ -72,10 +72,6 @@ function addLoginOrLogoutLinkToNavigation() {
         );
 
         navigationElement.appendChild(
-          createListItem(createLink('/user-info.html', 'Your Profile'))
-        );
-
-        navigationElement.appendChild(
           createListItem(
             createLink(
               `/user-page.html?user=${loginStatus.username}`,
