@@ -40,7 +40,8 @@ nav .brand h2 {
 }
 
 nav .search-container {
-  padding-top: 80px;
+  position: relative;
+  top: 80px;
   float: right;
 }
 
