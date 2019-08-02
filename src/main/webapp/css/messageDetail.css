@@ -20,3 +20,11 @@ span.message-detail-title{
 small{
   float:right;
 }
+
+.featured-story{
+  font-family: 'Roboto', sans-serif;
+  padding-left:10vh;
+  padding-right: 10vh;
+  color:black;
+  font-size:20px;
+}
