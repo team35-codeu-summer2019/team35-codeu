@@ -132,10 +132,10 @@ limitations under the License.
             Profile</button>
         </div>
       </div>
-      <form id="image-form" method="POST" enctype="multipart/form-data" class="hidden">
+      <form id="image-form" method="POST"  onsubmit="return checkForm();" enctype="multipart/form-data" class="hidden">
         <br />
         <p>Upload an image:</p>
-        <input type="file" name="image">
+        <input id = "upload-1" type="file" name="image" accept=".png, .jpg, .gif, image/*">
         <button>Submit</button>
       </form>
 
