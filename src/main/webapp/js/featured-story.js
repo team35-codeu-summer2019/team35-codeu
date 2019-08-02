@@ -90,7 +90,7 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
   const bodyMessageId = `message-body-${messageIndex.toString()}`;
   bodyDiv.setAttribute('id', bodyMessageId);
   bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = '<a href=' + feedDetailUrl + ' style="text-decoration:none">' + message.text + '</a>';
+  bodyDiv.innerHTML = message.text;
 
   const langList = buildLanguageSelectList();
   const langId = `lang-${messageIndex.toString()}`;
@@ -98,7 +98,7 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
 
   const translateButton = document.createElement('button');
   translateButton.setAttribute('onclick', 'requestTranslator(\'' + langId + '\',\'' + bodyMessageId + '\');');
-  translateButton.setAttribute('class', 'btn btn-light');
+  translateButton.setAttribute('class', 'btn btn-primary');
   translateButton.style.setProperty("margin-left", "20px");
   translateButton.style.setProperty("border-radius", "8px;");
   translateButton.innerText = 'Translate';
@@ -109,10 +109,17 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
 
   const audioButton = document.createElement('button');
   audioButton.setAttribute('onclick', 'play(\'' + audioId + '\',\'' + bodyMessageId + '\');');
-  audioButton.setAttribute('class', 'btn btn-light');
+  audioButton.setAttribute('class', 'btn btn-primary');
   audioButton.style.setProperty("margin-left", "20px");
   audioButton.style.setProperty("border-radius", "8px;");
   audioButton.innerText = 'Play';
+
+  const detailButton = document.createElement('button');
+  detailButton.setAttribute('onclick', `location.href = '${feedDetailUrl}'`);
+  detailButton.setAttribute('class', 'btn btn-primary');
+  detailButton.style.setProperty("margin-left", "20px");
+  detailButton.style.setProperty("border-radius", "8px;");
+  detailButton.innerText = 'View detail';
 
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
@@ -121,6 +128,7 @@ function buildFeaturedStoryDiv(message, messageIndex, profilePromise) {
   headerDiv.appendChild(translateButton);
   headerDiv.appendChild(audio);
   headerDiv.appendChild(audioButton);
+  headerDiv.appendChild(detailButton);
 
   const currentUserPromise = fetch("/login-status").then(res => { return res.json() });
   currentUserPromise.then((res) => {
