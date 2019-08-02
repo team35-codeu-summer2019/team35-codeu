@@ -68,20 +68,37 @@ public class StatsTopPlacesServlet extends HttpServlet {
     // Sort the uniqueCity - averageRating map
     Map<String, Float> sortedResult = sortByFloatValue(result);
 
+    // check if the string is capitalized
+    Map<String, Float> sortedValidResult = new HashMap<>();
+    for (String key : sortedResult.keySet()) {
+      char firstChar = key.charAt(0);
+      float score = sortedResult.get(key);
+
+      System.out.println("The first char checking in StatsTopPlacesServlet is ");
+      System.out.println(firstChar);
+
+      if( Character.isUpperCase(firstChar) ){
+        sortedValidResult.put(key, score);
+        System.out.println("Valid result");
+        System.out.println(key);
+        System.out.println(score);
+      }
+    }
+
     // Get the Top 10 from the whole map
     Map<String, Float> finalResult = new HashMap<>();
-    int sortedResultLength = sortedResult.size();
-    if(sortedResultLength <= 10){
+    int sortedValidResultLength = sortedValidResult.size();
+    if(sortedValidResultLength <= 10){
       System.out.println("Less than 10");
-      finalResult = sortedResult;
+      finalResult = sortedValidResult;
     }else{
       System.out.println("More than 10");
       int count = 0;
 
-      Iterator it = sortedResult.entrySet().iterator();
+      Iterator it = sortedValidResult.entrySet().iterator();
       while (it.hasNext()) {
         Map.Entry pair = (Map.Entry)it.next();
-        if(sortedResultLength-count<=10){  // Meaning the last 10
+        if(sortedValidResultLength-count<=10){  // Meaning the last 10
           finalResult.put(pair.getKey().toString(), Float.parseFloat(pair.getValue().toString()));
         }
         count++;
