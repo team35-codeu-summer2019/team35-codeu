@@ -216,6 +216,12 @@ function fetchBlobstoreUrlAndShowForm() {
     })
 }
 
+function checkForm() {
+  var fileName = document.getElementById("upload-1").value.toLowerCase();
+  if(fileName == '' || !(fileName.endsWith("png") || fileName.endsWith('jpg') || fileName.endsWith('gif'))) {
+    alert('Unaccepted file type!');
+  }
+}
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   fetchUserData();
